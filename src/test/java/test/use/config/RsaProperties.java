@@ -1,8 +1,7 @@
 package test.use.config;
 
-import test.use.util.MapUtil;
-import test.use.util.PathUtil;
-import test.use.util.YamlUtil;
+import test.use.utils.MapUtil;
+import test.use.utils.YamlUtil;
 
 import java.io.IOException;
 import java.util.Map;
@@ -24,7 +23,7 @@ public class RsaProperties {
      */
     static {
         try{
-            Map yaml = YamlUtil.getReadAbleYaml("resource:/application/application-test.yml");
+            Map yaml = YamlUtil.getReadAbleYaml("resource:application/application-test.yml");
             privateKey = (String) MapUtil.readMapByPoint(yaml,"ras.private_key");
             publicKey = (String) MapUtil.readMapByPoint(yaml,"ras.public_key");
         }catch (IOException e){

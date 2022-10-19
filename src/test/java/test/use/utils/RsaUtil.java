@@ -1,4 +1,4 @@
-package test.use.util;
+package test.use.utils;
 
 import org.apache.commons.codec.binary.Base64;
 

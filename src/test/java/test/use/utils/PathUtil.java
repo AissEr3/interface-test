@@ -1,6 +1,4 @@
-package test.use.util;
-
-import java.util.Map;
+package test.use.utils;
 
 /**
  * @ClassName PathUtil
@@ -14,6 +12,7 @@ public class PathUtil {
 
     /**
      * 直接读取在resource下的文件
+     * 在路径前加上`resource:`即可
      *
      * @param path
      * @return

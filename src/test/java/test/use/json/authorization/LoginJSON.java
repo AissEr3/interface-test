@@ -2,7 +2,7 @@ package test.use.json.authorization;
 
 import lombok.Data;
 import test.use.config.RsaProperties;
-import test.use.util.RsaUtil;
+import test.use.utils.RsaUtil;
 
 import java.io.Serializable;
 

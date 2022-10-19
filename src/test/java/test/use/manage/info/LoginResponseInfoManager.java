@@ -2,7 +2,7 @@ package test.use.manage.info;
 
 import io.restassured.response.Response;
 import test.use.json.authorization.LoginJSON;
-import test.use.util.MapUtil;
+import test.use.utils.MapUtil;
 
 import java.util.Map;
 

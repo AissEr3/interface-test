@@ -1,11 +1,16 @@
 package eladmin.test.authorization;
 
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import org.junit.jupiter.api.*;
 
+import test.use.common.test.BaseTest;
 import test.use.config.RsaProperties;
+import test.use.json.authorization.LoginJSON;
 import test.use.manage.info.LoginResponseInfo;
 import test.use.manage.info.LoginResponseInfoManager;
+import test.use.utils.RsaUtil;
+import test.use.utils.YamlUtil;
 
 import java.util.Map;
 
@@ -18,31 +23,50 @@ import static io.restassured.RestAssured.*;
  * @Version 1.0
  * @Description TODO
  **/
-
-public class TestLogin {
-    private static final String PUBLIC_KEY = RsaProperties.getPublicKey();
+public class TestLogin{
 
     @Test
     @Order(1)
     void testRightLogin() throws Exception{
-        LoginResponseInfo info = new LoginResponseInfoManager("admin","123456");
-        Map<String, String> loginInfo = info.getLoginInfo();
-        System.out.println(loginInfo.toString());
-        info.changeLoginResponseInfo("test","123456");
-        loginInfo = info.getLoginInfo();
-        System.out.println(loginInfo.toString());
-    }
+        LoginJSON loginJSON = new LoginJSON("admin","123456");
 
+        given().
+        contentType(ContentType.JSON).
+                body(loginJSON).
+        when().
+                post("http://localhost:8000/auth/login").
+        then().
+                log().all();
+    }
 
     @Test
     @Order(3)
     void testRightLogout(){
-        when().delete("http://localhost:8000/auth/logout").then().log().all();
+        LoginResponseInfo info = new LoginResponseInfoManager("admin","123456");
+        Map<String, String> loginInfo = info.getLoginInfo();
+        given()
+                .headers("Authorization",loginInfo.get("ELADMIN-TOKEN"))
+                .cookies(loginInfo)
+        .when().delete("http://localhost:8000/auth/logout").then().log().all();
     }
 
     @Test
     @Order(2)
-    void testRightCode(){
+    void testCode(){
         when().get("http://localhost:8000/auth/code").then().log().all();
+    }
+
+    @Test
+    @Order(2)
+    void testRightInfo(){
+        LoginResponseInfo info = new LoginResponseInfoManager("admin","123456");
+        Map<String, String> loginInfo = info.getLoginInfo();
+        given()
+                .headers("Authorization",loginInfo.get("ELADMIN-TOKEN"))
+                .cookies(loginInfo).log().all()
+        .when()
+                .get("http://localhost:8000/auth/info")
+        .then()
+                .log().all();
     }
 }
