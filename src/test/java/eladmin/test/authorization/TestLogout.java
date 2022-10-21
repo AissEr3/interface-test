@@ -1,11 +1,8 @@
 package eladmin.test.authorization;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import test.use.common.annotation.InterfaceTest;
-import test.use.common.test.BaseTest;
-
-import static io.restassured.RestAssured.*;
+import eladmin.base.BaseTest;
+import utils.stat.RequestType;
 
 /**
  * @ClassName TestLogout
@@ -16,19 +13,9 @@ import static io.restassured.RestAssured.*;
  **/
 public class TestLogout extends BaseTest {
 
-    @BeforeEach
-    public void beforeEach2(){
-        System.out.println("each 2");
-    }
-
-    @InterfaceTest
-    void test1(){
-        System.out.println("test1");
-    }
-
-    @InterfaceTest
-    void test2(){
-        System.out.println("test2");
+    @Test
+    void test1(String path, RequestType type){
+        System.out.println(path);
     }
 
 }

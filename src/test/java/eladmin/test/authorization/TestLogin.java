@@ -1,16 +1,11 @@
 package eladmin.test.authorization;
 
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.*;
 
-import test.use.common.test.BaseTest;
-import test.use.config.RsaProperties;
-import test.use.json.authorization.LoginJSON;
-import test.use.manage.info.LoginResponseInfo;
-import test.use.manage.info.LoginResponseInfoManager;
-import test.use.utils.RsaUtil;
-import test.use.utils.YamlUtil;
+import json.authorization.LoginJSON;
+import manage.info.LoginResponseInfo;
+import manage.info.LoginResponseInfoManager;
 
 import java.util.Map;
 
@@ -23,6 +18,7 @@ import static io.restassured.RestAssured.*;
  * @Version 1.0
  * @Description TODO
  **/
+@Disabled
 public class TestLogin{
 
     @Test
