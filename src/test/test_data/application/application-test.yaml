@@ -1,18 +1,18 @@
 test-config:
   # 配置请求基础信息
   base:
-    baseURI: http://localhost
-    port: 8000
-    contentType: application/json
-  defalut-loginInfo:
-    username: admin
-    password: 123456
+    baseURI: "http://localhost"
+    port: "8000"
+    contentType: "application/json"
+  default-loginMessage:
+    username: "admin"
+    password: "123456"
   # 配置默认headers
-  defalut-headers:
+  default-headers:
     #设置header Authorization 取值是哪个值，如果需要的话
-    Authorization: ELADMIN-TOKEN
+    Authorization: "ELADMIN-TOKEN"
   # 配置默认cookies
-  defalut-cookies:
-    remember: true
-    Pycharm-3339b356: 61093f87-8779-4b40-b995-8d9cba97bb1e
-    Idea-80e4ad09: bd43ce8f-6a5b-43c8-b470-8c24ed2b3704
+  default-cookies:
+    remember: "true"
+    Pycharm-3339b356: "61093f87-8779-4b40-b995-8d9cba97bb1e"
+    Idea-80e4ad09: "bd43ce8f-6a5b-43c8-b470-8c24ed2b3704"

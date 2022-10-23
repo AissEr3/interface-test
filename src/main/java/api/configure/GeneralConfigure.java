@@ -1,6 +1,10 @@
 package api.configure;
 
-import manage.info.LoginResponseInfoManager;
+import api.ApiObject;
+import api.manage.info.LoginResponseInfo;
+import api.manage.info.LoginResponseInfoManager;
+import utils.ApiObjectUtil;
+import utils.MapUtil;
 
 import java.util.Map;
 
@@ -14,19 +18,28 @@ import java.util.Map;
  *   很多信息都需要登录后才可以获取，例如header、cookies
  **/
 public abstract class GeneralConfigure implements Configure {
-    protected LoginResponseInfoManager loginInfo;
+    protected LoginResponseInfo loginInfo = new LoginResponseInfoManager();
 
     // 记录配置信息的map
-    protected Map<String,String> applicationMap;
+    protected Map<String,Object> applicationMap;
 
     public GeneralConfigure(){
+        initApplicationMap();
         initDefaultLoginMessage();
         loginInfo.getLoginInfo();
     }
 
-    //
-    protected abstract void initDefaultLoginMessage();
-
     // 设置读取配置信息的方法
     protected abstract void initApplicationMap();
+
+    // 设置默认的登录信息
+    protected abstract void initDefaultLoginMessage();
+
+    // 通过‘.’的方式方便获取嵌套Map
+    protected Map<String,Object> readApplicationByPoint(String targetKey){
+        if(applicationMap != null){
+            return (Map<String, Object>) MapUtil.readMapByPoint(applicationMap, targetKey);
+        }
+        return null;
+    }
 }

@@ -1,8 +1,6 @@
 package utils;
 
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
-import json.JsonBean;
-import json.authorization.LoginJSON;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.BufferedReader;

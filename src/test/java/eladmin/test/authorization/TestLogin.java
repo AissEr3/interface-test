@@ -4,8 +4,8 @@ import io.restassured.http.ContentType;
 import org.junit.jupiter.api.*;
 
 import json.authorization.LoginJSON;
-import manage.info.LoginResponseInfo;
-import manage.info.LoginResponseInfoManager;
+import api.manage.info.LoginResponseInfo;
+import api.manage.info.LoginResponseInfoManager;
 
 import java.util.Map;
 

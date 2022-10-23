@@ -33,4 +33,19 @@ public class PathUtil {
     }
 
 
+    /**
+     * 用'.'连接所有字符串；即所有字符串连接，以'.'间隔字符串
+     * @param keys 需要连接的key
+     * @return 返回连接后的字符串
+     */
+    public static String connectionByPoint(String ... keys){
+        StringBuilder result = new StringBuilder();
+        for(String key : keys){
+            result.append(key);
+            result.append('.');
+        }
+        return result.substring(0,result.length()-1);
+    }
+
+
 }

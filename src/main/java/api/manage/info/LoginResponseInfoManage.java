@@ -1,4 +1,4 @@
-package manage.info;
+package api.manage.info;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +29,7 @@ public abstract class LoginResponseInfoManage implements LoginResponseInfo {
     }
 
     @Override
-    public void changeLoginResponseInfo(String username, String password) {
+    public void changeLoginMessage(String username, String password) {
         loginInfo = null;
         setLoginMessage(username, password);
     }

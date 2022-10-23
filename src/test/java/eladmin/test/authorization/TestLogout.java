@@ -1,8 +1,9 @@
 package eladmin.test.authorization;
 
+import api.ApiObject;
+import api.configure.FundamentalConfigure;
 import org.junit.jupiter.api.Test;
 import eladmin.base.BaseTest;
-import utils.stat.RequestType;
 
 /**
  * @ClassName TestLogout
@@ -14,8 +15,11 @@ import utils.stat.RequestType;
 public class TestLogout extends BaseTest {
 
     @Test
-    void test1(String path, RequestType type){
-        System.out.println(path);
+    void test1(){
+        ApiObject apiObject = new ApiObject();
+        FundamentalConfigure base = FundamentalConfigure.getInstance();
+        base.configure(apiObject);
+        System.out.println(apiObject.toString());
     }
 
 }

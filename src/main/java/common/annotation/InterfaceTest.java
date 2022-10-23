@@ -1,4 +1,4 @@
-package test.use.common.annotation;
+package common.annotation;
 
 import utils.stat.RequestType;
 

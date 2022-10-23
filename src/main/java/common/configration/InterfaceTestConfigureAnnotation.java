@@ -1,4 +1,4 @@
-package test.use.common.configration;
+package common.configration;
 
 /**
  * @ClassName InterfaceTestConfigureAnnotation

@@ -24,10 +24,11 @@ public class MapUtil {
     public static Object readMapByPoint(Map<String,Object> map, String targetKey){
         String[] keys = targetKey.split("\\.");
         Map endMap = map;
-        for(int i = 0; i < keys.length-1; i++){
+        for(int i = 0; i < keys.length-1 && endMap != null; i++){
             endMap = (Map) endMap.get(keys[i]);
         }
-        return endMap.get(keys[keys.length-1]);
+        Object obj = endMap.get(keys[keys.length - 1]);
+        return obj == null ? null : obj;
     }
 
 //    private static Object getBy(String newKey){

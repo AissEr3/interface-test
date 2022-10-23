@@ -1,8 +1,7 @@
-package manage.info;
+package api.manage.info;
 
 import io.restassured.response.Response;
 import json.authorization.LoginJSON;
-import lombok.extern.java.Log;
 import utils.MapUtil;
 
 import java.util.Map;
@@ -21,7 +20,6 @@ public class LoginResponseInfoManager extends LoginResponseInfoManage {
     private Response response;
 
     public LoginResponseInfoManager(){
-
     }
 
     public LoginResponseInfoManager(String username, String password){
@@ -42,9 +40,9 @@ public class LoginResponseInfoManager extends LoginResponseInfoManage {
 
     // 重写修改登录信息的方法，增加功能，如果是同一用户，不进行修改
     @Override
-    public void changeLoginResponseInfo(String username, String password) {
-        if(!loginJSON.getUsername().equals(username)){
-            super.changeLoginResponseInfo(username, password);
+    public void changeLoginMessage(String username, String password) {
+        if(loginJSON == null || !loginJSON.getUsername().equals(username)){
+            super.changeLoginMessage(username, password);
         }
     }
 

@@ -48,7 +48,6 @@ public class LoginJSON implements JsonBean {
         toRasPassword(this.password);
     }
 
-    @Override
     public void toJsonBean(String yamlPath) throws IOException {
         ReadFileUtil.readFileToBean(yamlPath,this.getClass());
         toRasPassword(this.password);

@@ -1,7 +1,7 @@
 package eladmin.test.main;
 
 import org.junit.platform.suite.api.*;
-import test.use.common.extension.CustomAnnotationParameterResolver;
+import common.extension.CustomAnnotationParameterResolver;
 
 
 /**

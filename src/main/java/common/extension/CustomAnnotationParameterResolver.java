@@ -1,7 +1,7 @@
-package test.use.common.extension;
+package common.extension;
 
 import org.junit.jupiter.api.extension.*;
-import test.use.common.annotation.InterfaceTest;
+import common.annotation.InterfaceTest;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

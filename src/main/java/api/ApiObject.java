@@ -2,6 +2,9 @@ package api;
 
 import json.JsonBean;
 import lombok.Builder;
+import lombok.Data;
+import lombok.ToString;
+import org.junit.jupiter.api.Test;
 import org.reflections.Reflections;
 import utils.stat.RequestType;
 
@@ -16,7 +19,8 @@ import java.util.Map;
  * @Version 1.0
  * @Description TODO
  **/
-@Builder
+@Data
+@ToString
 public class ApiObject {
     private String baseURI;
 
@@ -37,13 +41,4 @@ public class ApiObject {
     private Map<String, String> headers;
 
     private Map<String, String> cookies;
-
-    public static String[] getConfigurationItem(){
-        Field[] fields = ApiObject.class.getFields();
-        String[] items = new String[fields.length];
-        for(int i = 0; i < fields.length; i++){
-            items[i] = fields[i].getName();
-        }
-        return items;
-    }
 }
