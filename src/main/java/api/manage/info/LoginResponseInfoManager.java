@@ -1,7 +1,7 @@
 package api.manage.info;
 
 import io.restassured.response.Response;
-import json.authorization.LoginJSON;
+import api.manage.LoginJSON;
 import utils.MapUtil;
 
 import java.util.Map;
@@ -67,11 +67,11 @@ public class LoginResponseInfoManager extends LoginResponseInfoManage {
         loginInfo.put("ELADMIN-TOKEN", (String) MapUtil.readMapByPoint(map,"token"));
         loginInfo.put("username", (String) MapUtil.readMapByPoint(map,"user.user.username"));
         loginInfo.put("password",(String) MapUtil.readMapByPoint(map,"user.user.password"));
-        loginInfo.put("remember","true");
     }
 
     @Override
     protected void initDefaultInfo() {
+        loginInfo.put("remember","true");
         loginInfo.put("Pycharm-3339b356","61093f87-8779-4b40-b995-8d9cba97bb1e");
         loginInfo.put("Idea-80e4ad09","bd43ce8f-6a5b-43c8-b470-8c24ed2b3704");
     }

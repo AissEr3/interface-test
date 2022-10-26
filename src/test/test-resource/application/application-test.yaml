@@ -7,12 +7,14 @@ test-config:
   default-loginMessage:
     username: "admin"
     password: "123456"
+
+  # 配置的是登录后从登录信息中获取的headers和cookies，对应的值从登录信息中查找
   # 配置默认headers
-  default-headers:
+  login-headers:
     #设置header Authorization 取值是哪个值，如果需要的话
     Authorization: "ELADMIN-TOKEN"
   # 配置默认cookies
-  default-cookies:
-    remember: "true"
-    Pycharm-3339b356: "61093f87-8779-4b40-b995-8d9cba97bb1e"
-    Idea-80e4ad09: "bd43ce8f-6a5b-43c8-b470-8c24ed2b3704"
+  login-cookies:
+    remember: "remember"
+    Pycharm-3339b356: "Pycharm-3339b356"
+    Idea-80e4ad09: "Idea-80e4ad09"

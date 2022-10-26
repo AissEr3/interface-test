@@ -1,5 +1,7 @@
 package utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import org.yaml.snakeyaml.Yaml;
 
@@ -31,24 +33,5 @@ public class ReadFileUtil {
         reader.close();
         buffer.close();
         return map;
-    }
-
-    /**
-     * 读取文件并将其转换为指定的bean，使用Jackson进行转
-     * 目前一支可转换文件类型：yaml、json
-     *
-     * @param path
-     * @param clazz
-     * @return
-     * @throws IOException
-     */
-    public static Object readFileToBean(String path, Class clazz) throws IOException {
-        FileReader reader = new FileReader(PathUtil.realPath(path));
-        BufferedReader buffer = new BufferedReader(reader);
-        YAMLMapper yamlMapper = new YAMLMapper();
-        Object o = yamlMapper.readValue(buffer, clazz);
-        reader.close();
-        buffer.close();
-        return o;
     }
 }

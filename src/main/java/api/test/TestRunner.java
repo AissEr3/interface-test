@@ -1,4 +1,4 @@
-package eladmin.base;
+package api.test;
 
 /**
  * @ClassName TestRunner

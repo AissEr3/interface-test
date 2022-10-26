@@ -14,11 +14,11 @@ import java.util.Map;
  * @Version 1.0
  * @Description TODO
  **/
-public class BaseInfoConfigure implements ConfigureStrategy<Map<String,Object>>{
+public class BaseInfoConfigure implements ConfigureStrategy<Map<String,String>>{
     public static final String name = ConfigureOptions.BASE.getName();
 
     @Override
-    public void alterConfigureContent(ApiObject apiObject, Map<String,Object> value) {
+    public void alterConfigureContent(ApiObject apiObject, Map<String,String> value) {
         for (String item : ApiObjectUtil.items) {
             Object obj = value.get(item);
             if(obj != null){

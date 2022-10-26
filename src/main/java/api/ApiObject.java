@@ -1,14 +1,11 @@
 package api;
 
-import json.JsonBean;
-import lombok.Builder;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.ToString;
-import org.junit.jupiter.api.Test;
-import org.reflections.Reflections;
 import utils.stat.RequestType;
 
-import java.lang.reflect.Field;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,9 +25,9 @@ public class ApiObject {
 
     private String contentType;
 
-    private JsonBean body;// post
+    private ObjectMapper body;// post
 
-    private Map<String, String> query;// get
+    private Map<String, String> query = new HashMap<>();// get
 
     private String basePath;
 
@@ -38,7 +35,7 @@ public class ApiObject {
 
     private RequestType requestType;
 
-    private Map<String, String> headers;
+    private Map<String, String> headers = new HashMap<>();
 
-    private Map<String, String> cookies;
+    private Map<String, String> cookies = new HashMap<>();
 }

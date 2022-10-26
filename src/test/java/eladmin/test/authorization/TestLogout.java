@@ -3,7 +3,7 @@ package eladmin.test.authorization;
 import api.ApiObject;
 import api.configure.FundamentalConfigure;
 import org.junit.jupiter.api.Test;
-import eladmin.base.BaseTest;
+import api.test.BaseTest;
 
 /**
  * @ClassName TestLogout

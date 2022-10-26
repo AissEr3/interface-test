@@ -1,8 +1,6 @@
-package json.authorization;
+package api.manage;
 
-import json.JsonBean;
 import lombok.Data;
-import utils.ReadFileUtil;
 import utils.RsaUtil;
 import utils.stat.RsaProperties;
 
@@ -16,7 +14,7 @@ import java.io.IOException;
  * @Description 发送登录请求的JSON格式
  **/
 @Data
-public class LoginJSON implements JsonBean {
+public class LoginJSON{
     // 跳过自动生成的uuid，跳过验证码验证
     private static final String TEST_BACK_DOOR = "hhd";
 
@@ -35,21 +33,10 @@ public class LoginJSON implements JsonBean {
         code = TEST_BACK_DOOR;
     }
 
-    public LoginJSON(String yamlPath) throws IOException {
-        this();
-        toJsonBean(yamlPath);
-        toRasPassword(this.password);
-    }
-
     public LoginJSON(String username,String password){
         this();
         this.username = username;
         this.password = password;
-        toRasPassword(this.password);
-    }
-
-    public void toJsonBean(String yamlPath) throws IOException {
-        ReadFileUtil.readFileToBean(yamlPath,this.getClass());
         toRasPassword(this.password);
     }
 

@@ -12,12 +12,12 @@ public enum ConfigureOptions {
         "options: baseURI | port | contentType"),
 
     DEFAULT_LOGIN_MESSAGE("default-loginMessage",
-            "options: username | password | ...... "),
+            "options: username | password "),
 
-    DEFAULT_HEADERS("default-headers",
+    LOGIN_HEADERS("login-headers",
             "options: header1 | header2 | header3 | ......"),
 
-    DEFAULT_COOKIES("default-cookies",
+    LOGIN_COOKIES("login-cookies",
             "options: cookie1 | cookie2 | cookie3 | ......");
 
 

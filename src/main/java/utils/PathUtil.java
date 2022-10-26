@@ -8,7 +8,7 @@ package utils;
  * @Description TODO
  **/
 public class PathUtil {
-    private static final String TEST_RESOURCE_PATH = "src/test/test_data/";
+    private static final String TEST_RESOURCE_PATH = "src/test/test-resource/";
 
     private static final String CLASS_RESOURCE_PATH = "src/main/resources";
 

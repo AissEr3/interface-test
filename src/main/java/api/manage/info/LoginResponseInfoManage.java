@@ -35,7 +35,7 @@ public abstract class LoginResponseInfoManage implements LoginResponseInfo {
     }
 
     @Override
-    public Map<String, String> getLoginInfo() {
+    public Map<String, String> getValue() {
         if(loginInfo == null){
             initLoginResponseInfo();
         }
