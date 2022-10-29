@@ -1,15 +1,13 @@
 package api.manage;
 
 import api.ApiObject;
-import api.configure.Configure;
+
 import api.configure.FundamentalConfigure;
 import api.configure.InterfaceConfigure;
 import api.manage.login.LoginResponseInfo;
 import lombok.Data;
-import lombok.ToString;
-import org.junit.jupiter.params.provider.Arguments;
 
-import java.util.ArrayList;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -18,9 +16,8 @@ import java.util.Map;
  * @Author AissEr
  * @Date 2022/10/27 20:31
  * @Version 1.0
- * @Description 待测试
+ * @Description
  **/
-@Data
 public class ConfigureManager{
     private ApiObject apiObject;
     private static final FundamentalConfigure fundamentalConfigure = FundamentalConfigure.getInstance();
@@ -34,21 +31,35 @@ public class ConfigureManager{
         this.apiObject = apiObject;
     }
 
-    public ConfigureManager(ApiObject apiObject,String InterfaceConfPath){
+    public ConfigureManager(ApiObject apiObject,String interfaceConfPath){
         this(apiObject);
-        setInterfaceConfigure(InterfaceConfPath);
+        setInterfaceConfigure(interfaceConfPath);
+    }
+
+    public ConfigureManager(ApiObject apiObject,File interfaceFile){
+        this(apiObject);
+        setInterfaceConfigure(interfaceFile);
     }
 
     public void setInterfaceConfigure(String path){
         interfaceConfigure = new InterfaceConfigure(path);
     }
 
-    public void initConfigure(){
+    public void setInterfaceConfigure(File interfaceFile){
+        interfaceConfigure = new InterfaceConfigure(interfaceFile);
+    }
+
+    public void reloadInterfaceConfigure(){
+        interfaceConfigure.initConfigure();
+        interfaceConfigure.configure(apiObject);
+    }
+
+    public void initConfigureClass(){
         fundamentalConfigure.initConfigure();
         interfaceConfigure.initConfigure();
     }
 
-    public void configure(){
+    public void setConfigureInfo(){
         fundamentalConfigure.configure(apiObject);
         interfaceConfigure.configure(apiObject);
     }
@@ -57,16 +68,15 @@ public class ConfigureManager{
         return fundamentalConfigure.getLoginInfo();
     }
 
-    public ArrayList<Map<String, Object>> getTestData(){
+    public List<Map<String, Object>> getTestData(){
         return interfaceConfigure.getTestData();
     }
 
-    public List<Arguments> getJunit5TestCases(){
-        List<Map<String, Object>> testData = getTestData();
-        List<Arguments> testCase = new ArrayList<>();
-        for(Map<String,Object> data : testData){
-            testCase.add(Arguments.arguments(data));
-        }
-        return testCase;
+    public ApiObject getApiObject() {
+        return apiObject;
+    }
+
+    public void setApiObject(ApiObject apiObject) {
+        this.apiObject = apiObject;
     }
 }

@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static api.configure.ConfigureOptions.*;
@@ -22,17 +23,21 @@ import static api.configure.ConfigureOptions.*;
  * @Version 1.0
  * @Description TODO
  **/
-@Data
 public class InterfaceConfigure extends GeneralConfigure{
-    // 避免每次配置都创建mapper，浪费资源
-    private static final ObjectMapper mapper = new YAMLMapper();
+    // 避免每次配置都创建，浪费资源
+    public static final Class<? extends HashMap> PARAMETERS_TYPE = new HashMap<String,Object>().getClass();
+    private static final ObjectMapper MAPPER = new YAMLMapper();
 
-    private String configureFilePath;
+    private File configureFile;
 
     public InterfaceConfigure(){}
 
-    public InterfaceConfigure(String path){
-        configureFilePath = path;
+    public InterfaceConfigure(String filePath){
+        setFile(filePath);
+    }
+
+    public InterfaceConfigure(File configureFile){
+        this.configureFile = configureFile;
     }
 
     @Override
@@ -44,15 +49,21 @@ public class InterfaceConfigure extends GeneralConfigure{
     @Override
     protected void initApplicationMap() {
         try{
-            applicationMap = mapper.readValue(new File(PathUtil.realPath(configureFilePath)),
-                    new HashMap<String,Object>().getClass());
+            applicationMap = MAPPER.readValue(configureFile, PARAMETERS_TYPE);
         }catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    public ArrayList<Map<String,Object>> getTestData(){
-        return (ArrayList<Map<String,Object>>) applicationMap.get(TEST_DATA.getName());
+    public List<Map<String,Object>> getTestData(){
+        return (List<Map<String,Object>>) applicationMap.get(TEST_DATA.getName());
     }
 
+    public void setFile(String filePath){
+        configureFile = new File(PathUtil.realPath(filePath));
+    }
+
+    public void setFile(File file){
+        configureFile = file;
+    }
 }

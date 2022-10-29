@@ -21,7 +21,7 @@ public class CookiesInfoConfigure implements ConfigureStrategy<Map<String, Strin
 
     @Override
     public void alterConfigureContent(ApiObject apiObject, Map<String, String> value) {
-        Map<String, String> cookies = apiObject.getCookies();
+        Map<String, String> cookies = new HashMap<>();
         for(String key : value.keySet()){
             String val = loginInfo.get(value.get(key));
             if(val == null){
@@ -29,5 +29,6 @@ public class CookiesInfoConfigure implements ConfigureStrategy<Map<String, Strin
             }
             cookies.put(key,val);
         }
+        apiObject.setCookies(cookies);
     }
 }

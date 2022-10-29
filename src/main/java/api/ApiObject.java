@@ -25,9 +25,7 @@ public class ApiObject {
 
     private String contentType;
 
-//    private Map<String, String> body = new HashMap<>();// post
-//
-//    private Map<String, String> query = new HashMap<>();// get
+    private Map<String, Object> data;
 
     private String basePath;
 

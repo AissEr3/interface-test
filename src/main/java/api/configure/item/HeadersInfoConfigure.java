@@ -5,6 +5,7 @@ import api.configure.ConfigureOptions;
 import api.configure.FundamentalConfigure;
 import api.configure.strategy.ConfigureStrategy;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -17,11 +18,10 @@ import java.util.Map;
 public class HeadersInfoConfigure implements ConfigureStrategy<Map<String,String>> {
     public static final String name = ConfigureOptions.LOGIN_HEADERS.getName();
     private static Map<String, String> loginInfo = FundamentalConfigure.getInstance().getLoginInfo().getValue();
-    private static final String TOKEN_NAME = "ELADMIN-TOKEN";
 
     @Override
     public void alterConfigureContent(ApiObject apiObject, Map<String, String> value) {
-        Map<String, String> headers = apiObject.getHeaders();
+        Map<String, String> headers = new HashMap<>();
         for(String key : value.keySet()){
             String val = loginInfo.get(value.get(key));
             if(val == null){
@@ -29,6 +29,7 @@ public class HeadersInfoConfigure implements ConfigureStrategy<Map<String,String
             }
             headers.put(key,val);
         }
+        apiObject.setHeaders(headers);
     }
 
 }

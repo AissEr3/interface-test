@@ -7,7 +7,7 @@ package api.configure;
 public enum ConfigureOptions {
 
     ROOT_OPTION("test-config",
-             new String[] {"base","default-loginMessage","default-headers","default-cookies"}),
+             new String[] {"base","basePath","default-loginMessage","default-headers","default-cookies"}),
 
     BASE("base",
         new String[]{"baseURI","port","contentType"}),
@@ -20,9 +20,11 @@ public enum ConfigureOptions {
     LOGIN_COOKIES("login-cookies"),
 
     INTERFACE_INFO("interface-info",
-            new String[]{"basePath","path","requestType"}),
+            new String[]{"path","requestType","contentType"}),
 
-    TEST_DATA("test-data");
+    TEST_DATA("test-data"),
+
+    ASSERT_DATA("assert-data");
 
 
     private String name;
