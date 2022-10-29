@@ -30,17 +30,16 @@ public class FundamentalConfigure extends GeneralConfigure{
     private static final ConfigureOptions[] DEFAULT_OPTIONS = {BASE, LOGIN_HEADERS, LOGIN_COOKIES};
 
     // 下面是开放的配置信息，使用者可以进行修改
-    public static String APPLICATION_FILE_PATH = DEFAULT_APPLICATION_FILE_PATH;
-    public static String USERNAME = DEFAULT_USERNAME;
-    public static String PASSWORD = DEFAULT_PASSWORD;
-    public static ConfigureOptions[] OPTIONS = DEFAULT_OPTIONS;
+    public static String applicationFilePath = DEFAULT_APPLICATION_FILE_PATH;
+    public static String username = DEFAULT_USERNAME;
+    public static String password = DEFAULT_PASSWORD;
+    public static ConfigureOptions[] options = DEFAULT_OPTIONS;
 
     // 单例模式的实例，配置全局配置信息，所有只有一个实例；
     // 必然会使用到该类，所以直接在最开始就加载资源
     private static FundamentalConfigure instance = new FundamentalConfigure();
 
-    public FundamentalConfigure(){
-
+    private FundamentalConfigure(){
     }
 
     public static FundamentalConfigure getInstance(){
@@ -54,7 +53,7 @@ public class FundamentalConfigure extends GeneralConfigure{
      */
     @Override
     public void configure(ApiObject apiObject){
-        for(ConfigureOptions opt : OPTIONS){
+        for(ConfigureOptions opt : options){
             String targetKey = PathUtil.connectionByPoint(ROOT_NAME, opt.getName());
             Map<String,Object> resultMap = readApplicationByPoint(targetKey);
             StrategyFactory.createStrategy(opt).alterConfigureContent(apiObject,resultMap);
@@ -67,7 +66,7 @@ public class FundamentalConfigure extends GeneralConfigure{
     @Override
     protected void initApplicationMap(){
         try {
-            applicationMap = ReadFileUtil.readYamlToMap(APPLICATION_FILE_PATH);
+            applicationMap = ReadFileUtil.readYamlToMap(applicationFilePath);
         }catch (IOException e){
            e.printStackTrace();
         }
@@ -82,7 +81,7 @@ public class FundamentalConfigure extends GeneralConfigure{
                 Map<String, Object> resultMap = readApplicationByPoint(targetKey);
                 loginInfo.changeLoginMessage((String) resultMap.get("username"), (String) resultMap.get("password"));
             } else {
-                loginInfo.changeLoginMessage(USERNAME, PASSWORD);
+                loginInfo.changeLoginMessage(username, password);
             }
             // 初始化loginInfo
             loginInfo.getValue();

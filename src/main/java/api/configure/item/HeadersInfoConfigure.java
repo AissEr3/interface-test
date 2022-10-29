@@ -24,6 +24,9 @@ public class HeadersInfoConfigure implements ConfigureStrategy<Map<String,String
         Map<String, String> headers = apiObject.getHeaders();
         for(String key : value.keySet()){
             String val = loginInfo.get(value.get(key));
+            if(val == null){
+                val = value.get(key);
+            }
             headers.put(key,val);
         }
     }

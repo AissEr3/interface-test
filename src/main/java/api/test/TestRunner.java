@@ -8,4 +8,8 @@ package api.test;
  * @Description TODO
  **/
 public class TestRunner {
+
+    public TestRunner(){
+
+    }
 }

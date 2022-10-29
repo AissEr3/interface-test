@@ -1,7 +1,6 @@
-package api.manage.info;
+package api.manage.login;
 
 import io.restassured.response.Response;
-import api.manage.LoginJSON;
 import utils.MapUtil;
 
 import java.util.Map;

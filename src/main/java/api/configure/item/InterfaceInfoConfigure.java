@@ -8,18 +8,18 @@ import utils.ApiObjectUtil;
 import java.util.Map;
 
 /**
- * @ClassName BaseInfoConfigure
+ * @ClassName InterfaceInfoConfigure
  * @Author AissEr
- * @Date 2022/10/23 20:10
+ * @Date 2022/10/27 8:52
  * @Version 1.0
  * @Description TODO
  **/
-public class BaseInfoConfigure implements ConfigureStrategy<Map<String,String>>{
-    public static final String name = ConfigureOptions.BASE.getName();
+public class InterfaceInfoConfigure implements ConfigureStrategy<Map<String,Object>> {
+    public static final String name = ConfigureOptions.INTERFACE_INFO.getName();
 
     @Override
-    public void alterConfigureContent(ApiObject apiObject, Map<String,String> value) {
-        for (String item : ConfigureOptions.BASE.getOptions()) {
+    public void alterConfigureContent(ApiObject apiObject, Map<String, Object> value) {
+        for (String item : ConfigureOptions.INTERFACE_INFO.getOptions()) {
             Object obj = value.get(item);
             if(obj != null){
                 try {

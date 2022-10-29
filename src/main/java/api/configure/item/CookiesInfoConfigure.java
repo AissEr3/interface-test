@@ -24,6 +24,9 @@ public class CookiesInfoConfigure implements ConfigureStrategy<Map<String, Strin
         Map<String, String> cookies = apiObject.getCookies();
         for(String key : value.keySet()){
             String val = loginInfo.get(value.get(key));
+            if(val == null){
+                val = value.get(key);
+            }
             cookies.put(key,val);
         }
     }

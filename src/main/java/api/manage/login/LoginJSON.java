@@ -1,4 +1,4 @@
-package api.manage;
+package api.manage.login;
 
 import lombok.Data;
 import utils.RsaUtil;

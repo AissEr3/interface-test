@@ -25,17 +25,26 @@ public class ApiObject {
 
     private String contentType;
 
-    private ObjectMapper body;// post
-
-    private Map<String, String> query = new HashMap<>();// get
+//    private Map<String, String> body = new HashMap<>();// post
+//
+//    private Map<String, String> query = new HashMap<>();// get
 
     private String basePath;
 
     private String path;
 
-    private RequestType requestType;
+    private String requestType;
 
     private Map<String, String> headers = new HashMap<>();
 
     private Map<String, String> cookies = new HashMap<>();
+
+    public RequestType getRequestType(){
+        for(RequestType type : RequestType.values()){
+            if(type.getTypeName().equals(requestType)){
+                return type;
+            }
+        }
+        return null;
+    }
 }

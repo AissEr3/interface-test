@@ -1,7 +1,7 @@
 package api.configure;
 
-import api.manage.info.LoginResponseInfo;
-import api.manage.info.LoginResponseInfoManager;
+import api.manage.login.LoginResponseInfo;
+import api.manage.login.LoginResponseInfoManager;
 import utils.MapUtil;
 
 import java.util.Map;
@@ -21,7 +21,7 @@ public abstract class GeneralConfigure implements Configure {
     // 记录配置信息的map
     protected Map<String,Object> applicationMap;
 
-    public GeneralConfigure(){
+    public void initConfigure(){
         initApplicationMap();
         initLoginMessage();
     }

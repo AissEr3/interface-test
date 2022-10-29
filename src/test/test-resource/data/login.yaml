@@ -1,4 +1,7 @@
-testData:
+interface-info:
+  path: /api/users
+  requestType: get
+test-data:
   - page: 0
     size: 10
     sort: id,desc

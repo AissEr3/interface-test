@@ -5,35 +5,43 @@ package api.configure;
  * 所有选项均非必填
  */
 public enum ConfigureOptions {
+
     ROOT_OPTION("test-config",
-             "options: base | default-loginMessage | default-headers | default-cookies"),
+             new String[] {"base","default-loginMessage","default-headers","default-cookies"}),
 
     BASE("base",
-        "options: baseURI | port | contentType"),
+        new String[]{"baseURI","port","contentType"}),
 
     DEFAULT_LOGIN_MESSAGE("default-loginMessage",
-            "options: username | password "),
+            new String[]{"username","password"}),
 
-    LOGIN_HEADERS("login-headers",
-            "options: header1 | header2 | header3 | ......"),
+    LOGIN_HEADERS("login-headers"),
 
-    LOGIN_COOKIES("login-cookies",
-            "options: cookie1 | cookie2 | cookie3 | ......");
+    LOGIN_COOKIES("login-cookies"),
+
+    INTERFACE_INFO("interface-info",
+            new String[]{"basePath","path","requestType"}),
+
+    TEST_DATA("test-data");
 
 
     private String name;
-    private String describe;
+    private String[] opts;
 
-    ConfigureOptions(String name,String describe){
+    ConfigureOptions(String name){
         this.name = name;
-        this.describe = describe;
+    }
+
+    ConfigureOptions(String name,String[] opts){
+        this(name);
+        this.opts = opts;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String[] getOptions() {
+        return opts;
     }
 }

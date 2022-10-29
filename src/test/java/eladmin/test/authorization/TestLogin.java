@@ -1,22 +1,18 @@
 package eladmin.test.authorization;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
-import com.google.gson.Gson;
+import api.ApiObject;
+import api.configure.FundamentalConfigure;
+import api.configure.InterfaceConfigure;
 import io.restassured.http.ContentType;
 import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 
-import api.manage.LoginJSON;
-import api.manage.info.LoginResponseInfo;
-import api.manage.info.LoginResponseInfoManager;
-import utils.PathUtil;
+import api.manage.login.LoginJSON;
+import api.manage.login.LoginResponseInfo;
+import api.manage.login.LoginResponseInfoManager;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.*;
@@ -45,16 +41,17 @@ public class TestLogin{
                 log().all();
     }
 
-//    @Test
-//    @Order(3)
-//    void testRightLogout(){
-//        LoginResponseInfo info = new LoginResponseInfoManager("admin","123456");
-//        Map<String, String> loginInfo = info.getValue();
-//        given()
-//                .headers("Authorization",loginInfo.get("ELADMIN-TOKEN"))
-//                .cookies(loginInfo)
-//        .when().delete("http://localhost:8000/auth/logout").then().log().all();
-//    }
+    @Test
+    @Order(3)
+    @Ignore
+    void testRightLogout(){
+        LoginResponseInfo info = new LoginResponseInfoManager("admin","123456");
+        Map<String, String> loginInfo = info.getValue();
+        given()
+                .headers("Authorization",loginInfo.get("ELADMIN-TOKEN"))
+                .cookies(loginInfo)
+        .when().delete("http://localhost:8000/auth/logout").then().log().all();
+    }
 
     @Test
     @Order(2)
@@ -77,18 +74,24 @@ public class TestLogin{
     }
 
     @Test
-    @Ignore
     public void test001() throws IOException {
-        ObjectMapper mapper = new YAMLMapper();
-        HashMap<String,Object> hashMap = mapper.readValue(new File(PathUtil.realPath("test:data/login.yaml")), new HashMap<String,Object>().getClass());
-        ArrayList testData = (ArrayList)hashMap.get("testData");
+        ApiObject apiObject = new ApiObject();
 
-        LoginResponseInfo info = new LoginResponseInfoManager("admin","123456");
-        Map<String, String> loginInfo = info.getValue();
+        FundamentalConfigure fundamentalConfigure = FundamentalConfigure.getInstance();
+        fundamentalConfigure.initConfigure();
+        fundamentalConfigure.configure(apiObject);
+        InterfaceConfigure interfaceConfigure = new InterfaceConfigure("test:data/login.yaml");
+        interfaceConfigure.initConfigure();
+        interfaceConfigure.configure(apiObject);
+        System.out.println(apiObject.toString());
+
+        ArrayList<Map<String, Object>> testData = interfaceConfigure.getTestData();
+
+        Map<String, String> loginInfo = fundamentalConfigure.getLoginInfo().getValue();
         given()
                 .headers("Authorization",loginInfo.get("ELADMIN-TOKEN"))
                 .cookies(loginInfo)
-                .queryParams((Map<String, String>) testData.get(0)).log().all()
+                .queryParams(testData.get(0)).log().all()
         .when().get("http://localhost:8000/api/users").then().log().all();
     }
 }

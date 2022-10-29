@@ -1,4 +1,4 @@
-package api.manage.info;
+package api.manage.login;
 
 import java.util.HashMap;
 import java.util.Map;

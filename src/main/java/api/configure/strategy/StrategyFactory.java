@@ -4,6 +4,7 @@ import api.configure.ConfigureOptions;
 import api.configure.item.BaseInfoConfigure;
 import api.configure.item.CookiesInfoConfigure;
 import api.configure.item.HeadersInfoConfigure;
+import api.configure.item.InterfaceInfoConfigure;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +23,8 @@ public class StrategyFactory {
         factory.put(ConfigureOptions.BASE, new BaseInfoConfigure());
         factory.put(ConfigureOptions.LOGIN_HEADERS, new HeadersInfoConfigure());
         factory.put(ConfigureOptions.LOGIN_COOKIES, new CookiesInfoConfigure());
+        factory.put(ConfigureOptions.INTERFACE_INFO, new InterfaceInfoConfigure());
+        factory.put(ConfigureOptions.TEST_DATA,new InterfaceInfoConfigure());
     }
 
     public static ConfigureStrategy createStrategy(ConfigureOptions option){
