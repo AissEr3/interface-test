@@ -2,8 +2,14 @@ package eladmin.test.authorization;
 
 import api.ApiObject;
 import api.configure.FundamentalConfigure;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import org.junit.jupiter.api.Test;
-import api.test.BaseTest;
+import base.BaseTest;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * @ClassName TestLogout
@@ -15,11 +21,11 @@ import api.test.BaseTest;
 public class TestLogout extends BaseTest {
 
     @Test
-    void test1(){
-        ApiObject apiObject = new ApiObject();
-        FundamentalConfigure base = FundamentalConfigure.getInstance();
-        base.configure(apiObject);
-        System.out.println(apiObject.toString());
+    void test1() throws IOException {
+        ObjectMapper mapper = new YAMLMapper();
+        HashMap<String, Object> hashMap = mapper.readValue(new File("src/test/test-resource/data/login.yaml")
+                , new HashMap<String, Object>().getClass());
+        given.params(hashMap).get("/api/users").then().log().all();
     }
 
 }

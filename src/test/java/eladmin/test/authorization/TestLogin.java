@@ -1,21 +1,12 @@
 package eladmin.test.authorization;
 
-import api.ApiObject;
-import api.manage.ConfigureManager;
-import api.test.TestRunner;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 
 import api.manage.login.LoginJSON;
 import api.manage.login.LoginResponseInfo;
 import api.manage.login.LoginResponseInfoManager;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
-
-import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.*;
@@ -75,24 +66,5 @@ public class TestLogin{
         .then()
                 .log().all();
     }
-
-    @Test
-    public void test001() throws IOException {
-        ApiObject apiObject = new ApiObject();
-
-        ConfigureManager configureManager = new ConfigureManager(apiObject,"test:data/login.yaml");
-        configureManager.initConfigureClass();
-        configureManager.setConfigureInfo();
-
-        List<Map<String, Object>> testData = configureManager.getTestData();
-
-        Map<String, String> loginInfo = configureManager.getLoginInfo().getValue();
-        given()
-                .headers("Authorization",loginInfo.get("ELADMIN-TOKEN"))
-                .cookies(loginInfo)
-                .queryParams(testData.get(0))
-        .when().get("http://localhost:8000/api/users").then().log().all();
-    }
-
 
 }

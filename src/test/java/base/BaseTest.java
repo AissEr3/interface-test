@@ -1,6 +1,7 @@
-package api.test;
+package base;
 
 
+import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.BeforeAll;
 
 /**
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.BeforeAll;
  * @Description TODO
  **/
 public class BaseTest {
+    protected static final RequestSpecification given = AutoSetRestAssured.given;
 
     @BeforeAll
     public static void beforeClass(){

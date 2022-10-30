@@ -40,14 +40,6 @@ public abstract class GeneralConfigure implements Configure {
 
     }
 
-    // 通过‘.’的方式方便获取嵌套Map
-    protected Map<String,Object> readApplicationByPoint(String targetKey){
-        if(applicationMap != null){
-            return (Map<String, Object>) MapUtil.readMapByPoint(applicationMap, targetKey);
-        }
-        return null;
-    }
-
     public LoginResponseInfo getLoginInfo(){
         return loginInfo;
     }

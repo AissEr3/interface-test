@@ -25,7 +25,7 @@ public class ApiObject {
 
     private String contentType;
 
-    private Map<String, Object> data;
+//    private Map<String, Object> data;
 
     private String basePath;
 

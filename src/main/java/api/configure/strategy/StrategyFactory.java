@@ -1,6 +1,7 @@
 package api.configure.strategy;
 
 import api.configure.ConfigureOptions;
+import api.configure.InterfaceConfigure;
 import api.configure.item.BaseInfoConfigure;
 import api.configure.item.CookiesInfoConfigure;
 import api.configure.item.HeadersInfoConfigure;
@@ -18,13 +19,14 @@ import java.util.Map;
  **/
 public class StrategyFactory {
     private static Map<ConfigureOptions,ConfigureStrategy> factory = new HashMap<>();
+    // 使用频繁，
+    private static final InterfaceInfoConfigure interfaceInfoConfigure = new InterfaceInfoConfigure();
 
     static{
         factory.put(ConfigureOptions.BASE, new BaseInfoConfigure());
         factory.put(ConfigureOptions.LOGIN_HEADERS, new HeadersInfoConfigure());
         factory.put(ConfigureOptions.LOGIN_COOKIES, new CookiesInfoConfigure());
-        factory.put(ConfigureOptions.INTERFACE_INFO, new InterfaceInfoConfigure());
-        factory.put(ConfigureOptions.TEST_DATA,new InterfaceInfoConfigure());
+        factory.put(ConfigureOptions.INTERFACE_INFO, interfaceInfoConfigure);
     }
 
     public static ConfigureStrategy createStrategy(ConfigureOptions option){

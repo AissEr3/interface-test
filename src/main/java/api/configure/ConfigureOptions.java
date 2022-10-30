@@ -6,8 +6,11 @@ package api.configure;
  */
 public enum ConfigureOptions {
 
+    /**
+     * 基础信息配置项
+     */
     ROOT_OPTION("test-config",
-             new String[] {"base","basePath","default-loginMessage","default-headers","default-cookies"}),
+             new String[] {"base","basePath","default-loginMessage","login-headers","login-cookies"}),
 
     BASE("base",
         new String[]{"baseURI","port","contentType"}),
@@ -19,12 +22,13 @@ public enum ConfigureOptions {
 
     LOGIN_COOKIES("login-cookies"),
 
+    /**
+     * 单独接口信息配置项
+     */
     INTERFACE_INFO("interface-info",
             new String[]{"path","requestType","contentType"}),
 
-    TEST_DATA("test-data"),
-
-    ASSERT_DATA("assert-data");
+    DEFAULT_TEST_DATA("default-test-data");
 
 
     private String name;

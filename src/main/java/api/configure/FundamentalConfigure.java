@@ -2,6 +2,7 @@ package api.configure;
 
 import api.ApiObject;
 import api.configure.strategy.StrategyFactory;
+import utils.MapUtil;
 import utils.PathUtil;
 import utils.ReadFileUtil;
 
@@ -53,10 +54,14 @@ public class FundamentalConfigure extends GeneralConfigure{
      */
     @Override
     public void configure(ApiObject apiObject){
-        for(ConfigureOptions opt : options){
-            String targetKey = PathUtil.connectionByPoint(ROOT_NAME, opt.getName());
-            Map<String,Object> resultMap = readApplicationByPoint(targetKey);
-            StrategyFactory.createStrategy(opt).alterConfigureContent(apiObject,resultMap);
+        if(applicationMap != null){
+            for(ConfigureOptions opt : options){
+                String targetKey = PathUtil.connectionByPoint(ROOT_NAME, opt.getName());
+                Map<String,Object> resultMap = (Map<String, Object>) MapUtil.readMapByPoint(applicationMap, targetKey);
+                if(resultMap != null){
+                    StrategyFactory.createStrategy(opt).alterConfigureContent(apiObject,resultMap);
+                }
+            }
         }
     }
 
@@ -78,7 +83,7 @@ public class FundamentalConfigure extends GeneralConfigure{
             String targetKey = PathUtil.connectionByPoint(ROOT_NAME,
                     DEFAULT_LOGIN_MESSAGE.getName());
             if (targetKey != null) {
-                Map<String, Object> resultMap = readApplicationByPoint(targetKey);
+                Map<String, Object> resultMap = (Map<String, Object>) MapUtil.readMapByPoint(applicationMap, targetKey);
                 loginInfo.changeLoginMessage((String) resultMap.get("username"), (String) resultMap.get("password"));
             } else {
                 loginInfo.changeLoginMessage(username, password);
