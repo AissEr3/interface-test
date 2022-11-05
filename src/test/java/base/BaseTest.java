@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeAll;
  * @Description TODO
  **/
 public class BaseTest {
-    protected static final RequestSpecification given = AutoSetRestAssured.given;
+    protected RequestSpecification given;
 
     @BeforeAll
     public static void beforeClass(){

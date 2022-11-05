@@ -13,23 +13,22 @@ import java.io.File;
 import java.util.Map;
 
 /**
- * @ClassName AutoSetRestAssured
+ * @ClassName SetRestAssured
  * @Author AissEr
  * @Date 2022/10/30 20:02
  * @Version 1.0
  * @Description 该类自动配置接口通用（每个测试接口都需要）的接口信息
  **/
-public class AutoSetRestAssured {
+public class SetRestAssured {
     private static final GeneralConfigure fundamentalConfigure;
     private static ApiObject apiObject = new ApiObject();
-    public static RequestSpecification given;
+    public RequestSpecification given;
 
     static{
         settingFundamentalConfigure();
         fundamentalConfigure = FundamentalConfigure.getInstance();
         fundamentalConfigure.initConfigure();
         fundamentalConfigure.configure(apiObject);
-        settingRestAssured();
     }
 
     /**
@@ -39,8 +38,7 @@ public class AutoSetRestAssured {
 
     }
 
-    // 设置token信息
-    private static void settingRestAssured(){
+    public InterfaceBuilder settingRestAssured(){
         // 设置基础信息
         if(apiObject.getBaseURI() != null){
             RestAssured.baseURI = apiObject.getBaseURI();
@@ -54,23 +52,40 @@ public class AutoSetRestAssured {
 
         // 真正获取所有信息
         given = RestAssured.given();
+        return new InterfaceBuilder();
+    }
 
-        // 默认的contentType
-        String defaultContentType = apiObject.getContentType();
-        if(defaultContentType != null){
-            given.contentType(defaultContentType);
+    private class InterfaceBuilder{
+        public InterfaceBuilder setContentType(){
+            // 默认的contentType
+            String defaultContentType = apiObject.getContentType();
+            if(defaultContentType != null){
+                given.contentType(defaultContentType);
+            }
+            return this;
         }
 
-        // 如果有header，配置header
-        Map<String, String> headers =  apiObject.getHeaders();
-        if(headers != null && headers.size() != 0){
-            given.headers(headers);
+        public InterfaceBuilder setHeaders(){
+            // 如果有header，配置header
+            Map<String, String> headers =  apiObject.getHeaders();
+            if(headers != null && headers.size() != 0){
+                given.headers(headers);
+            }
+            return this;
         }
 
-        // 如果有cookies，如果有cookies
-        Map<String, String> cookies =  apiObject.getHeaders();
-        if(cookies != null && cookies.size() != 0){
-            given.cookies(cookies);
+        public InterfaceBuilder setCookies(){
+            // 如果有header，配置header
+            Map<String, String> cookies =  apiObject.getCookies();
+            if(cookies != null && cookies.size() != 0){
+                given.headers(cookies);
+            }
+            return this;
+        }
+
+        public RequestSpecification build(){
+            return given;
         }
     }
+
 }

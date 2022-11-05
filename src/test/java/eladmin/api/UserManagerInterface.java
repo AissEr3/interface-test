@@ -1,5 +1,7 @@
 package eladmin.api;
 
+import base.BaseInterface;
+
 /**
  * @ClassName UserManagerInterface
  * @Author AissEr
@@ -7,5 +9,5 @@ package eladmin.api;
  * @Version 1.0
  * @Description TODO
  **/
-public class UserManagerInterface {
+public class UserManagerInterface extends BaseInterface {
 }

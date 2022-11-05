@@ -25,7 +25,14 @@ public class TestLogout extends BaseTest {
         ObjectMapper mapper = new YAMLMapper();
         HashMap<String, Object> hashMap = mapper.readValue(new File("src/test/test-resource/data/login.yaml")
                 , new HashMap<String, Object>().getClass());
-        given.params(hashMap).get("/api/users").then().log().all();
+        given.params(hashMap).log().all().get("/api/users").then().log().all();
+
     }
+
+    @Test
+    void test2(){
+        given.log().all().get("/auth/code").then().log().all();
+    }
+
 
 }

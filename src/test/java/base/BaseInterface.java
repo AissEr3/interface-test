@@ -15,14 +15,13 @@ import java.util.Map;
  * @Description TODO
  **/
 public class BaseInterface {
-    protected static final RequestSpecification given = AutoSetRestAssured.given;
+    protected RequestSpecification given;
     protected String interfaceConfigureFilePath;
     protected ApiObject apiObject;
     protected InterfaceConfigure interfaceConfigure;
 
     public BaseInterface(){
-        loadFileAndConfigure();
-        configureGiven();
+
     }
 
     protected void loadFileAndConfigure(){
@@ -38,5 +37,4 @@ public class BaseInterface {
     public List<Map<String, Object>> getDefaultTestData(){
         return interfaceConfigure.getTestData();
     }
-
 }
