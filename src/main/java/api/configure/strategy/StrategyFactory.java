@@ -19,13 +19,16 @@ import java.util.Map;
  **/
 public class StrategyFactory {
     private static Map<ConfigureOptions,ConfigureStrategy> factory = new HashMap<>();
-    // 使用频繁，
+    // 此处策略都不用重复创建，因此只用创建一个即可
+    private static final BaseInfoConfigure BaseInfoConfigure = new BaseInfoConfigure();
     private static final InterfaceInfoConfigure interfaceInfoConfigure = new InterfaceInfoConfigure();
+    private static final HeadersInfoConfigure HeadersInfoConfigure = new HeadersInfoConfigure();
+    private static final CookiesInfoConfigure CookiesInfoConfigure = new CookiesInfoConfigure();
 
     static{
-        factory.put(ConfigureOptions.BASE, new BaseInfoConfigure());
-        factory.put(ConfigureOptions.LOGIN_HEADERS, new HeadersInfoConfigure());
-        factory.put(ConfigureOptions.LOGIN_COOKIES, new CookiesInfoConfigure());
+        factory.put(ConfigureOptions.BASE, BaseInfoConfigure);
+        factory.put(ConfigureOptions.LOGIN_HEADERS, HeadersInfoConfigure);
+        factory.put(ConfigureOptions.LOGIN_COOKIES, CookiesInfoConfigure);
         factory.put(ConfigureOptions.INTERFACE_INFO, interfaceInfoConfigure);
     }
 

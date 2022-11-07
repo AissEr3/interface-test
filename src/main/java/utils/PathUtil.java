@@ -22,12 +22,14 @@ public class PathUtil {
     public static String realPath(String path){
         String realPath = path;
         int index = path.indexOf(':');
-        String prefix = path.substring(0,index);
-        if(prefix.equals("test")) {
-            realPath = TEST_RESOURCE_PATH + path.substring(index + 1);
-        }
-        else if(prefix.equals("resource")){
-            realPath = CLASS_RESOURCE_PATH + path.substring(index + 1);
+        if(index != -1){
+            String prefix = path.substring(0,index);
+            if(prefix.equals("test")) {
+                realPath = TEST_RESOURCE_PATH + path.substring(index + 1);
+            }
+            else if(prefix.equals("resource")){
+                realPath = CLASS_RESOURCE_PATH + path.substring(index + 1);
+            }
         }
         return realPath;
     }
@@ -46,6 +48,5 @@ public class PathUtil {
         }
         return result.substring(0,result.length()-1);
     }
-
 
 }

@@ -2,11 +2,13 @@ package api.configure;
 
 import api.ApiObject;
 import api.configure.strategy.StrategyFactory;
-import api.manage.TestData;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import utils.PathUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +21,9 @@ import static api.configure.ConfigureOptions.*;
  * @Version 1.0
  * @Description TODO
  **/
-public class InterfaceConfigure extends GeneralConfigure implements TestData<List<Map<String,Object>>> {
+public class InterfaceConfigure extends GeneralConfigure{
+    Class<? extends HashMap> CONVERT_TYPE = new HashMap<String,Object>().getClass();
+    ObjectMapper MAPPER = new YAMLMapper();
     private File configureFile;
 
     public InterfaceConfigure(){}
@@ -49,7 +53,6 @@ public class InterfaceConfigure extends GeneralConfigure implements TestData<Lis
         }
     }
 
-    @Override
     public List<Map<String,Object>> getTestData(){
         return (List<Map<String,Object>>) applicationMap.get(DEFAULT_TEST_DATA.getName());
     }

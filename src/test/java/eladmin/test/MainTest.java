@@ -1,11 +1,11 @@
-package eladmin.test.main;
+package eladmin.test;
 
 import org.junit.platform.suite.api.*;
 import common.extension.CustomAnnotationParameterResolver;
 
 
 /**
- * @ClassName RunTest
+ * @ClassName MainTest
  * @Author AissEr
  * @Date 2022/10/20 14:47
  * @Version 1.0
@@ -13,6 +13,6 @@ import common.extension.CustomAnnotationParameterResolver;
  **/
 @Suite
 @SelectPackages("eladmin.test.authorization")
-public class RunTest {
+public class MainTest {
 
 }

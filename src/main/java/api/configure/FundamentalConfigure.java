@@ -84,12 +84,12 @@ public class FundamentalConfigure extends GeneralConfigure{
                     DEFAULT_LOGIN_MESSAGE.getName());
             if (targetKey != null) {
                 Map<String, Object> resultMap = (Map<String, Object>) MapUtil.readMapByPoint(applicationMap, targetKey);
-                loginInfo.changeLoginMessage((String) resultMap.get("username"), (String) resultMap.get("password"));
+                DEFAULT_LOGIN_INFO.changeLoginMessage((String) resultMap.get("username"), (String) resultMap.get("password"));
             } else {
-                loginInfo.changeLoginMessage(username, password);
+                DEFAULT_LOGIN_INFO.changeLoginMessage(username, password);
             }
             // 初始化loginInfo
-            loginInfo.getValue();
+            DEFAULT_LOGIN_INFO.getValue();
         }
     }
 

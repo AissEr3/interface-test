@@ -1,7 +1,9 @@
 package base;
 
 
+import api.SetRestAssured;
 import io.restassured.specification.RequestSpecification;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 /**
@@ -12,11 +14,10 @@ import org.junit.jupiter.api.BeforeAll;
  * @Description TODO
  **/
 public class BaseTest {
-    protected RequestSpecification given;
 
     @BeforeAll
-    public static void beforeClass(){
-
+    public static void beforeAll(){
+        SetRestAssured.initFundamentalConfigure();
     }
 
 }

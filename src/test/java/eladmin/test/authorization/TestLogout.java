@@ -1,15 +1,15 @@
 package eladmin.test.authorization;
 
-import api.ApiObject;
-import api.configure.FundamentalConfigure;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
-import org.junit.jupiter.api.Test;
-import base.BaseTest;
 
-import java.io.File;
+import eladmin.api.usermanage.QueryUserInterface;
+
+import base.BaseTest;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName TestLogout
@@ -19,20 +19,15 @@ import java.util.HashMap;
  * @Description TODO
  **/
 public class TestLogout extends BaseTest {
+    static QueryUserInterface queryUserInterface = new QueryUserInterface("src/test/test-resource/data/login.yaml");
 
-    @Test
-    void test1() throws IOException {
-        ObjectMapper mapper = new YAMLMapper();
-        HashMap<String, Object> hashMap = mapper.readValue(new File("src/test/test-resource/data/login.yaml")
-                , new HashMap<String, Object>().getClass());
-        given.params(hashMap).log().all().get("/api/users").then().log().all();
-
+    @MethodSource("testData")
+    @ParameterizedTest
+    void test1(Map<String, Object> data){
+        queryUserInterface.request(data).then().log().all();
     }
 
-    @Test
-    void test2(){
-        given.log().all().get("/auth/code").then().log().all();
+    public static List<Map<String, Object>> testData(){
+        return queryUserInterface.getDefaultTestData();
     }
-
-
 }

@@ -16,7 +16,7 @@ import java.util.Map;
  *   很多信息都需要登录后才可以获取，例如header、cookies，在配置header和cookies时从登录信息中取值
  **/
 public abstract class GeneralConfigure implements Configure {
-    protected static LoginResponseInfo loginInfo = new LoginResponseInfoManager();
+    protected static final LoginResponseInfo DEFAULT_LOGIN_INFO = new LoginResponseInfoManager();
 
     // 记录配置信息的map
     protected Map<String,Object> applicationMap;
@@ -40,7 +40,7 @@ public abstract class GeneralConfigure implements Configure {
 
     }
 
-    public LoginResponseInfo getLoginInfo(){
-        return loginInfo;
+    public LoginResponseInfo getDefaultLoginInfo(){
+        return DEFAULT_LOGIN_INFO;
     }
 }

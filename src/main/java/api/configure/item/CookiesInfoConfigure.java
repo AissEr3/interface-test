@@ -17,7 +17,7 @@ import java.util.Map;
  **/
 public class CookiesInfoConfigure implements ConfigureStrategy<Map<String, String>> {
     public static final String name = ConfigureOptions.LOGIN_COOKIES.getName();
-    private static Map<String, String> loginInfo = FundamentalConfigure.getInstance().getLoginInfo().getValue();
+    private static Map<String, String> loginInfo = FundamentalConfigure.getInstance().getDefaultLoginInfo().getValue();
 
     @Override
     public void alterConfigureContent(ApiObject apiObject, Map<String, String> value) {
