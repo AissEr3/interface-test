@@ -15,15 +15,15 @@ import java.util.Map;
  * @Version 1.0
  * @Description TODO
  **/
-public class HeadersInfoConfigure implements ConfigureStrategy<Map<String,String>> {
+public class HeadersInfoConfigure implements ConfigureStrategy<Map<String,Object>> {
     public static final String name = ConfigureOptions.LOGIN_HEADERS.getName();
     private static Map<String, String> loginInfo = FundamentalConfigure.getInstance().getDefaultLoginInfo().getValue();
 
     @Override
-    public void alterConfigureContent(ApiObject apiObject, Map<String, String> value) {
-        Map<String, String> headers = new HashMap<>();
+    public void alterConfigureContent(ApiObject apiObject, Map<String, Object> value) {
+        Map<String, Object> headers = new HashMap<>();
         for(String key : value.keySet()){
-            String val = loginInfo.get(value.get(key));
+            Object val = loginInfo.get(value.get(key));
             if(val == null){
                 val = value.get(key);
             }

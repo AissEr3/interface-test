@@ -82,7 +82,7 @@ public class SetRestAssured {
         // 设置配置文件中默认的header
         public InterfaceSetter defaultHeaders(){
             // 如果有header，配置header
-            Map<String, String> headers = apiObject.getHeaders();
+            Map<String, Object> headers = apiObject.getHeaders();
             if(headers != null && headers.size() != 0){
                 given.headers(headers);
             }
@@ -90,7 +90,7 @@ public class SetRestAssured {
         }
 
         // 设置header
-        public InterfaceSetter headers(Map<String, String> headers){
+        public InterfaceSetter headers(Map<String, Object> headers){
             if(headers != null && headers.size() != 0){
                 given.headers(headers);
             }
@@ -100,14 +100,14 @@ public class SetRestAssured {
         // 设置默认cookies
         public InterfaceSetter defaultCookies(){
             // 如果有cookie，配置cookie
-            Map<String, String> cookies = apiObject.getCookies();
+            Map<String, Object> cookies = apiObject.getCookies();
             if(cookies != null && cookies.size() != 0){
                 given.cookies(cookies);
             }
             return this;
         }
 
-        public InterfaceSetter cookies(Map<String, String> cookies){
+        public InterfaceSetter cookies(Map<String, Object> cookies){
             if(cookies != null && cookies.size() != 0){
                 given.headers(cookies);
             }

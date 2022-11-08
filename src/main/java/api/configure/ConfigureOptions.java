@@ -10,7 +10,7 @@ public enum ConfigureOptions {
      * 基础信息配置项
      */
     ROOT_OPTION("test-config",
-             new String[] {"base","basePath","default-loginMessage","login-headers","login-cookies"}),
+             new String[] {"common","basePath","default-loginMessage","login-headers","login-cookies"}),
 
     BASE("base",
         new String[]{"baseURI","port","contentType"}),

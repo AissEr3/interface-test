@@ -1,10 +1,7 @@
 package eladmin.api.usermanage;
 
 import api.SetRestAssured;
-import base.BaseInterface;
-import base.InterfaceTest;
-
-import java.util.Map;
+import common.BaseInterface;
 
 /**
  * @ClassName QueryUserInterface
@@ -13,7 +10,7 @@ import java.util.Map;
  * @Version 1.0
  * @Description TODO
  **/
-public class QueryUserInterface extends BaseInterface<Map<String, Object>> {
+public class QueryUserInterface extends BaseInterface {
 
     public QueryUserInterface(String interfaceConfigureFilePath){
         super(interfaceConfigureFilePath);

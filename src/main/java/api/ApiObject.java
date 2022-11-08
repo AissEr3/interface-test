@@ -33,9 +33,9 @@ public class ApiObject {
 
     private String requestType;
 
-    private Map<String, String> headers = new HashMap<>();
+    private Map<String, Object> headers = new HashMap<>();
 
-    private Map<String, String> cookies = new HashMap<>();
+    private Map<String, Object> cookies = new HashMap<>();
 
     public RequestType getRequestType(){
         for(RequestType type : RequestType.values()){

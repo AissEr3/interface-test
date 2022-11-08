@@ -1,13 +1,14 @@
 package eladmin.test.authorization;
 
 
+import common.BaseInterface;
 import eladmin.api.usermanage.QueryUserInterface;
 
-import base.BaseTest;
+import common.BaseTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.kohsuke.rngom.parse.host.Base;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ import java.util.Map;
  * @Description TODO
  **/
 public class TestLogout extends BaseTest {
-    static QueryUserInterface queryUserInterface = new QueryUserInterface("src/test/test-resource/data/login.yaml");
+    static BaseInterface queryUserInterface = new BaseInterface("src/test/test-resource/data/addUser.yaml");
 
     @MethodSource("testData")
     @ParameterizedTest

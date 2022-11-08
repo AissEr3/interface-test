@@ -15,10 +15,15 @@ import static io.restassured.RestAssured.*;
  * @Description TODO
  **/
 public class LoginResponseInfoManager extends LoginResponseInfoManage {
+    public static final String TOKEN_NAME = "ELADMIN-TOKEN";
     private LoginJSON loginJSON;
     private Response response;
 
     public LoginResponseInfoManager(){
+    }
+
+    public LoginResponseInfoManager(LoginJSON loginJSON){
+        setLoginJSON(loginJSON);
     }
 
     public LoginResponseInfoManager(String username, String password){
@@ -63,7 +68,7 @@ public class LoginResponseInfoManager extends LoginResponseInfoManage {
     @Override
     protected void initResponseInfo() {
         Map map = response.then().extract().jsonPath().getMap("");
-        loginInfo.put("ELADMIN-TOKEN", (String) MapUtil.readMapByPoint(map,"token"));
+        loginInfo.put(TOKEN_NAME, (String) MapUtil.readMapByPoint(map,"token"));
         loginInfo.put("username", (String) MapUtil.readMapByPoint(map,"user.user.username"));
         loginInfo.put("password",(String) MapUtil.readMapByPoint(map,"user.user.password"));
     }

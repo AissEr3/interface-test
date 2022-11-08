@@ -1,9 +1,7 @@
-package base;
+package common;
 
 
 import api.SetRestAssured;
-import io.restassured.specification.RequestSpecification;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 /**
