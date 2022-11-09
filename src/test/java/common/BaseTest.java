@@ -1,8 +1,10 @@
 package common;
 
 
-import api.SetRestAssured;
 import org.junit.jupiter.api.BeforeAll;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName BaseTest
@@ -11,11 +13,12 @@ import org.junit.jupiter.api.BeforeAll;
  * @Version 1.0
  * @Description TODO
  **/
-public class BaseTest {
+public abstract class BaseTest {
+    protected static String path;
+    protected static InterfaceRun currentInterface;
 
     @BeforeAll
     public static void beforeAll(){
         SetRestAssured.initFundamentalConfigure();
     }
-
 }

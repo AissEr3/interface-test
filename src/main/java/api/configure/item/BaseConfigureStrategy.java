@@ -8,13 +8,13 @@ import utils.ApiObjectUtil;
 import java.util.Map;
 
 /**
- * @ClassName BaseInfoConfigure
+ * @ClassName BaseConfigureStrategy
  * @Author AissEr
  * @Date 2022/10/23 20:10
  * @Version 1.0
  * @Description TODO
  **/
-public class BaseInfoConfigure implements ConfigureStrategy<Map<String,String>>{
+public class BaseConfigureStrategy implements ConfigureStrategy<Map<String,String>>{
     public static final String name = ConfigureOptions.BASE.getName();
 
     @Override

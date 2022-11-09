@@ -21,7 +21,7 @@ import static api.configure.ConfigureOptions.*;
  * @Version 1.0
  * @Description TODO
  **/
-public class InterfaceConfigure extends GeneralConfigure{
+public class InterfaceConfigure extends AbstractConfigure {
     Class<? extends HashMap> CONVERT_TYPE = new HashMap<String,Object>().getClass();
     ObjectMapper MAPPER = new YAMLMapper();
     private File configureFile;

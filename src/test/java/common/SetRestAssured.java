@@ -1,7 +1,7 @@
-package api;
+package common;
 
 import api.ApiObject;
-import api.configure.FundamentalConfigure;
+import api.configure.AbstractConfigure;
 import api.configure.GeneralConfigure;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -17,8 +17,8 @@ import java.util.Map;
  * @Description
  **/
 public class SetRestAssured {
-    private static GeneralConfigure fundamentalConfigure;
-    private static ApiObject apiObject = new ApiObject();
+    private static AbstractConfigure generalConfigure;
+    private static ApiObject apiObject = ApiObject.builder().build();
     public RequestSpecification given;
 
     private SetRestAssured(){}
@@ -28,16 +28,14 @@ public class SetRestAssured {
     }
 
     /**
-     * 如果需要设置该类，在这里设置
+     * 如果需要设置配置文件类，在这里设置
      */
     public static void initFundamentalConfigure(){
-        fundamentalConfigure = FundamentalConfigure.getInstance();
-        fundamentalConfigure.initConfigure();
-        fundamentalConfigure.configure(apiObject);
-    }
+        generalConfigure = GeneralConfigure.getInstance();
+        generalConfigure.initConfigure();
+        generalConfigure.configure(apiObject);
 
-    private InterfaceSetter settingRestAssured(){
-        // 设置基础信息
+        // 设置基础信息，只用配置一次
         if(apiObject.getBaseURI() != null){
             RestAssured.baseURI = apiObject.getBaseURI();
         }
@@ -47,7 +45,9 @@ public class SetRestAssured {
         if(apiObject.getPort() != null){
             RestAssured.port = Integer.parseInt(apiObject.getPort());
         }
+    }
 
+    private InterfaceSetter settingRestAssured(){
         // 真正获取所有信息
         given = RestAssured.given();
         return new InterfaceSetter();

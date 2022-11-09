@@ -26,7 +26,7 @@ public enum ConfigureOptions {
      * 单独接口信息配置项
      */
     INTERFACE_INFO("interface-info",
-            new String[]{"path","requestType","contentType"}),
+            new String[]{"path","requestType","contentType","dataPlaceIn"}),
 
     DEFAULT_TEST_DATA("default-test-data");
 

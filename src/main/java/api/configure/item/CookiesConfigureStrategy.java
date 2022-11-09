@@ -2,34 +2,33 @@ package api.configure.item;
 
 import api.ApiObject;
 import api.configure.ConfigureOptions;
-import api.configure.FundamentalConfigure;
+import api.configure.GeneralConfigure;
 import api.configure.strategy.ConfigureStrategy;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @ClassName HeadersInfoConfigure
+ * @ClassName CookiesConfigureStrategy
  * @Author AissEr
- * @Date 2022/10/24 11:33
+ * @Date 2022/10/26 18:42
  * @Version 1.0
  * @Description TODO
  **/
-public class HeadersInfoConfigure implements ConfigureStrategy<Map<String,Object>> {
-    public static final String name = ConfigureOptions.LOGIN_HEADERS.getName();
-    private static Map<String, String> loginInfo = FundamentalConfigure.getInstance().getDefaultLoginInfo().getValue();
+public class CookiesConfigureStrategy implements ConfigureStrategy<Map<String, Object>> {
+    public static final String name = ConfigureOptions.LOGIN_COOKIES.getName();
+    private static Map<String, String> loginInfo = GeneralConfigure.getInstance().getDefaultLoginInfo().getValue();
 
     @Override
     public void alterConfigureContent(ApiObject apiObject, Map<String, Object> value) {
-        Map<String, Object> headers = new HashMap<>();
+        Map<String, Object> cookies = new HashMap<>();
         for(String key : value.keySet()){
             Object val = loginInfo.get(value.get(key));
             if(val == null){
                 val = value.get(key);
             }
-            headers.put(key,val);
+            cookies.put(key,val);
         }
-        apiObject.setHeaders(headers);
+        apiObject.setCookies(cookies);
     }
-
 }

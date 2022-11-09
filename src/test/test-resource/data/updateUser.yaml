@@ -1,0 +1,13 @@
+interface-info:
+  path: /api/users
+  requestType: put
+  dataPlaceIn: body
+default-test-data:
+  - data: {"id":10,"username":"test002","nickName":"test002","gender":"男","email":"5500002@qq.com"
+        ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":8}],"dept":{"id":5,"name":"运维部"},
+        "phone":"13412340001","createBy":"admin","createTime":"2022-11-09 19:04:13",
+        "updateBy":"admin","updateTime":"2022-11-09 19:04:13"}
+  - data: { "id": 11,"username": "test003","nickName": "test003","gender": "男","email": "5500002@qq.com"
+          ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 8 } ],"dept": { "id": 5,"name": "运维部" },
+          "phone": "13412340001","createBy": "admin","createTime": "2022-11-09 19:04:13",
+          "updateBy": "admin","updateTime": "2022-11-09 19:04:13" }

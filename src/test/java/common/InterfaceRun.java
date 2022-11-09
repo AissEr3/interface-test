@@ -1,13 +1,12 @@
 package common;
 
 import api.ApiObject;
-import api.SetRestAssured;
 import api.configure.ConfigureOptions;
 import api.configure.InterfaceConfigure;
 import api.configure.strategy.StrategyFactory;
 import api.manage.login.LoginResponseInfo;
-import api.manage.login.LoginResponseInfoManager;
-import io.restassured.path.json.JsonPath;
+import api.manage.login.LoginResponseInfoManage;
+import com.sun.istack.NotNull;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import utils.stat.RequestType;
@@ -17,40 +16,62 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @ClassName BaseInterface
+ * @ClassName InterfaceRun
  * @Author AissEr
  * @Date 2022/10/30 22:27
  * @Version 1.0
- * @Description
+ * @Description 根据总配置文件信息，创建可运行的接口
  **/
-public class BaseInterface implements InterfaceTest{
+public class InterfaceRun implements InterfaceTest{
+    // 是否指定配置文件都会使用到的信息
     protected RequestSpecification given;
     protected Response response;
     protected LoginResponseInfo loginInfo;
-    private final String interfaceConfigureFilePath;
     private ApiObject apiObject;
+
+    // 如果指定配置文件才使用到的属性；
+    // 文件路径即存储文件路径，也是判断是否使用配置文件的标志
+    private final String INTERFACE_CONFIGURE_FILE_PATH;
     private InterfaceConfigure interfaceConfigure;
 
-    public BaseInterface(String interfaceConfigureFilePath){
-        this.interfaceConfigureFilePath = interfaceConfigureFilePath;
-        apiObject = new ApiObject();
-        loadFileAndConfigure();
+    public InterfaceRun(ApiObject apiObject){
+        INTERFACE_CONFIGURE_FILE_PATH = null;
+        this.apiObject = apiObject;
     }
 
-    private void defaultConfigureGiven(){
-        given = SetRestAssured.startSet()
-                .defaultContentType()
-                .defaultHeaders()
-                .defaultCookies()
-                .endSet();
+    public InterfaceRun(String interfaceConfigureFilePath){
+        this.INTERFACE_CONFIGURE_FILE_PATH = interfaceConfigureFilePath;
+        apiObject = ApiObject.builder().build();
+        loadFileAndApiObjectConfigure();
+    }
+
+    private void loadFileAndApiObjectConfigure(){
+        interfaceConfigure = new InterfaceConfigure(INTERFACE_CONFIGURE_FILE_PATH);
+        interfaceConfigure.initConfigure();
+        interfaceConfigure.configure(apiObject);
+    }
+
+    public List<Map<String, Object>> getDefaultTestData(){
+        if(INTERFACE_CONFIGURE_FILE_PATH != null){
+            return interfaceConfigure.getTestData();
+        }
+        return null;
     }
 
     // 使用SetRestAssured来设置given
-    protected void configureGiven(){
-        if(loginInfo == null){
-            defaultConfigureGiven();
+    private void configureGiven(){
+        if(loginInfo == null || INTERFACE_CONFIGURE_FILE_PATH == null){
+            given = SetRestAssured.startSet()
+                    .defaultContentType()
+                    .defaultHeaders()
+                    .defaultCookies()
+                    .endSet();
+            // 如果自己指定了
+            if(apiObject.getContentType() != null && !apiObject.getContentType().equals("")){
+                given.contentType(apiObject.getContentType());
+            }
         }
-        else {
+        else{
             given = SetRestAssured.startSet()
                     .contentType(apiObject.getContentType())
                     .headers(apiObject.getHeaders())
@@ -59,13 +80,17 @@ public class BaseInterface implements InterfaceTest{
         }
     }
 
-    protected void loadFileAndConfigure(){
-        interfaceConfigure = new InterfaceConfigure(interfaceConfigureFilePath);
-        interfaceConfigure.initConfigure();
-        interfaceConfigure.configure(apiObject);
+    private void addData(Map<String,?> data){
+        String dataPlace = apiObject.getDataPlaceIn();
+        if(dataPlace.equals("body")){
+            given.body(data);
+        }
+        else if(dataPlace == null || dataPlace.equals("") || dataPlace.equals("query")){
+            given.params(data);
+        }
     }
 
-    protected void runInterface(){
+    private void runInterface(){
         // java switch新特性（jdk14及以上）
         String path = apiObject.getPath();
         response = switch (apiObject.getRequestType()){
@@ -76,34 +101,32 @@ public class BaseInterface implements InterfaceTest{
         };
     }
 
-    protected void addData(Map<String,?> data){
-        RequestType requestType = apiObject.getRequestType();
-        if(requestType == RequestType.GET || requestType == RequestType.DELETE){
-            given.params(data);
-        }
-        else if(requestType == RequestType.POST || requestType == RequestType.PUT){
-            given.body(data);
-        }
+    @Override
+    public Response request() {
+        configureGiven();
+        runInterface();
+        return response;
     }
 
     @Override
-    public Response request() {
-        return request(null);
+    public Response request(Object data){
+        configureGiven();
+        given.body(data);
+        runInterface();
+        return response;
     }
 
     @Override
     public Response request(Map<String,?> data) {
         configureGiven();
-        if(data != null && data.size() != 0){
-            addData(data);
-        }
+        addData(data);
         runInterface();
         return response;
     }
 
     public void specifyUser(String username,String password){
         if(loginInfo == null){
-            loginInfo = new LoginResponseInfoManager(username, password);
+            loginInfo = new LoginResponseInfoManage(username, password);
         }
         else {
             loginInfo.changeLoginMessage(username, password);
@@ -112,16 +135,12 @@ public class BaseInterface implements InterfaceTest{
         ConfigureLogin.header(apiObject,loginInfo);
     }
 
-    public List<Map<String, Object>> getDefaultTestData(){
-        return interfaceConfigure.getTestData();
+    public void changeDefaultUser(){
+        loginInfo = null;
     }
 
     public Response getResponse() {
         return response;
-    }
-
-    public JsonPath getJsonPath() {
-        return response.then().extract().jsonPath();
     }
 
     public void addHeader(String headerName, Object headerValue){
@@ -133,7 +152,7 @@ public class BaseInterface implements InterfaceTest{
     }
 
     // 将登录信息放入header或cookies里
-    protected static class ConfigureLogin{
+    private static class ConfigureLogin{
         private static final String[] HEADER_OPTIONS = {"Authorization"};
         private static final String[] COOKIES_OPTIONS = {"Pycharm-3339b356","remember","Idea-80e4ad09"};
 
@@ -142,7 +161,7 @@ public class BaseInterface implements InterfaceTest{
             Map<String, String> login = loginInfo.getValue();
             for(String opt : HEADER_OPTIONS){
                 if(opt.equals("Authorization")){
-                    value.put(opt,login.get(LoginResponseInfoManager.TOKEN_NAME));
+                    value.put(opt,login.get(LoginResponseInfoManage.TOKEN_NAME));
                 }
                 else {
                     value.put(opt,login.get(opt));
@@ -159,6 +178,5 @@ public class BaseInterface implements InterfaceTest{
             }
             StrategyFactory.createStrategy(ConfigureOptions.LOGIN_COOKIES).alterConfigureContent(apiObject,value);
         }
-
     }
 }

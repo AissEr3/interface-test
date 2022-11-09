@@ -8,13 +8,13 @@ import utils.ApiObjectUtil;
 import java.util.Map;
 
 /**
- * @ClassName InterfaceInfoConfigure
+ * @ClassName InterfaceConfigureStrategy
  * @Author AissEr
  * @Date 2022/10/27 8:52
  * @Version 1.0
  * @Description TODO
  **/
-public class InterfaceInfoConfigure implements ConfigureStrategy<Map<String,Object>> {
+public class InterfaceConfigureStrategy implements ConfigureStrategy<Map<String,Object>> {
     public static final String name = ConfigureOptions.INTERFACE_INFO.getName();
 
     @Override

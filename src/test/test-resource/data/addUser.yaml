@@ -1,6 +1,10 @@
 interface-info:
   path: /api/users
   requestType: post
+  dataPlaceIn: body
 default-test-data:
-  - {"id":13,"username":"test002","nickName":"AissEr","gender":"男","email":"123457@qq.com"
-    ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":12}],"dept":{"id":6},"phone":13212341235}
+  - data: {"id":15,"username":"test100","nickName":"AissEr","gender":"男","email":"123459@qq.com"
+    ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":12}],"dept":{"id":6},"phone":13212341213}
+
+  - data: {"id":16,"username":"test101","nickName":"AissEr","gender":"男","email":"123410@qq.com"
+    ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":12}],"dept":{"id":6},"phone":13212341212}

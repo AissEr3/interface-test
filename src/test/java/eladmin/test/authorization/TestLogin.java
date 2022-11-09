@@ -6,7 +6,7 @@ import org.junit.jupiter.api.*;
 
 import api.manage.login.LoginJSON;
 import api.manage.login.LoginResponseInfo;
-import api.manage.login.LoginResponseInfoManager;
+import api.manage.login.LoginResponseInfoManage;
 import java.util.Map;
 
 import static io.restassured.RestAssured.*;
@@ -39,7 +39,7 @@ public class TestLogin{
     @Order(3)
     @Ignore
     void testRightLogout(){
-        LoginResponseInfo info = new LoginResponseInfoManager("admin","123456");
+        LoginResponseInfo info = new LoginResponseInfoManage("admin","123456");
         Map<String, String> loginInfo = info.getValue();
         given()
                 .headers("Authorization",loginInfo.get("ELADMIN-TOKEN"))
@@ -56,7 +56,7 @@ public class TestLogin{
     @Test
     @Order(2)
     void testRightInfo(){
-        LoginResponseInfo info = new LoginResponseInfoManager("admin","123456");
+        LoginResponseInfo info = new LoginResponseInfoManage("admin","123456");
         Map<String, String> loginInfo = info.getValue();
         given()
                 .headers("Authorization",loginInfo.get("ELADMIN-TOKEN"))

@@ -1,6 +1,7 @@
 package api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 import utils.stat.RequestType;
@@ -18,6 +19,7 @@ import java.util.Map;
  **/
 @Data
 @ToString
+@Builder
 public class ApiObject {
     private String baseURI;
 
@@ -30,6 +32,8 @@ public class ApiObject {
     private String basePath;
 
     private String path;
+
+    private String dataPlaceIn;
 
     private String requestType;
 
