@@ -5,9 +5,9 @@ import io.restassured.response.Response;
 import java.util.Map;
 
 public interface InterfaceTest {
-    Response request();
+    ResponseHandle request();
 
-    Response request(Object data);
+    ResponseHandle request(Object data);
 
-    Response request(Map<String,?> data);
+    ResponseHandle request(Map<String,?> data);
 }

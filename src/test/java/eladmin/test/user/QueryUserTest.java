@@ -3,12 +3,12 @@ package eladmin.test.user;
 import common.BaseTest;
 import common.InterfaceRun;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * @ClassName QueryUserTest
@@ -31,6 +31,7 @@ public class QueryUserTest extends BaseTest {
     @MethodSource("testData")
     @ParameterizedTest
     void queryUserTest(Map<String,Object> data){
-        currentInterface.request(data.get("data")).then().log().all();
+        currentInterface.request((Map<String, ?>) data.get("data")).then().log().all();
+
     }
 }

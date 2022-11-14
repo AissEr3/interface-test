@@ -54,7 +54,11 @@ public class InterfaceConfigure extends AbstractConfigure {
     }
 
     public List<Map<String,Object>> getTestData(){
-        return (List<Map<String,Object>>) applicationMap.get(DEFAULT_TEST_DATA.getName());
+        return (List<Map<String,Object>>) applicationMap.get(TEST_DATA.getName());
+    }
+
+    public String getJsonSchema(){
+        return (String) applicationMap.get(JSON_SCHEME.getName());
     }
 
     public void setFile(String filePath){

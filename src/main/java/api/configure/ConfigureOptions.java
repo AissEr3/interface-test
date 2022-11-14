@@ -28,7 +28,9 @@ public enum ConfigureOptions {
     INTERFACE_INFO("interface-info",
             new String[]{"path","requestType","contentType","dataPlaceIn"}),
 
-    DEFAULT_TEST_DATA("default-test-data");
+    TEST_DATA("default-test-data"),
+
+    JSON_SCHEME("json-schema");
 
 
     private String name;

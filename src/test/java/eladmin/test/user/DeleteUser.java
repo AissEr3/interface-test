@@ -33,6 +33,6 @@ public class DeleteUser extends BaseTest {
     @MethodSource("testData")
     @ParameterizedTest
     void queryUserTest(Map<String,Object> data){
-        currentInterface.request( data.get("data")).then().log().all();
+        currentInterface.request(data.get("data")).then().log().all();
     }
 }

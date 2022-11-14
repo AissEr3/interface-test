@@ -27,7 +27,10 @@ public class MapUtil {
         for(int i = 0; i < keys.length-1 && endMap != null; i++){
             endMap = (Map) endMap.get(keys[i]);
         }
-        Object obj = endMap.get(keys[keys.length - 1]);
+        Object obj = null;
+        if(endMap != null){
+            obj = endMap.get(keys[keys.length - 1]);
+        }
         return obj == null ? null : obj;
     }
 
