@@ -14,7 +14,7 @@ import java.util.Map;
  * @Author AissEr
  * @Date 2022/10/30 20:02
  * @Version 1.0
- * @Description
+ * @Description 将全局配置文件的信息加载出来，并根据全局文件的信息创建配置好的given
  **/
 public class SetRestAssured {
     private static AbstractConfigure generalConfigure;
@@ -23,12 +23,17 @@ public class SetRestAssured {
 
     private SetRestAssured(){}
 
+    /**
+     * 对外提供的设置方法
+     * @return
+     */
     public static InterfaceSetter startSet(){
         return new SetRestAssured().settingRestAssured();
     }
 
     /**
      * 如果需要设置配置文件类，在这里设置
+     * 具体如何设置，看GeneralConfigure类即可知道
      */
     public static void initFundamentalConfigure(){
         generalConfigure = GeneralConfigure.getInstance();
@@ -47,12 +52,18 @@ public class SetRestAssured {
         }
     }
 
+    /**
+     * @return 返回配置项，类似于Builder模式
+     */
     private InterfaceSetter settingRestAssured(){
         // 真正获取所有信息
         given = RestAssured.given();
         return new InterfaceSetter();
     }
 
+    /**
+     * 可以自己配置given的地方，类似于Builder模式
+     */
     public class InterfaceSetter {
         // 默认的contentType，内容为配置文件的内容
         public InterfaceSetter defaultContentType(){
@@ -107,6 +118,7 @@ public class SetRestAssured {
             return this;
         }
 
+        // 设置cookies
         public InterfaceSetter cookies(Map<String, Object> cookies){
             if(cookies != null && cookies.size() != 0){
                 given.headers(cookies);
@@ -114,6 +126,7 @@ public class SetRestAssured {
             return this;
         }
 
+        // 结束设置
         public RequestSpecification endSet(){
             return SetRestAssured.this.given;
         }

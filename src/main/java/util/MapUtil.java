@@ -1,4 +1,4 @@
-package utils;
+package util;
 
 import java.util.Map;
 
@@ -34,12 +34,4 @@ public class MapUtil {
         return obj == null ? null : obj;
     }
 
-//    private static Object getBy(String newKey){
-//
-//        return null;
-//    }
-//
-//    private enum Selection{
-//        STRING,LIST
-//    }
 }

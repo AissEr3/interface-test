@@ -3,7 +3,7 @@ package api.configure.item;
 import api.ApiObject;
 import api.configure.ConfigureOptions;
 import api.configure.strategy.ConfigureStrategy;
-import utils.ApiObjectUtil;
+import util.ApiObjectUtil;
 
 import java.util.Map;
 
@@ -12,7 +12,7 @@ import java.util.Map;
  * @Author AissEr
  * @Date 2022/10/27 8:52
  * @Version 1.0
- * @Description TODO
+ * @Description 修改具体运行接口配置信息的策略
  **/
 public class InterfaceConfigureStrategy implements ConfigureStrategy<Map<String,Object>> {
     public static final String name = ConfigureOptions.INTERFACE_INFO.getName();

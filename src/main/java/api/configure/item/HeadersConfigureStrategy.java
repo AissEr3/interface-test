@@ -13,7 +13,7 @@ import java.util.Map;
  * @Author AissEr
  * @Date 2022/10/24 11:33
  * @Version 1.0
- * @Description TODO
+ * @Description 修改Header配置信息的策略
  **/
 public class HeadersConfigureStrategy implements ConfigureStrategy<Map<String,Object>> {
     public static final String name = ConfigureOptions.LOGIN_HEADERS.getName();

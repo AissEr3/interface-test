@@ -1,11 +1,11 @@
-package utils;
+package util;
 
 /**
  * @ClassName PathUtil
  * @Author AissEr
  * @Date 2022/10/11 23:20
  * @Version 1.0
- * @Description TODO
+ * @Description 玩具类，做着玩的，仅在本项目内使用，别的地方基本用不上
  **/
 public class PathUtil {
     private static final String TEST_RESOURCE_PATH = "src/test/test-resource/";

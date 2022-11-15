@@ -1,10 +1,9 @@
 package api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
-import utils.stat.RequestType;
+import util.stat.RequestType;
 
 
 import java.util.HashMap;
@@ -15,7 +14,7 @@ import java.util.Map;
  * @Author AissEr
  * @Date 2022/10/20 21:12
  * @Version 1.0
- * @Description TODO
+ * @Description 指定每个接口可以配置的信息
  **/
 @Data
 @ToString

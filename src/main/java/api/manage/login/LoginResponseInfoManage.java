@@ -1,7 +1,7 @@
 package api.manage.login;
 
 import io.restassured.response.Response;
-import utils.MapUtil;
+import util.MapUtil;
 
 import java.util.Map;
 

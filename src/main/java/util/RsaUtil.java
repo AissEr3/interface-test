@@ -1,4 +1,4 @@
-package utils;
+package util;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -15,7 +15,7 @@ import java.security.spec.X509EncodedKeySpec;
  * @Author AissEr
  * @Date 2022/10/11 23:09
  * @Version 1.0
- * @Description TODO
+ * @Description ras加密工具类，在开发项目中找到直接拿来用了 :)
  **/
 public class RsaUtil {
     /**

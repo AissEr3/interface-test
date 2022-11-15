@@ -12,9 +12,9 @@ import java.util.Optional;
  * @Author AissEr
  * @Date 2022/10/20 16:26
  * @Version 1.0
- * @Description TODO
+ * @Description Junit5提供的参数注入方法，有时候还挺有用的
  **/
-// 暂时不考虑实现
+// Junit5提供的参数注入方法，有时候还挺有用的，好像涉及到了Junit5实现参数化的原理
 @Deprecated
 public class CustomAnnotationParameterResolver implements ParameterResolver {
 

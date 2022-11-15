@@ -1,6 +1,6 @@
 package common.annotation;
 
-import utils.stat.RequestType;
+import util.stat.RequestType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

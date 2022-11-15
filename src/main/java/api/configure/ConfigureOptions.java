@@ -3,6 +3,7 @@ package api.configure;
 /**
  * 简易约定、管理配置文件可配置项信息
  * 所有选项均非必填
+ * 相当于一个静态资源类，且在运行时不可能有任何改变，因此使用枚举类
  */
 public enum ConfigureOptions {
 

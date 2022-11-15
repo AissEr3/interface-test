@@ -11,7 +11,6 @@ package common.configration;
 @Deprecated
 public class InterfaceTestConfigureAnnotation {
 
-
     public void initAnnotation(){
 
     }

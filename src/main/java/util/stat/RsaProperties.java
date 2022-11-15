@@ -1,7 +1,7 @@
-package utils.stat;
+package util.stat;
 
-import utils.MapUtil;
-import utils.ReadFileUtil;
+import util.MapUtil;
+import util.ReadFileUtil;
 
 import java.io.IOException;
 import java.util.Map;

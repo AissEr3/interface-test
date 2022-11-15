@@ -2,9 +2,9 @@ package api.configure;
 
 import api.ApiObject;
 import api.configure.strategy.StrategyFactory;
-import utils.MapUtil;
-import utils.PathUtil;
-import utils.ReadFileUtil;
+import util.MapUtil;
+import util.PathUtil;
+import util.ReadFileUtil;
 
 import java.io.IOException;
 import java.util.Map;
@@ -77,6 +77,9 @@ public class GeneralConfigure extends AbstractConfigure {
         }
     }
 
+    /**
+     * 该配置类需要重置登录信息，因此需要重写登录方法
+     */
     @Override
     protected void initLoginMessage() {
         if(applicationMap != null) {

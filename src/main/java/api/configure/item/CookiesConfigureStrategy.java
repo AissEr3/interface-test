@@ -13,7 +13,7 @@ import java.util.Map;
  * @Author AissEr
  * @Date 2022/10/26 18:42
  * @Version 1.0
- * @Description TODO
+ * @Description 修改Cookies配置信息的策略
  **/
 public class CookiesConfigureStrategy implements ConfigureStrategy<Map<String, Object>> {
     public static final String name = ConfigureOptions.LOGIN_COOKIES.getName();

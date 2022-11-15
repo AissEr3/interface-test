@@ -1,4 +1,4 @@
-package utils.stat;
+package util.stat;
 
 public enum RequestType {
     GET("get"),

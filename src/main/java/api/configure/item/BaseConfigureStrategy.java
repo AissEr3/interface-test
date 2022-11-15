@@ -3,7 +3,7 @@ package api.configure.item;
 import api.ApiObject;
 import api.configure.ConfigureOptions;
 import api.configure.strategy.ConfigureStrategy;
-import utils.ApiObjectUtil;
+import util.ApiObjectUtil;
 
 import java.util.Map;
 
@@ -12,7 +12,7 @@ import java.util.Map;
  * @Author AissEr
  * @Date 2022/10/23 20:10
  * @Version 1.0
- * @Description TODO
+ * @Description 修改基础配置信息的策略
  **/
 public class BaseConfigureStrategy implements ConfigureStrategy<Map<String,String>>{
     public static final String name = ConfigureOptions.BASE.getName();
