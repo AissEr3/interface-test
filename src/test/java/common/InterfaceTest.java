@@ -12,7 +12,6 @@ import java.util.Map;
 public interface InterfaceTest {
     ResponseHandle request();
 
-    ResponseHandle request(Object data);
+    <T> ResponseHandle request(T data);
 
-    ResponseHandle request(Map<String,?> data);
 }

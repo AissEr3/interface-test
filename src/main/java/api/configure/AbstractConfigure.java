@@ -18,7 +18,7 @@ public abstract class AbstractConfigure implements Configure {
     protected static final LoginResponseInfo DEFAULT_LOGIN_INFO = new LoginResponseInfoManage();
 
     // 记录配置信息的map
-    protected Map<String,Object> applicationMap;
+    protected Map<String,?> applicationMap;
 
     public void initConfigure(){
         initApplicationMap();

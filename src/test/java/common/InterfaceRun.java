@@ -9,6 +9,7 @@ import api.manage.login.LoginResponseInfoManage;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +57,14 @@ public class InterfaceRun implements InterfaceTest{
     public InterfaceRun(String interfaceConfigureFilePath){
         this.INTERFACE_CONFIGURE_FILE_PATH = interfaceConfigureFilePath;
         apiObject = ApiObject.builder().build();
+        interfaceConfigure = new InterfaceConfigure(INTERFACE_CONFIGURE_FILE_PATH);
+        loadFileAndApiObjectConfigure();
+    }
+
+    public InterfaceRun(File file){
+        this.INTERFACE_CONFIGURE_FILE_PATH = "has";
+        apiObject = ApiObject.builder().build();
+        interfaceConfigure = new InterfaceConfigure(file);
         loadFileAndApiObjectConfigure();
     }
 
@@ -63,7 +72,6 @@ public class InterfaceRun implements InterfaceTest{
      * 加载指定的配置文件信息，并将配置文件的信息配置到属性ApiObject里
      */
     private void loadFileAndApiObjectConfigure(){
-        interfaceConfigure = new InterfaceConfigure(INTERFACE_CONFIGURE_FILE_PATH);
         interfaceConfigure.initConfigure();
         interfaceConfigure.configure(apiObject);
     }
@@ -77,6 +85,26 @@ public class InterfaceRun implements InterfaceTest{
             return interfaceConfigure.getTestData();
         }
         return null;
+    }
+
+    /**
+     * 无参数的请求
+     */
+    @Override
+    public ResponseHandle request() {
+        configureGiven();
+        return runInterface();
+    }
+
+    /**
+     * @param data 接口请求需要的参数
+     * @param <T> 如果数据在body里，可以任意类型；如果数据在其他地方，只能使用Map<String,?>
+     */
+    @Override
+    public <T> ResponseHandle request(T data){
+        configureGiven();
+        addData(data);
+        return runInterface();
     }
 
     /**
@@ -106,14 +134,17 @@ public class InterfaceRun implements InterfaceTest{
      * @param data 接口需要的数据
      * 缺少自定义异常
      */
-    private void addData(Map<String,?> data){
+    private<T> void addData(T data){
         String dataPlace = apiObject.getDataPlaceIn();
         if(dataPlace.equals("body")){
             given.body(data);
         }
         // params可以匹配除body方法以外的所有方法
+        else if(data instanceof Map){
+            given.params((Map<String,?>)data);
+        }
         else {
-            given.params(data);
+            throw new RuntimeException("data type must map");
         }
     }
 
@@ -134,25 +165,11 @@ public class InterfaceRun implements InterfaceTest{
         return new ResponseHandle(this,response);
     }
 
-    @Override
-    public ResponseHandle request() {
-        configureGiven();
-        return runInterface();
-    }
-
-    @Override
-    public ResponseHandle request(Object data){
-        configureGiven();
-        // 只有body里可以方Object对象
-        given.body(data);
-        return runInterface();
-    }
-
-    @Override
-    public ResponseHandle request(Map<String,?> data) {
-        configureGiven();
-        addData(data);
-        return runInterface();
+    public boolean hasJsonScheme(){
+        if(INTERFACE_CONFIGURE_FILE_PATH == null || interfaceConfigure.getJsonSchema() == null){
+            return false;
+        }
+        return true;
     }
 
     /**

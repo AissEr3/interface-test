@@ -3,8 +3,47 @@ interface-info:
   requestType: post
   dataPlaceIn: body
 default-test-data:
-  - data: {"id":15,"username":"test100","nickName":"AissEr","gender":"男","email":"123459@qq.com"
-    ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":12}],"dept":{"id":6},"phone":13212341213}
+  # 正确用例 1
+  - describe: "正确用例 1"
+    data: '{"username":"test100","nickName":"AissEr","gender":"男","email":"123459@qq.com"
+    ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":12}],"dept":{"id":6},"phone":13212341213}'
+    excepted:
+      statusCode: 201
 
-  - data: {"id":16,"username":"test101","nickName":"AissEr","gender":"男","email":"123410@qq.com"
-    ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":12}],"dept":{"id":6},"phone":13212341212}
+  # 正确用例 2
+  - describe: "正确用例 2"
+    data: '{"username": "test101","nickName": "AissEr","gender": "男","email": "123450@qq.com"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 13212341215}'
+    excepted:
+      statusCode: 201
+
+  # 正确用例 3
+  - describe: "正确用例 3"
+    data: '{"username": "test102","nickName": "AissEr","gender": "男","email": "123451@qq.com"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 13212341216}'
+    excepted:
+      statusCode: 201
+
+  # 用户名错误（重复）
+  - describe: "用户名错误（重复）"
+    data: '{"username": "test102","nickName": "AissEr","gender": "男","email": "123452@qq.com"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 13212341217}'
+    excepted:
+      message: "username test102 existed"
+      statusCode: 400
+
+  # email错误（重复）
+  - describe: "email错误（重复）"
+    data: '{"username": "test103","nickName": "AissEr","gender": "男","email": "123451@qq.com"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 13212341217}'
+    excepted:
+      message: "email 123451@qq.com existed"
+      statusCode: 400
+
+  # 手机号错误（重复）
+  - describe: "手机号错误（重复）"
+    data: '{"username": "test103","nickName": "AissEr","gender": "男","email": "123452@qq.com"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 13212341216}'
+    excepted:
+      message: "phone 13212341216 existed"
+      statusCode: 400

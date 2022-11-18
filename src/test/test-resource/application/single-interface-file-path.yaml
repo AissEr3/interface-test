@@ -1,0 +1,4 @@
+001_addUser: "src/test/test-resource/data/addUser.yaml"
+002_updateUser: "src/test/test-resource/data/updateUser.yaml"
+003_queryUser: "src/test/test-resource/data/queryUser.yaml"
+004_deleteUser: "src/test/test-resource/data/deleteUser.yaml"

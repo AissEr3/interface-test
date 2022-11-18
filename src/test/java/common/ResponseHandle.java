@@ -4,7 +4,12 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
+import static org.assertj.core.api.Assertions.*;
 import lombok.Data;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @ClassName ResponseHandle
@@ -42,19 +47,47 @@ public class ResponseHandle {
      * 直接获取jsonpath进行断言
      * @return 响应信息的jsonpath
      */
-    public JsonPath getJsonPath(){
+    public JsonPath jsonPath(){
         return response.then().extract().jsonPath();
+    }
+
+    /**
+     * 使用JsonPath获取值
+     */
+    public Object getJsonObject(String path){
+        return jsonPath().getJsonObject(path);
     }
 
     /**
      * 验证JsonSchema
      */
-    public void verifyJsonSchema(){
+    public ResponseHandle verifyJsonSchema(){
         verifyJsonSchema(runner.interfaceConfigure.getJsonSchema());
+        return this;
     }
 
-    public void verifyJsonSchema(String jsonScheme){
+    public ResponseHandle verifyJsonSchema(String jsonScheme){
         response.then().assertThat()
                 .body(matchesJsonSchema(jsonScheme));
+        return this;
     }
+
+    public ResponseHandle verifyExcepted(Map<String,?> excepted){
+        Set<String> keys = excepted.keySet();
+        for(String key : keys){
+            if(!key.equals("statusCode")){
+                assertThat((String) getJsonObject(key)).contains((String)excepted.get(key));
+            }
+            else {
+                verifyStatusCode((Integer) excepted.get(key));
+            }
+        }
+        return this;
+    }
+
+    private ResponseHandle verifyStatusCode(Integer code){
+        response.then().statusCode(code);
+        return this;
+    }
+
 }

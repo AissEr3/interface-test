@@ -4,6 +4,7 @@ import api.ApiObject;
 import api.configure.strategy.StrategyFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+import common.YamlMapper;
 import util.PathUtil;
 
 import java.io.File;
@@ -22,16 +23,13 @@ import static api.configure.ConfigureOptions.*;
  * @Description 该类将具体的接口配置文件信息，配置到APIObject中
  **/
 public class InterfaceConfigure extends AbstractConfigure {
-    // 使用到的静态资源
-    private  static Class<? extends HashMap> CONVERT_TYPE = new HashMap<String,Object>().getClass();
-    private  static ObjectMapper MAPPER = new YAMLMapper();
     // 管理文件
     private File configureFile;
 
     public InterfaceConfigure(){}
 
     public InterfaceConfigure(String filePath){
-        setFile(filePath);
+        configureFile = new File(filePath);
     }
 
     public InterfaceConfigure(File configureFile){
@@ -55,12 +53,7 @@ public class InterfaceConfigure extends AbstractConfigure {
      */
     @Override
     protected void initApplicationMap() {
-        try{
-            // MAPPER是静态资源
-            applicationMap = MAPPER.readValue(configureFile, CONVERT_TYPE);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+        applicationMap = new YamlMapper(configureFile).getYaml();
     }
 
     /**
@@ -75,13 +68,5 @@ public class InterfaceConfigure extends AbstractConfigure {
      */
     public String getJsonSchema(){
         return (String) applicationMap.get(JSON_SCHEME.getName());
-    }
-
-    public void setFile(String filePath){
-        configureFile = new File(PathUtil.realPath(filePath));
-    }
-
-    public void setFile(File file){
-        configureFile = file;
     }
 }

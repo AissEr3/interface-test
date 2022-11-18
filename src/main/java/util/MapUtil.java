@@ -21,7 +21,7 @@ public class MapUtil {
      * @param map json或yaml转换成的map文件，或者多层嵌套的map,key类型必须为String
      * @return 读取的对象
      */
-    public static Object readMapByPoint(Map<String,Object> map, String targetKey){
+    public static Object readMapByPoint(Map<String,?> map, String targetKey){
         String[] keys = targetKey.split("\\.");
         Map endMap = map;
         for(int i = 0; i < keys.length-1 && endMap != null; i++){

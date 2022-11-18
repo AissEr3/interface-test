@@ -3,152 +3,24 @@ interface-info:
   requestType: get
   dataPlaceIn: query
 default-test-data:
-  - data:
+  # 正确用例 1
+  - describe: "正确用例 1"
+    data:
       page: 0
       size: 10
       sort: id,desc
-  - data:
+    excepted:
+      content[0].username: "test102"
+      content[1].username: "test101"
+      content[2].username: "test100"
+      statusCode: 200
+
+  # 正确用例 2
+  - describe: "正确用例 2"
+    data:
       page: 0
       size: 1
       sort: id,desc
-json-schema:
-  '{
-       "type": "object",
-       "required": [
-           "content",
-           "totalElements"
-       ],
-       "properties": {
-           "content": {
-               "type": "array",
-               "items": {
-                   "type": "object",
-                   "required": [
-                       "avatarName",
-                       "avatarPath",
-                       "createTime",
-                       "dept",
-                       "email",
-                       "enabled",
-                       "gender",
-                       "id",
-                       "jobs",
-                       "nickName",
-                       "phone",
-                       "pwdResetTime",
-                       "roles",
-                       "updateBy",
-                       "updateTime",
-                       "username",
-                       "createBy"
-                   ],
-                   "properties": {
-                       "avatarName": {
-                           "type": "string"
-                       },
-                       "avatarPath": {
-                           "type": "string"
-                       },
-                       "createTime": {
-                           "type": "string"
-                       },
-                       "dept": {
-                           "type": "object",
-                           "required": [
-                               "id",
-                               "name"
-                           ],
-                           "properties": {
-                               "id": {
-                                   "type": "integer"
-                               },
-                               "name": {
-                                   "type": "string"
-                               }
-                           }
-                       },
-                       "email": {
-                           "type": "string"
-                       },
-                       "enabled": {
-                           "type": "boolean"
-                       },
-                       "gender": {
-                           "type": "string"
-                       },
-                       "id": {
-                           "type": "integer"
-                       },
-                       "jobs": {
-                           "type": "array",
-                           "items": {
-                               "type": "object",
-                               "required": [
-                                   "id",
-                                   "name"
-                               ],
-                               "properties": {
-                                   "id": {
-                                       "type": "integer"
-                                   },
-                                   "name": {
-                                       "type": "string"
-                                   }
-                               }
-                           }
-                       },
-                       "nickName": {
-                           "type": "string"
-                       },
-                       "phone": {
-                           "type": "string"
-                       },
-                       "pwdResetTime": {
-                           "type": "string"
-                       },
-                       "roles": {
-                           "type": "array",
-                           "items": {
-                               "type": "object",
-                               "required": [
-                                   "dataScope",
-                                   "id",
-                                   "level",
-                                   "name"
-                               ],
-                               "properties": {
-                                   "dataScope": {
-                                       "type": "string"
-                                   },
-                                   "id": {
-                                       "type": "integer"
-                                   },
-                                   "level": {
-                                       "type": "integer"
-                                   },
-                                   "name": {
-                                       "type": "string"
-                                   }
-                               }
-                           }
-                       },
-                       "updateBy": {
-                           "type": "string"
-                       },
-                       "updateTime": {
-                           "type": "string"
-                       },
-                       "username": {
-                           "type": "string"
-                       },
-                       "createBy": {
-                           "type": "string"
-                       }
-                   }
-               }
-           },
-           "totalElements": {
-               "type": "integer"
-           }
-       }
-   }'
+    excepted:
+      content[0].username: "test102"
+      statusCode: 200
