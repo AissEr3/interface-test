@@ -3,6 +3,7 @@ package eladmin.test;
 
 import common.InterfaceRun;
 import common.ResponseHandle;
+import common.TestDataOptions;
 import common.YamlMapper;
 import org.junit.jupiter.api.*;
 
@@ -21,12 +22,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SingleInterfaceTest {
     private static Map<String,String> pathMap  = new HashMap<>();
 
+    // 指定单接口文件基本路径
+    private static final String BASE_PATH = "src/test/test-resource/data/single";
     private static final String ALL_SINGLE_INTERFACE_FILE_PATH
             = "src/test/test-resource/application/single-interface-file-path.yaml";
 
     @BeforeAll
     public static void beforeAll(){
-        pathMap = (Map<String, String>) new YamlMapper(ALL_SINGLE_INTERFACE_FILE_PATH).getYaml();
+        pathMap = (Map<String, String>) new YamlMapper(ALL_SINGLE_INTERFACE_FILE_PATH).getYamlMap();
     }
 
     /**
@@ -38,16 +41,16 @@ public class SingleInterfaceTest {
     @DisplayName("单接口测试")
     Collection<DynamicContainer> single() {
         // 最终要返回给Junit5让其测试的“测试用例容器列表”
-        ArrayList<DynamicContainer> result = new ArrayList<>();
+        ArrayList<DynamicContainer> result = new ArrayList<>(pathMap.size());
         // 所有单接口的配置文件，迭代取出
         pathMap.forEach((interfaceName,interfacePath) -> {
             // 读取单接口的配置文件，并配置好该但接口，等待运行
-            InterfaceRun currentInterface = new InterfaceRun(interfacePath);
+            InterfaceRun currentInterface = new InterfaceRun(BASE_PATH+interfacePath);
             // 设置该单接口测试用例列表，最终将列表放入测试用例容器中，即将所有用例放入容器
             List<DynamicTest> list = new ArrayList<>();
             // 获取配置文件的测试数据（每条测试用例），迭代取出
             currentInterface.getDefaultTestData().forEach(data -> {
-                String describe = (String) data.get("describe");
+                String describe = (String) data.get(TestDataOptions.DESCRIBE.keyName());
                 /*
                  *  将该条测试用例，加入测试用例容器；
                  *  runTest方法，就是测试用例执行方法
@@ -65,20 +68,20 @@ public class SingleInterfaceTest {
         return result;
     }
 
-    void runTest(Map<String,Object> data,InterfaceRun currentInterface){
-        ResponseHandle responseHandle = currentInterface.request(data.get("data"));
-
-        Object excepted = data.get("excepted");
+    private void runTest(Map<String,Object> data,InterfaceRun currentInterface){
+        ResponseHandle responseHandle = currentInterface.request(data.get(TestDataOptions.DATA.keyName()));
+        Object excepted = data.get(TestDataOptions.EXCEPTED.keyName());
         if(excepted != null){
             responseHandle.verifyExcepted((Map<String,?>)excepted);
         }
     }
 
-    void sortSingle(ArrayList<DynamicContainer> dynamicContainers){
+    private void sortSingle(ArrayList<DynamicContainer> dynamicContainers){
         // 排一次序，否则有可能是乱序的；编译器提示不准确，不能省略该代码！！！
         dynamicContainers.sort(
                 (DynamicContainer d1, DynamicContainer d2) ->
                         d1.getDisplayName().compareTo(d2.getDisplayName())
         );
     }
+
 }

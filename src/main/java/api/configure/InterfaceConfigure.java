@@ -2,14 +2,9 @@ package api.configure;
 
 import api.ApiObject;
 import api.configure.strategy.StrategyFactory;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import common.YamlMapper;
-import util.PathUtil;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +48,7 @@ public class InterfaceConfigure extends AbstractConfigure {
      */
     @Override
     protected void initApplicationMap() {
-        applicationMap = new YamlMapper(configureFile).getYaml();
+        applicationMap = new YamlMapper(configureFile).getYamlMap();
     }
 
     /**

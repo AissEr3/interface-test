@@ -22,6 +22,7 @@ import java.util.Map;
  * @Description 根据总配置文件信息，创建可运行的接口
  *              该类是接口，发送请求的类
  *              自动配置运行的接口信息，根据apiObject指定的信息来对指定接口发送请求
+ *              是接口测试的核心类
  **/
 public class InterfaceRun implements InterfaceTest{
     // 是否指定配置文件都会使用到的信息

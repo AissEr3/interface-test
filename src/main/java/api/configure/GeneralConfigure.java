@@ -2,6 +2,7 @@ package api.configure;
 
 import api.ApiObject;
 import api.configure.strategy.StrategyFactory;
+import common.YamlMapper;
 import util.MapUtil;
 import util.PathUtil;
 import util.ReadFileUtil;
@@ -19,7 +20,8 @@ import static api.configure.ConfigureOptions.*;
  **/
 public class GeneralConfigure extends AbstractConfigure {
     // 配置文件的默认路径
-    private static final String DEFAULT_APPLICATION_FILE_PATH = "test:application/application-test.yaml";
+    private static final String DEFAULT_APPLICATION_FILE_PATH
+            = "src/test/test-resource/application/application-test-admin.yaml";
     // 默认的登录信息
     private static final String DEFAULT_USERNAME = "admin";
     // 默认的登录密码
@@ -70,11 +72,7 @@ public class GeneralConfigure extends AbstractConfigure {
      */
     @Override
     protected void initApplicationMap(){
-        try {
-            applicationMap = ReadFileUtil.readYamlToMap(applicationFilePath);
-        }catch (IOException e){
-           e.printStackTrace();
-        }
+        applicationMap = new YamlMapper(applicationFilePath).getYamlMap();
     }
 
     /**

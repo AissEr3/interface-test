@@ -11,8 +11,8 @@ default-test-data:
       sort: id,desc
     excepted:
       content[0].username: "test102"
-      content[1].username: "test101"
-      content[2].username: "test100"
+      content[1].username: "test003"
+      content[2].username: "test002"
       statusCode: 200
 
   # 正确用例 2

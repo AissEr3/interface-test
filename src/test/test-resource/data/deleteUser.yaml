@@ -1,6 +1,0 @@
-interface-info:
-  path: /api/users
-  requestType: delete
-  dataPlaceIn: "body"
-default-test-data:
-  - data: [16,15]

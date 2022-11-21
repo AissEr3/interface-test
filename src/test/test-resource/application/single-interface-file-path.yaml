@@ -1,4 +1,5 @@
-001_addUser: "src/test/test-resource/data/addUser.yaml"
-002_updateUser: "src/test/test-resource/data/updateUser.yaml"
-003_queryUser: "src/test/test-resource/data/queryUser.yaml"
-004_deleteUser: "src/test/test-resource/data/deleteUser.yaml"
+# 用户管理类
+001_addUser: "/user/addUser.yaml"
+002_updateUser: "/user/updateUser.yaml"
+003_queryUser: "/user/queryUser.yaml"
+004_deleteUser: "/user/deleteUser.yaml"

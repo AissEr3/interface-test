@@ -32,7 +32,7 @@ public class YamlMapper {
         setYaml(file);
     }
 
-    public Map<String, ?> getYaml() {
+    public Map<String, ?> getYamlMap() {
         return yaml;
     }
 

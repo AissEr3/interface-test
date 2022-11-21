@@ -24,7 +24,7 @@ public class AddUserTest{
     @BeforeAll
     public static void setInterface(){
         currentInterface = new InterfaceRun(
-                "src/test/test-resource/data/addUser.yaml");
+                "src/test/test-resource/data/updateUser.yaml");
     }
 
     public static List<Map<String,Object>> testData() {
