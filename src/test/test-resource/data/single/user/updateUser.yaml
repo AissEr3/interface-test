@@ -1,14 +1,30 @@
 interface-info:
+  apiName: "updateUser"
   path: /api/users
   requestType: put
   dataPlaceIn: body
-default-test-data:
-  - data: '{"id":3,"username":"test002","nickName":"test002","gender":"男","email":"5500002@qq.com"
+single-test-data:
+  - describe: "正确用例 1"
+    data: '{"id":${ids[0]},"username":"test001","nickName":"test002","gender":"男","email":"5500002@qq.com"
         ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":8}],"dept":{"id":5,"name":"运维部"},
         "phone":"13412340001","createBy":"admin","createTime":"2022-11-09 19:04:13",
         "updateBy":"admin","updateTime":"2022-11-09 19:04:13"}'
+    excepted:
+      statusCode: 204
 
-  - data: '{"id":4, "username": "test003","nickName": "test003","gender": "男","email": "5500003@qq.com"
+  - describe: "正确用例 2"
+    data: '{"id":${ids[1]}, "username": "test002","nickName": "test003","gender": "男","email": "5500003@qq.com"
           ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 8 } ],"dept": { "id": 5,"name": "运维部" },
           "phone": "13412340002","createBy": "admin","createTime": "2022-11-09 19:04:13",
           "updateBy": "admin","updateTime": "2022-11-09 19:04:13" }'
+    excepted:
+      statusCode: 204
+
+  - describe: "正确用例 3"
+    data: '{"id":${ids[2]}, "username": "test003","nickName": "test003","gender": "男","email": "5500004@qq.com"
+            ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 8 } ],"dept": { "id": 5,"name": "运维部" },
+            "phone": "13412340003","createBy": "admin","createTime": "2022-11-09 19:04:13",
+            "updateBy": "admin","updateTime": "2022-11-09 19:04:13" }'
+    excepted:
+      statusCode: 204
+

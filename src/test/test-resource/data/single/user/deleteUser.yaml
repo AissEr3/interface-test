@@ -1,11 +1,12 @@
 interface-info:
+  apiName: "deleteUser"
   path: /api/users
   requestType: delete
   dataPlaceIn: body
-default-test-data:
+single-test-data:
   # 正确删除用例1
   - describe: "正确删除用例1"
-    data: "[3,4]"
+    data: "[${ids[0]},${ids[1]}]"
     excepted:
       statusCode: 200
 
@@ -17,13 +18,13 @@ default-test-data:
 
   # 删除没有的用户
   - describe: "删除没有的用户"
-    data: "[18,19]"
+    data: "[0]"
     excepted:
       statusCode: 400
 
   # 删除中存在没有的用户
   - describe: "删除中存在没有的用户"
-    data: "[5,18]"
+    data: "[${ids[2]},0]"
     excepted:
       statusCode: 400
 
@@ -41,7 +42,13 @@ default-test-data:
       statusCode: 400
       message: JSON parse error
 
-#  # 删除用户时，禁止删除自己
+  # 正确删除用例1
+  - describe: "正确删除用例1"
+    data: "[${ids[2]}]"
+    excepted:
+      statusCode: 200
+
+#  # 删除用户时，禁止删除自己；该功能再接口层未做设置
 #  - describe: "删除禁止删除的管理员用户"
 #    data: "[1]"
 #    excepted:

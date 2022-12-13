@@ -1,15 +1,14 @@
 package api.configure;
 
 import api.ApiObject;
+import api.configure.option.ConfigureOptions;
 import api.configure.strategy.StrategyFactory;
 import common.YamlMapper;
 import util.MapUtil;
 import util.PathUtil;
-import util.ReadFileUtil;
 
-import java.io.IOException;
 import java.util.Map;
-import static api.configure.ConfigureOptions.*;
+import static api.configure.option.ConfigureOptions.*;
 
 /**
  * @ClassName GeneralConfigure

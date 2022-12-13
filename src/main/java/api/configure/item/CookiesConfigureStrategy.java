@@ -1,7 +1,7 @@
 package api.configure.item;
 
 import api.ApiObject;
-import api.configure.ConfigureOptions;
+import api.configure.option.ConfigureOptions;
 import api.configure.GeneralConfigure;
 import api.configure.strategy.ConfigureStrategy;
 

@@ -3,11 +3,9 @@ package common;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static org.assertj.core.api.Assertions.*;
 import lombok.Data;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -22,15 +20,11 @@ import java.util.Set;
 @Data
 public class ResponseHandle {
     private Response response;
-    private InterfaceRun runner;
 
     /**
-     * 需要使用到对于运行类的一些属性（protected属性），所以需要指定
-     * @param alreadyRunning 运行类的对象
      * @param response 与运行类对应的响应信息
      */
-    public ResponseHandle(InterfaceRun alreadyRunning,Response response){
-        setRunner(alreadyRunning);
+    public ResponseHandle(Response response){
         setResponse(response);
     }
 
@@ -58,17 +52,8 @@ public class ResponseHandle {
         return jsonPath().getJsonObject(path);
     }
 
-    /**
-     * 验证JsonSchema
-     */
-    public ResponseHandle verifyJsonSchema(){
-        verifyJsonSchema(runner.interfaceConfigure.getJsonSchema());
-        return this;
-    }
-
-    public ResponseHandle verifyJsonSchema(String jsonScheme){
-        response.then().assertThat()
-                .body(matchesJsonSchema(jsonScheme));
+    private ResponseHandle verifyStatusCode(Integer code){
+        response.then().statusCode(code);
         return this;
     }
 
@@ -84,10 +69,4 @@ public class ResponseHandle {
         }
         return this;
     }
-
-    private ResponseHandle verifyStatusCode(Integer code){
-        response.then().statusCode(code);
-        return this;
-    }
-
 }

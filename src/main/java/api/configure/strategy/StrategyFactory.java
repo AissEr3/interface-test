@@ -1,6 +1,6 @@
 package api.configure.strategy;
 
-import api.configure.ConfigureOptions;
+import api.configure.option.ConfigureOptions;
 import api.configure.item.BaseConfigureStrategy;
 import api.configure.item.CookiesConfigureStrategy;
 import api.configure.item.HeadersConfigureStrategy;

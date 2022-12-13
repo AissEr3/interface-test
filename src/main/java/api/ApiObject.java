@@ -20,6 +20,8 @@ import java.util.Map;
 @ToString
 @Builder
 public class ApiObject {
+    private String apiName;
+
     private String baseURI;
 
     private String port;

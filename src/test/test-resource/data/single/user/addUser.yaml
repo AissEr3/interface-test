@@ -1,8 +1,9 @@
 interface-info:
+  apiName: "addUser"
   path: /api/users
   requestType: post
   dataPlaceIn: body
-default-test-data:
+single-test-data:
   # 正确用例 1
   - describe: "正确用例 1"
     data: '{"username":"test100","nickName":"AissEr","gender":"男","email":"123459@qq.com"
@@ -13,7 +14,7 @@ default-test-data:
   # 正确用例 2
   - describe: "正确用例 2"
     data: '{"username": "test101","nickName": "AissEr","gender": "男","email": "123450@qq.com"
-    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 13212341215}'
+    ,"enabled": "true","roles":[{"id":2}],"jobs":[{"id": 12}],"dept": { "id": 6 },"phone": 13212341215}'
     excepted:
       statusCode: 201
 

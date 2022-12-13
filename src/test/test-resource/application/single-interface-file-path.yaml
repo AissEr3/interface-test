@@ -1,5 +1,5 @@
 # 用户管理类
 001_addUser: "/user/addUser.yaml"
-002_updateUser: "/user/updateUser.yaml"
-003_queryUser: "/user/queryUser.yaml"
+002_queryUser: "/user/queryUser.yaml"
+003_updateUser: "/user/updateUser.yaml"
 004_deleteUser: "/user/deleteUser.yaml"

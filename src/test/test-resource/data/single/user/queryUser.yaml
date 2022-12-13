@@ -1,26 +1,23 @@
 interface-info:
+  apiName: "queryUser"
   path: /api/users
   requestType: get
   dataPlaceIn: query
-default-test-data:
+single-test-data:
   # 正确用例 1
   - describe: "正确用例 1"
-    data:
-      page: 0
-      size: 10
-      sort: id,desc
+    data: { page: 0, size: 10, sort: "id,desc" }
     excepted:
       content[0].username: "test102"
-      content[1].username: "test003"
-      content[2].username: "test002"
+      content[1].username: "test101"
+      content[2].username: "test100"
       statusCode: 200
+    addRelevanceData:
+      content.id: "ids" #list
 
   # 正确用例 2
   - describe: "正确用例 2"
-    data:
-      page: 0
-      size: 1
-      sort: id,desc
+    data: { page: 0, size: 1, sort: "id,desc" }
     excepted:
       content[0].username: "test102"
       statusCode: 200

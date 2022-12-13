@@ -1,8 +1,9 @@
 package common;
 
 import api.ApiObject;
-import api.configure.ConfigureOptions;
+import api.configure.option.ConfigureOptions;
 import api.configure.InterfaceConfigure;
+import api.configure.option.TestModuleOptions;
 import api.configure.strategy.StrategyFactory;
 import api.manage.login.LoginResponseInfo;
 import api.manage.login.LoginResponseInfoManage;
@@ -13,6 +14,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @ClassName InterfaceRun
@@ -81,7 +83,7 @@ public class InterfaceRun implements InterfaceTest{
      * 获取配置文件中的测试数据，此测试数据是用来测试单接口的
      * @return 单接口测试数据
      */
-    public List<Map<String, Object>> getDefaultTestData(){
+    public List<Map<String, ?>> getSingleTestData(){
         if(INTERFACE_CONFIGURE_FILE_PATH != null){
             return interfaceConfigure.getTestData();
         }
@@ -89,23 +91,16 @@ public class InterfaceRun implements InterfaceTest{
     }
 
     /**
-     * 无参数的请求
-     */
-    @Override
-    public ResponseHandle request() {
-        configureGiven();
-        return runInterface();
-    }
-
-    /**
-     * @param data 接口请求需要的参数
+     * @param data 接口请求需要的参数，可以为null——null代表为空
      * @param <T> 如果数据在body里，可以任意类型；如果数据在其他地方，只能使用Map<String,?>
      */
     @Override
     public <T> ResponseHandle request(T data){
         configureGiven();
-        addData(data);
-        return runInterface();
+        if(data != null){
+            addData(data);
+        }
+        return new ResponseHandle(runInterface());
     }
 
     /**
@@ -138,14 +133,15 @@ public class InterfaceRun implements InterfaceTest{
     private<T> void addData(T data){
         String dataPlace = apiObject.getDataPlaceIn();
         if(dataPlace.equals("body")){
-            given.body(data);
+            given.body(RelevanceVariable.replaceByRelevanceVariable((String) data));
         }
         // params可以匹配除body方法以外的所有方法
         else if(data instanceof Map){
-            given.params((Map<String,?>)data);
+            RelevanceVariable.replaceByRelevanceVariable((Map<String,Object>) data);
+            given.params((Map<String,?>) data);
         }
         else {
-            throw new RuntimeException("data type must map");
+            throw new RuntimeException("data type must be map");
         }
     }
 
@@ -153,9 +149,9 @@ public class InterfaceRun implements InterfaceTest{
      * 运行接口，根据指定的请求类型运行接口，没有指定默认发送get请求
      * @return 返回对应的响应处理类
      */
-    private ResponseHandle runInterface(){
-        // java switch新特性（jdk14及以上）
+    private Response runInterface(){
         String path = apiObject.getPath();
+        // java switch新特性（jdk14及以上）
         Response response = switch (apiObject.getRequestType()){
             case GET -> given.get(path);
             case POST -> given.post(path);
@@ -163,14 +159,7 @@ public class InterfaceRun implements InterfaceTest{
             case DELETE -> given.delete(path);
             default -> given.get(path);
         };
-        return new ResponseHandle(this,response);
-    }
-
-    public boolean hasJsonScheme(){
-        if(INTERFACE_CONFIGURE_FILE_PATH == null || interfaceConfigure.getJsonSchema() == null){
-            return false;
-        }
-        return true;
+        return response;
     }
 
     /**
@@ -197,7 +186,7 @@ public class InterfaceRun implements InterfaceTest{
             ConfigureLogin.header(apiObject,loginInfo);
         }
 
-        public void changeDefaultUser(){
+        public void changeToDefaultUser(){
             loginInfo = null;
         }
 

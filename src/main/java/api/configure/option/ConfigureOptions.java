@@ -1,4 +1,4 @@
-package api.configure;
+package api.configure.option;
 
 /**
  * 简易约定、管理配置文件可配置项信息
@@ -8,7 +8,7 @@ package api.configure;
 public enum ConfigureOptions {
 
     /**
-     * 基础信息配置项
+     * -----------基础信息配置项-----------
      */
     ROOT_OPTION("test-config",
              new String[] {"common","basePath","default-loginMessage","login-headers","login-cookies"}),
@@ -24,14 +24,10 @@ public enum ConfigureOptions {
     LOGIN_COOKIES("login-cookies"),
 
     /**
-     * 单独接口信息配置项
+     * -----------单独接口信息配置项-----------
      */
     INTERFACE_INFO("interface-info",
-            new String[]{"path","requestType","contentType","dataPlaceIn"}),
-
-    TEST_DATA("default-test-data"),
-
-    JSON_SCHEME("json-schema");
+            new String[]{"apiName","path","requestType","contentType","dataPlaceIn"});
 
 
     private String name;

@@ -1,14 +1,14 @@
 package api.configure;
 
 import api.ApiObject;
+import api.configure.option.ConfigureOptions;
+import api.configure.option.TestModuleOptions;
 import api.configure.strategy.StrategyFactory;
 import common.YamlMapper;
 
 import java.io.File;
 import java.util.List;
 import java.util.Map;
-
-import static api.configure.ConfigureOptions.*;
 
 /**
  * @ClassName InterfaceConfigure
@@ -37,9 +37,9 @@ public class InterfaceConfigure extends AbstractConfigure {
      */
     @Override
     public void configure(ApiObject object) {
-        Map<String,Object> resultMap = (Map<String, Object>) applicationMap.get(INTERFACE_INFO.getName());
+        Map<String,Object> resultMap = (Map<String, Object>) applicationMap.get(ConfigureOptions.INTERFACE_INFO.getName());
         if(resultMap != null) {
-            StrategyFactory.createStrategy(INTERFACE_INFO).alterConfigureContent(object, resultMap);
+            StrategyFactory.createStrategy(ConfigureOptions.INTERFACE_INFO).alterConfigureContent(object, resultMap);
         }
     }
 
@@ -54,14 +54,7 @@ public class InterfaceConfigure extends AbstractConfigure {
     /**
      * @return 获取配置文件中设置的单接口测试数据
      */
-    public List<Map<String,Object>> getTestData(){
-        return (List<Map<String,Object>>) applicationMap.get(TEST_DATA.getName());
-    }
-
-    /**
-     * @return 获取配置文件中设置的JsonSchema
-     */
-    public String getJsonSchema(){
-        return (String) applicationMap.get(JSON_SCHEME.getName());
+    public List<Map<String,?>> getTestData(){
+        return (List<Map<String,?>>) applicationMap.get(TestModuleOptions.SINGLE_TEST_DATA.getName());
     }
 }

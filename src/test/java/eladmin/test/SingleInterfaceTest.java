@@ -2,14 +2,13 @@ package eladmin.test;
 
 
 import common.InterfaceRun;
+import common.RelevanceVariable;
 import common.ResponseHandle;
-import common.TestDataOptions;
+import api.configure.option.TestModuleOptions;
 import common.YamlMapper;
 import org.junit.jupiter.api.*;
 
 import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @ClassName SingleInterfaceTest
@@ -33,7 +32,7 @@ public class SingleInterfaceTest {
     }
 
     /**
-     * Junit5的动态测试，解决了困扰我1个月的问题
+     * Junit5的动态测试
      * 该方法为：驱动测试方法，驱动核心代码的运行，调整好测试用例运行队列
      * @return
      */
@@ -49,8 +48,8 @@ public class SingleInterfaceTest {
             // 设置该单接口测试用例列表，最终将列表放入测试用例容器中，即将所有用例放入容器
             List<DynamicTest> list = new ArrayList<>();
             // 获取配置文件的测试数据（每条测试用例），迭代取出
-            currentInterface.getDefaultTestData().forEach(data -> {
-                String describe = (String) data.get(TestDataOptions.DESCRIBE.keyName());
+            currentInterface.getSingleTestData().forEach(data -> {
+                String describe = (String) data.get(TestModuleOptions.DESCRIBE.getName());
                 /*
                  *  将该条测试用例，加入测试用例容器；
                  *  runTest方法，就是测试用例执行方法
@@ -68,20 +67,34 @@ public class SingleInterfaceTest {
         return result;
     }
 
-    private void runTest(Map<String,Object> data,InterfaceRun currentInterface){
-        ResponseHandle responseHandle = currentInterface.request(data.get(TestDataOptions.DATA.keyName()));
-        Object excepted = data.get(TestDataOptions.EXCEPTED.keyName());
+    // 执行运行
+    private static void runTest(Map<String,?> data,InterfaceRun currentInterface){
+        // 发送请求
+        ResponseHandle responseHandle = currentInterface.request(data.get(TestModuleOptions.DATA.getName()));
+
+        // 检查是否要添加将响应数据作为关联数据
+        Map<String,Object> relevance = (Map<String, Object>)
+                data.get(TestModuleOptions.ADD_RELEVANCE_DATA.getName());
+        if(relevance != null){
+            Set<String> keys = relevance.keySet();
+            for(String key : keys){
+                Object jsonObject = responseHandle.getJsonObject(key);
+                RelevanceVariable.addRelevanceVariable((String) relevance.get(key),jsonObject);
+            }
+        }
+
+        // 验证断言是否通过
+        Object excepted = data.get(TestModuleOptions.EXCEPTED.getName());
         if(excepted != null){
-            responseHandle.verifyExcepted((Map<String,?>)excepted);
+            responseHandle.verifyExcepted((Map<String,?>) excepted);
         }
     }
 
-    private void sortSingle(ArrayList<DynamicContainer> dynamicContainers){
+    private static void sortSingle(ArrayList<DynamicContainer> dynamicContainers){
         // 排一次序，否则有可能是乱序的；编译器提示不准确，不能省略该代码！！！
         dynamicContainers.sort(
                 (DynamicContainer d1, DynamicContainer d2) ->
                         d1.getDisplayName().compareTo(d2.getDisplayName())
         );
     }
-
 }
