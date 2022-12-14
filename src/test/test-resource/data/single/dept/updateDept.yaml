@@ -1,0 +1,36 @@
+interface-info:
+  apiName: "updateDept"
+  path: /api/dept
+  requestType: put
+  dataPlaceIn: body
+single-test-data:
+  - describe: "将子部门修改为顶级部门"
+    data:  '{"id":${subIds[0]},"name":"修改部门1","isTop":"1",
+    "subCount":0,"pid":null,"deptSort":992,"enabled":"true"}'
+    excepted:
+      statusCode: 204
+
+  - describe: "将顶级部门修改为子部门"
+    data: '{"id":${subIds[0]},"name":"修改部门2","isTop":"0",
+    "subCount":0,"pid":${topDeptId},"deptSort":992,"enabled":"true"}'
+    excepted:
+      statusCode: 204
+
+  - describe: "错误创建部门（名称为空）"
+    data:  '{"id":${subIds[0]},"name":"","isTop":"0",
+    "subCount":0,"pid":${topDeptId},"deptSort":992,"enabled":"true"}'
+    excepted:
+      statusCode: 400
+      message: name error
+
+  - describe: "错误创建部门（isTop非0和1）"
+    data:  '{"id":${subIds[0]},"name":"修改部门2","isTop":"2",
+    "subCount":0,"pid":${topDeptId},"deptSort":992,"enabled":"true"}'
+    excepted:
+      statusCode: 204
+
+  - describe: "错误创建部门（isTop为1，指定父pid）"
+    data:  '{"id":${subIds[0]},"name":"修改部门2","isTop":"1",
+    "subCount":0,"pid":${topDeptId},"deptSort":992,"enabled":"true"}'
+    excepted:
+      statusCode: 204

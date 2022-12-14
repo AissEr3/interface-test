@@ -17,7 +17,6 @@ import java.util.*;
  * @Version 1.0
  * @Description 对单接口进行测试
  **/
-
 public class SingleInterfaceTest {
     private static Map<String,String> pathMap  = new HashMap<>();
 
@@ -55,7 +54,7 @@ public class SingleInterfaceTest {
                  *  runTest方法，就是测试用例执行方法
                  *  DynamicTest.dynamicTest（）方法是创建一条测试用例
                  */
-                list.add(DynamicTest.dynamicTest(interfaceName+":"+describe,() -> runTest(data,currentInterface)));
+                list.add(DynamicTest.dynamicTest(interfaceName+"："+describe,() -> runTest(data,currentInterface)));
             });
             // 这个接口的数据都变成了测试用例，并放在同一个测试用例容器里，将容器放入容器列表中
             // 测试用例容器列表是给Junit5，让他帮我们测试的
@@ -82,7 +81,7 @@ public class SingleInterfaceTest {
                 RelevanceVariable.addRelevanceVariable((String) relevance.get(key),jsonObject);
             }
         }
-
+        responseHandle.then().log().all();
         // 验证断言是否通过
         Object excepted = data.get(TestModuleOptions.EXCEPTED.getName());
         if(excepted != null){

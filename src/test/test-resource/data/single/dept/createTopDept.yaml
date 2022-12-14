@@ -1,0 +1,11 @@
+interface-info:
+  apiName: "addDept"
+  path: /api/dept
+  requestType: post
+  dataPlaceIn: body
+single-test-data:
+  - describe: "正确创建顶级部门"
+    data:  '{"name":"测试分部","isTop":"1","subCount":0,"pid":null,
+    "deptSort":999,"enabled":"true"}'
+    excepted:
+      statusCode: 201

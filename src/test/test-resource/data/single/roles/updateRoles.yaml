@@ -1,0 +1,51 @@
+interface-info:
+  apiName: "updateRoles"
+  path: /api/roles
+  requestType: put
+  dataPlaceIn: body
+single-test-data:
+  # 正确用例
+  - describe: "正确用例 1"
+    data: '{"id":${ids[2]},"name":"test","description":"des","dataScope":"本级","level":2}'
+    excepted:
+      statusCode: 204
+
+  # 错误用例（名称重复）
+  - describe: "错误用例（名称重复）"
+    data: '{"id":${ids[2]},"name":"test03","description":"test","dataScope":"全部","level":3}'
+    excepted:
+      message: username test03 existed
+      statusCode: 400
+
+  # 错误用例（名称为空）
+  - describe: "错误用例（名称为空）"
+    data: '{"id":${ids[2]},"name":"","description":"test","dataScope":"全部","level":3}'
+    excepted:
+      message: username test02 existed
+      statusCode: 400
+
+  # 错误用例（等级为0）
+  - describe: "错误用例（等级为0）"
+    data: '{"id":${ids[2]},"name":"test","description":"test","dataScope":"全部","level":0}'
+    excepted:
+      message: 权限不足，你的角色级别：1
+      statusCode: 400
+
+  # 错误用例（等级小于0）
+  - describe: "错误用例（等级小于0）"
+    data: '{"id":${ids[2]},"name":"test","description":"test","dataScope":"全部","level":-1}'
+    excepted:
+      message: 权限不足，你的角色级别：1
+      statusCode: 400
+
+  # 错误用例（等级为空）
+  - describe: "错误用例（等级为空）"
+    data: '{"id":${ids[2]},"name":"test","description":"test","dataScope":"全部"}'
+    excepted:
+      statusCode: 400
+
+  # 错误用例（数据范围为空）
+  - describe: "错误用例（数据范围为空）"
+    data: '{"id":${ids[2]},"name":"test","description":"test","dataScope":"","level":3}'
+    excepted:
+      statusCode: 400

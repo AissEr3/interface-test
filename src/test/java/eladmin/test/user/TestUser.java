@@ -12,20 +12,20 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @ClassName TestUserTest
+ * @ClassName TestUser
  * @Author AissEr
  * @Date 2022/11/9 19:44
  * @Version 1.0
  * @Description TODO
  **/
 @Disabled
-public class TestUserTest {
+public class TestUser {
     protected static InterfaceRun currentInterface;
 
     @BeforeAll
     public static void setInterface(){
         currentInterface = new InterfaceRun(
-                "src/test/test-resource/data/single/user/updateUser.yaml");
+                "src/test/test-resource/data/single/dept/createTopDept.yaml");
     }
 
     public static List<Map<String,?>> testData() {
@@ -36,6 +36,5 @@ public class TestUserTest {
     @ParameterizedTest
     void addUserTest(Map<String,Object> data){
         currentInterface.request(data.get("data")).then().log().all();
-        System.out.println(RelevanceVariable.relevanceData);
     }
 }

@@ -45,15 +45,11 @@ public class RelevanceVariable {
                 List relevanceVariable = (List) getRelevanceVariable(realName);
                 // 将其转换为字符串，但要注意是否为数字类型
                 Object o = relevanceVariable.get(Integer.parseInt(index));
-                if(o instanceof Number){
-                    replacement = String.valueOf(o);
-                }else {
-                    replacement = (String) o;
-                }
+                replacement = objToString(o);
             }
             // 否则直接匹配
             else {
-                replacement = (String) getRelevanceVariable(name);
+                replacement = objToString(getRelevanceVariable(name));
             }
             result = result.replace(replaced, replacement);
         }
@@ -70,6 +66,14 @@ public class RelevanceVariable {
                 String value = replaceByRelevanceVariable((String) o);
                 map.replace(key,value);
             }
+        }
+    }
+
+    private static String objToString(Object obj){
+        if(obj instanceof Number){
+            return String.valueOf(obj);
+        }else {
+            return (String) obj;
         }
     }
 }

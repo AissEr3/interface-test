@@ -1,11 +1,13 @@
 package common;
 
 import io.restassured.path.json.JsonPath;
+import io.restassured.path.json.exception.JsonPathException;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import static org.assertj.core.api.Assertions.*;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -59,14 +61,46 @@ public class ResponseHandle {
 
     public ResponseHandle verifyExcepted(Map<String,?> excepted){
         Set<String> keys = excepted.keySet();
+        RelevanceVariable.replaceByRelevanceVariable((Map<String, Object>) excepted);
         for(String key : keys){
-            if(!key.equals("statusCode")){
-                assertThat((String) getJsonObject(key)).contains((String)excepted.get(key));
-            }
-            else {
+            if(key.equals("statusCode")){
                 verifyStatusCode((Integer) excepted.get(key));
+                continue;
+            }
+            try{
+                Object jsonObject = getJsonObject(key);
+                if(jsonObject != null){
+                    assertByType(excepted.get(key),jsonObject);
+                }
+            }catch (JsonPathException e){
+                fail("no response data");
             }
         }
         return this;
+    }
+
+    private void assertByType(Object excepted, Object actual){
+        if(actual instanceof String){
+            if(excepted instanceof Number){
+                assertThat((String) actual).contains(String.valueOf(excepted));
+            }
+            else {
+                assertThat((String) actual).contains((String) excepted);
+            }
+        }
+        else if(actual instanceof Number){
+            if(excepted instanceof String){
+                assertThat(String.valueOf(actual)).isEqualTo(excepted);
+            }
+            else {
+                assertThat(actual).isEqualTo(excepted);
+            }
+        }
+        else if(actual instanceof List){
+            assertThat((List) actual).contains(excepted);
+        }
+        else {
+            fail("not fount assert method, default to fail");
+        }
     }
 }

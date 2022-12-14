@@ -4,27 +4,111 @@ interface-info:
   requestType: put
   dataPlaceIn: body
 single-test-data:
-  - describe: "正确用例 1"
-    data: '{"id":${ids[0]},"username":"test001","nickName":"test002","gender":"男","email":"5500002@qq.com"
+  - describe: "正确修改"
+    data: '{"id":${ids[2]},"username":"test001","nickName":"test002","gender":"男","email":"5500002@qq.com"
         ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":8}],"dept":{"id":5,"name":"运维部"},
         "phone":"13412340001","createBy":"admin","createTime":"2022-11-09 19:04:13",
         "updateBy":"admin","updateTime":"2022-11-09 19:04:13"}'
     excepted:
       statusCode: 204
 
-  - describe: "正确用例 2"
-    data: '{"id":${ids[1]}, "username": "test002","nickName": "test003","gender": "男","email": "5500003@qq.com"
-          ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 8 } ],"dept": { "id": 5,"name": "运维部" },
-          "phone": "13412340002","createBy": "admin","createTime": "2022-11-09 19:04:13",
-          "updateBy": "admin","updateTime": "2022-11-09 19:04:13" }'
+  - describe: "正确修改（缺少字段非必要字段）"
+    data: '{"id":${ids[2]},"username":"test001","nickName":"test002","gender":"男","email":"5500002@qq.com"
+        ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":8}],"dept":{"id":5,"name":"运维部"},
+        "phone":"13412340001"}'
     excepted:
       statusCode: 204
 
-  - describe: "正确用例 3"
-    data: '{"id":${ids[2]}, "username": "test003","nickName": "test003","gender": "男","email": "5500004@qq.com"
-            ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 8 } ],"dept": { "id": 5,"name": "运维部" },
-            "phone": "13412340003","createBy": "admin","createTime": "2022-11-09 19:04:13",
-            "updateBy": "admin","updateTime": "2022-11-09 19:04:13" }'
+  - describe: "错误修改（用户名重复）"
+    data: '{"id":${ids[2]},"username":"test101","nickName":"test002","gender":"男","email":"5500002@qq.com"
+        ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":8}],"dept":{"id":5,"name":"运维部"},
+        "phone":"13412340001"}'
     excepted:
-      statusCode: 204
+      statusCode: 400
+      message: username test101 existed
 
+  - describe: "错误修改（用户名少于2位）"
+    data: '{"id":${ids[2]},"username":"1","nickName":"test002","gender":"男","email":"5500002@qq.com"
+        ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":8}],"dept":{"id":5,"name":"运维部"},
+        "phone":"13412340001"}'
+    excepted:
+      statusCode: 400
+      message: username error
+
+  - describe: "错误修改（用户名多于20位）"
+    data: '{"id":${ids[2]},"username":"test2test2test2test21","nickName":"test002","gender":"男"
+    ,"email":"5500002@qq.com","enabled":"true","roles":[{"id":2}],"jobs":[{"id":8}]
+    ,"dept":{"id":5,"name":"运维部"},"phone":"13412340001"}'
+    excepted:
+      statusCode: 400
+      message: username error
+
+  - describe: "错误修改（邮箱重复）"
+    data: '{"id":${ids[2]},"username":"test001","nickName":"test002","gender":"男","email":"123450@qq.com"
+        ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":8}],"dept":{"id":5,"name":"运维部"},
+        "phone":"13412340001"}'
+    excepted:
+      statusCode: 400
+      message: email 123450@qq.com existed
+
+  - describe: "错误修改（邮箱格式错误）"
+    data: '{"id":${ids[2]},"username":"test001","nickName":"test002","gender":"男","email":"123450qq.com"
+        ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":8}],"dept":{"id":5,"name":"运维部"},
+        "phone":"13412340001"}'
+    excepted:
+      statusCode: 400
+      message: email error
+
+  - describe: "错误修改（邮箱为空）"
+    data: '{"id":${ids[2]},"username":"test001","nickName":"test002","gender":"男","email":""
+      ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":8}],"dept":{"id":5,"name":"运维部"},
+      "phone":"13412340001"}'
+    excepted:
+      statusCode: 400
+      message: email error
+
+  - describe: "错误修改（电话重复）"
+    data: '{"id":${ids[2]},"username":"test001","nickName":"test002","gender":"男","email":"5500002@qq.com"
+      ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":8}],"dept":{"id":5,"name":"运维部"},
+      "phone":"13212341215"}'
+    excepted:
+      statusCode: 400
+      message: phone 13212341215 existed
+
+  - describe: "错误修改（电话为空）"
+    data: '{"id":${ids[2]},"username":"test001","nickName":"test002","gender":"男","email":"5500002@qq.com"
+        ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":8}],"dept":{"id":5,"name":"运维部"},
+        "phone":""}'
+    excepted:
+      statusCode: 400
+      message: phone error
+
+  - describe: "错误修改（电话少于11位）"
+    data: '{"id":${ids[2]},"username":"test001","nickName":"test002","gender":"男","email":"5500002@qq.com"
+        ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":8}],"dept":{"id":5,"name":"运维部"},
+        "phone":"1341234000"}'
+    excepted:
+      statusCode: 400
+      message: phone error
+
+  - describe: "错误修改（电话多于11位）"
+    data: '{"id":${ids[2]},"username":"test001","nickName":"test002","gender":"男","email":"5500002@qq.com"
+        ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":8}],"dept":{"id":5,"name":"运维部"},
+        "phone":"134123400010"}'
+    excepted:
+      statusCode: 400
+      message: phone error
+
+  - describe: "错误修改（电话包含字母字符）"
+    data: '{"id":${ids[2]},"username":"test001","nickName":"test002","gender":"男","email":"5500002@qq.com"
+        ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":8}],"dept":{"id":5,"name":"运维部"},
+        "phone":"1341234000a"}'
+    excepted:
+      statusCode: 400
+      message: phone error
+
+  - describe: "错误修改(缺少必要字段)"
+    data: '{"id":${ids[2]},"username":"test001"}'
+    excepted:
+      statusCode: 400
+      message: "is null"

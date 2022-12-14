@@ -1,0 +1,21 @@
+interface-info:
+  apiName: "getDept"
+  path: /api/dept
+  requestType: get
+  dataPlaceIn: query
+single-test-data:
+  - describe: "根据顶级id查询其子部门"
+    data:
+      pid: ${topDeptId}
+    excepted:
+      content[0].pid: ${topDeptId}
+      statusCode: 200
+    addRelevanceData:
+      content.id: "subIds" #list
+
+  - describe: "查询不存在的id"
+    data:
+      pid: 0
+    excepted:
+      totalElement: 0
+      statusCode: 200

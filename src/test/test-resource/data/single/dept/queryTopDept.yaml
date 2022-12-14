@@ -1,0 +1,48 @@
+interface-info:
+  apiName: "getDept"
+  path: /api/dept
+  requestType: get
+  dataPlaceIn: query
+single-test-data:
+  - describe: "查询顶级部门id"
+    data:  { page: 0, sort: "id,decs" }
+    excepted:
+      statusCode: 200
+    addRelevanceData:
+      content[2].id: "topDeptId"
+
+  - describe: "带条件正确查询出数据"
+    data: { page: 0, size: 1, sort: "id", name: "测试", enable: true }
+    excepted:
+      content[0].name: "测试"
+      statusCode: 200
+
+  - describe: "查询不出数据的情况"
+    data: { page: 0, size: 1, sort: "id", name: "测试", enable: false }
+    excepted:
+      content[0].name: "测试"
+      statusCode: 200
+
+  - describe: "默认排序查询数据"
+    data: { page: 0, size: 1 }
+    excepted:
+      content[0].username: "华南分部"
+      statusCode: 200
+
+  - describe: "size默认值验证"
+    data: { page: 0 }
+    excepted:
+      content[0].username: "华南分部"
+      statusCode: 200
+
+  - describe: "page默认值验证"
+    data: { size: 1 }
+    excepted:
+      content[0].username: "华南分部"
+      statusCode: 200
+
+  - describe: "请求参数为空"
+    data: {}
+    excepted:
+      content[0].username: "华南分部"
+      statusCode: 200

@@ -1,0 +1,39 @@
+interface-info:
+  apiName: "addDept"
+  path: /api/dept
+  requestType: post
+  dataPlaceIn: body
+single-test-data:
+  - describe: "正确创建子部门1"
+    data:  '{"name":"部门1","isTop":"0","subCount":0,"pid":${topDeptId}
+    ,"deptSort":996,"enabled":"true"}'
+    excepted:
+      statusCode: 201
+
+  - describe: "正确创建子部门2"
+    data:  '{"name":"部门2","isTop":"0","subCount":0,"pid":${topDeptId}
+    ,"deptSort":996,"enabled":"true"}'
+    excepted:
+      statusCode: 201
+
+  - describe: "错误创建部门（名称为空）"
+    data:  '{"name":"","isTop":"0","subCount":0,"pid":${topDeptId}
+    ,"deptSort":996,"enabled":"true"}'
+    excepted:
+      statusCode: 400
+      message: name error
+
+  - describe: "错误创建部门（isTop非0和1）"
+    data:  '{"name":"部门3","isTop":"2","subCount":0,"pid":${topDeptId}
+    ,"deptSort":996,"enabled":"true"}'
+    excepted:
+      statusCode: 201
+
+  - describe: "错误创建部门（isTop为1，指定父pid）"
+    data:  '{"name":"部门4","isTop":"1","subCount":0,"pid":${topDeptId}
+    ,"deptSort":996,"enabled":"true"}'
+    excepted:
+      statusCode: 201
+
+
+

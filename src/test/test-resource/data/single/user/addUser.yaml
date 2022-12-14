@@ -25,7 +25,7 @@ single-test-data:
     excepted:
       statusCode: 201
 
-  # 用户名错误（重复）
+  # 用户名错误
   - describe: "用户名错误（重复）"
     data: '{"username": "test102","nickName": "AissEr","gender": "男","email": "123452@qq.com"
     ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 13212341217}'
@@ -33,18 +33,110 @@ single-test-data:
       message: "username test102 existed"
       statusCode: 400
 
-  # email错误（重复）
+  - describe: "用户名错误（为空）"
+    data: '{"username": "","nickName": "AissEr","gender": "男","email": "123452@qq.com"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 13212341217}'
+    excepted:
+      message: ""
+      statusCode: 400
+
+  - describe: "用户名错误（少于2位）"
+    data: '{"username": "t","nickName": "AissEr","gender": "男","email": "email3@qq.com"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone":13212341218}'
+    excepted:
+      message: ""
+      statusCode: 400
+
+  - describe: "用户名错误（多于20位）"
+    data: '{"username": "test1test1test1test11","nickName": "AissEr","gender": "男","email": "email4@qq.com"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone":13212341219}'
+    excepted:
+      message: ""
+      statusCode: 400
+
+  # email错误
   - describe: "email错误（重复）"
     data: '{"username": "test103","nickName": "AissEr","gender": "男","email": "123451@qq.com"
-    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 13212341217}'
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 13212341220}'
     excepted:
       message: "email 123451@qq.com existed"
       statusCode: 400
 
-  # 手机号错误（重复）
-  - describe: "手机号错误（重复）"
-    data: '{"username": "test103","nickName": "AissEr","gender": "男","email": "123452@qq.com"
-    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 13212341216}'
+  - describe: "email格式错误（缺少@）"
+    data: '{"username": "test104","nickName": "AissEr","gender": "男","email": "123451qq.com"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 13212341221}'
     excepted:
-      message: "phone 13212341216 existed"
+      message: "email error"
+      statusCode: 400
+
+  - describe: "email错误（缺少后缀）"
+    data: '{"username": "test105","nickName": "AissEr","gender": "男","email": "123451"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 13212341222}'
+    excepted:
+      message: "email error"
+      statusCode: 400
+
+  - describe: "email错误（缺少前缀）"
+    data: '{"username": "test106","nickName": "AissEr","gender": "男","email": "@qq.com"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 13212341223}'
+    excepted:
+      message: "email error"
+      statusCode: 400
+
+  # 昵称错误
+  - describe: "昵称错误（为空）"
+    data: '{"username": "test107","nickName": "","gender": "男","email": "errornick1@qq.com"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 13212341224}'
+    excepted:
+      message: "nickName not null"
+      statusCode: 400
+
+  - describe: "昵称错误（少于2位）"
+    data: '{"username": "test108","nickName": "1","gender": "男","email": "errornick2@qq.com"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 13212341225}'
+    excepted:
+      message: "nickName error"
+      statusCode: 400
+
+  - describe: "昵称错误（多于20位）"
+    data: '{"username": "test109","nickName": "aiss0aiss0aiss0aiss01","gender": "男","email": "errornick3@qq.com"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 13212341226}'
+    excepted:
+      message: "nickName error"
+      statusCode: 400
+
+  # 手机号错误
+  - describe: "手机号错误（重复）"
+    data: '{"username": "test110","nickName": "AissEr","gender": "男","email": "phoneerror01@qq.com"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 13212341213}'
+    excepted:
+      message: "phone 13212341213 existed"
+      statusCode: 400
+
+  - describe: "手机号错误（少于11位）"
+    data: '{"username": "test111","nickName": "AissEr","gender": "男","email": "phoneerror02@qq.com"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 1321234122}'
+    excepted:
+      message: "phone error"
+      statusCode: 400
+
+  - describe: "手机号错误（多于11位）"
+    data: '{"username": "test112","nickName": "AissEr","gender": "男","email": "phoneerror03@qq.com"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": 132123412233}'
+    excepted:
+      message: "phone error"
+      statusCode: 400
+
+  - describe: "手机号错误（包含字母）"
+    data: '{"username": "test114","nickName": "AissEr","gender": "男","email": "phoneerror04@qq.com"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": "1321234122a"}'
+    excepted:
+      message: "phone error"
+      statusCode: 400
+
+  - describe: "手机号错误（为空）"
+    data: '{"username": "test113","nickName": "AissEr","gender": "男","email": "phoneerror05@qq.com"
+    ,"enabled": "true","roles": [ { "id": 2 } ],"jobs": [ { "id": 12 } ],"dept": { "id": 6 },"phone": ""}'
+    excepted:
+      message: "phone error"
       statusCode: 400

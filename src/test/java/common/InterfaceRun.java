@@ -9,12 +9,12 @@ import api.manage.login.LoginResponseInfo;
 import api.manage.login.LoginResponseInfoManage;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @ClassName InterfaceRun
