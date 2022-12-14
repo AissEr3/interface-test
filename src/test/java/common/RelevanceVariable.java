@@ -11,11 +11,18 @@ import java.util.regex.Pattern;
  * @Author AissEr
  * @Date 2022/12/11 21:10
  * @Version 1.0
- * @Description 实现关联操作，如果
+ * @Description 实现关联操作
  **/
 public class RelevanceVariable {
-    private static final Pattern REGULAR = Pattern.compile("\\$\\{((\\w+)|(\\w+\\[\\d+\\]))\\}{1}");
-    public static Map<String, Object> relevanceData = new HashMap<>();
+    /**
+     *  默认的使用关联的正则表达式，
+     *  如 ${name}，找出关联数据集中，名称为name的数据
+     *  如 ${ids[1]}，找出存入关联数据集中，名称为ids的列表，取出列表中第二个元素
+     */
+    private static final Pattern DEFAULT_REGULAR = Pattern.compile("\\$\\{((\\w+)|(\\w+\\[\\d+\\]))\\}{1}");
+    // 可以修改匹配规则（默认规则，${key}），指定对应的匹配表达式即可，但key名称的规则仍只有以上两种
+    public static Pattern REGULAR = DEFAULT_REGULAR;
+    private static Map<String, Object> relevanceData = new HashMap<>();
 
     public static void addRelevanceVariable(String variableName, Object variableVale) {
         relevanceData.put(variableName, variableVale);

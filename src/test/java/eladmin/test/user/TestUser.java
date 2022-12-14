@@ -1,10 +1,8 @@
 package eladmin.test.user;
 
 import common.InterfaceRun;
-import common.RelevanceVariable;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -25,7 +23,7 @@ public class TestUser {
     @BeforeAll
     public static void setInterface(){
         currentInterface = new InterfaceRun(
-                "src/test/test-resource/data/single/dept/createTopDept.yaml");
+            "src/test/test-resource/data/single/dictDetail/queryDictDetail.yaml");
     }
 
     public static List<Map<String,?>> testData() {

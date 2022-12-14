@@ -1,0 +1,38 @@
+interface-info:
+  apiName: "addDictDetail"
+  path: /api/dictDetail
+  requestType: post
+  dataPlaceIn: body
+single-test-data:
+  - describe: "正确添加（所有字段都添加）"
+    data: '{"dict":{"id":${dict_ids[2]}},"label":"停止","value":"halt","dictSort":3}'
+    excepted:
+      statusCode: 201
+
+  - describe: "正确添加（重复标签名测试）"
+    data: '{"dict":{"id":${dict_ids[2]}},"label":"停止","value":"re","dictSort":4}'
+    excepted:
+      statusCode: 201
+
+  - describe: "错误添加（标签名为空）"
+    data: '{"dict":{"id":${dict_ids[2]}},"label":"","value":"re","dictSort":4}'
+    excepted:
+      statusCode: 400
+      message: label error
+
+  - describe: "错误添加（字典值为空）"
+    data: '{"dict":{"id":${dict_ids[2]}},"label":"test001","value":"","dictSort":4}'
+    excepted:
+      statusCode: 400
+      message: value error
+
+  - describe: "正确添加（排序为空纠错测试）"
+    data: '{"dict":{"id":${dict_ids[2]}},"label":"","value":"re"}'
+    excepted:
+      statusCode: 201
+
+  - describe: "错误添加（为不存在id）"
+    data: '{"dict":{"id":${dict_ids[3]}},"label":"","value":"re"}'
+    excepted:
+      statusCode: 400
+      message: dict id not fount

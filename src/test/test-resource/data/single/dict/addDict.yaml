@@ -1,0 +1,43 @@
+interface-info:
+  apiName: "addDict"
+  path: /api/dict
+  requestType: post
+  dataPlaceIn: body
+single-test-data:
+  - describe: "正确添加1（所有字段都添加）"
+    data: '{"name":"test_status_01","description":"测试状态","dictDetails":[]}'
+    excepted:
+      statusCode: 201
+
+  - describe: "正确添加2（重复）"
+    data: '{"name":"重复名称","description":"测试状态","dictDetails":[]}'
+    excepted:
+      statusCode: 201
+
+  - describe: "错误添加（名称重复）"
+    data: '{"name":"重复名称","description":"测试状态","dictDetails":[]}'
+    excepted:
+      statusCode: 400
+      message: name 重复名称 existed
+
+  - describe: "错误添加（名称为空）"
+    data: '{"name":"","description":"测试状态","dictDetails":[]}'
+    excepted:
+      statusCode: 400
+      message: name error
+
+  - describe: "正确添加（缺少描述字段）"
+    data: '{"name":"test_status_02","dictDetails":[]}'
+    excepted:
+      statusCode: 201
+
+  - describe: "正确添加（缺少字典详情字段）"
+    data: '{"name":"test_status_03","description":"测试状态"}'
+    excepted:
+      statusCode: 201
+
+  - describe: "错误添加（缺少名称字段）"
+    data: '{"description":"测试状态","dictDetails":[]}'
+    excepted:
+      statusCode: 400
+      message: could not execute statement

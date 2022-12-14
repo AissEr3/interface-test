@@ -1,0 +1,58 @@
+interface-info:
+  apiName: "queryDict"
+  path: /api/dict
+  requestType: get
+  dataPlaceIn: query
+single-test-data:
+  - describe: "不带条件正确查询出数据"
+    data: { page: 0,size: 20,sort: "id"}
+    excepted:
+      content[0].name: "user_status"
+      content[1].name: "dept_status"
+      content[2].name: "job_status"
+      statusCode: 200
+    addRelevanceData:
+      content.id: "dict_ids" #list
+
+  - describe: "带条件正确查询出数据"
+    data: { page: 0, size: 10, sort: "id", blurry: "test"}
+    excepted:
+      content[0].username: "test"
+      statusCode: 200
+
+  - describe: "带条件正确查询出数据"
+    data: { page: 0, size: 10, sort: "id,desc", blurry: "test"}
+    excepted:
+      content[0].id: "${dict_ids[8]}"
+      statusCode: 200
+
+
+  - describe: "查询不出数据的情况"
+    data: { page: 0, size: 20, sort: "id", blurry: "01test"}
+    excepted:
+      totalElements: 0
+      statusCode: 200
+
+  - describe: "默认排序查询数据"
+    data: { page: 0, size: 1}
+    excepted:
+      content[0].username: "user_status"
+      statusCode: 200
+
+  - describe: "size默认值验证"
+    data: { page: 0}
+    excepted:
+      content[0].username: "user_status"
+      statusCode: 200
+
+  - describe: "page默认值验证"
+    data: { size: 1}
+    excepted:
+      content[0].username: "user_status"
+      statusCode: 200
+
+  - describe: "请求参数为空"
+    data: {}
+    excepted:
+      content[0].username: "user_status"
+      statusCode: 200

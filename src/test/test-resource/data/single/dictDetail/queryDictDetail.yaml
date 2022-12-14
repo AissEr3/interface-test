@@ -1,0 +1,57 @@
+interface-info:
+  apiName: "queryDictDetail"
+  path: /api/dictDetail
+  requestType: get
+  dataPlaceIn: query
+single-test-data:
+  - describe: "不带条件正确查询出数据"
+    data: { page: 0,size: 20, sort: "id", dictName: "job_status"}
+    excepted:
+      statusCode: 200
+      content[0].label: "启用"
+      content[1].label: "停用"
+    addRelevanceData:
+      content.id: "dictDetail_ids" #list
+      id: "${dictDetail_ids[2]}"
+
+  - describe: "倒叙正确查询出数据"
+    data: { page: 0, size: 10, sort: "id", dictName: "job_status"}
+    excepted:
+      content[0].username: "启用"
+      statusCode: 200
+
+  - describe: "带条件正确查询出数据"
+    data: { page: 0, size: 10, sort: "id,desc", dictName: "job_status"}
+    excepted:
+      content[0].id: "${dictDetail_ids[6]}"
+      statusCode: 200
+
+  - describe: "查询不出数据的情况"
+    data: { page: 0, size: 20, sort: "id", dictName: "job_status111"}
+    excepted:
+      totalElements: 0
+      statusCode: 200
+
+  - describe: "默认排序查询数据"
+    data: { page: 0, size: 1 ,dictName: "job_status"}
+    excepted:
+      content[0].username: "启用"
+      statusCode: 200
+
+  - describe: "size默认值验证"
+    data: { page: 0 ,dictName: "job_status"}
+    excepted:
+      content[0].username: "启用"
+      statusCode: 200
+
+  - describe: "page默认值验证"
+    data: { size: 1 ,dictName: "job_status"}
+    excepted:
+      content[0].username: "启用"
+      statusCode: 200
+
+  - describe: "请求参数为空"
+    data: { }
+    excepted:
+      content[0].username: "激活"
+      statusCode: 200

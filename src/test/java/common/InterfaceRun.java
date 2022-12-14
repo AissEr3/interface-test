@@ -132,7 +132,7 @@ public class InterfaceRun implements InterfaceTest{
      */
     private<T> void addData(T data){
         String dataPlace = apiObject.getDataPlaceIn();
-        if(dataPlace.equals("body")){
+        if(dataPlace.equals("body") && data instanceof String){
             given.body(RelevanceVariable.replaceByRelevanceVariable((String) data));
         }
         // params可以匹配除body方法以外的所有方法
@@ -150,7 +150,7 @@ public class InterfaceRun implements InterfaceTest{
      * @return 返回对应的响应处理类
      */
     private Response runInterface(){
-        String path = apiObject.getPath();
+        String path = RelevanceVariable.replaceByRelevanceVariable(apiObject.getPath());
         // java switch新特性（jdk14及以上）
         Response response = switch (apiObject.getRequestType()){
             case GET -> given.get(path);

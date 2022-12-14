@@ -6,6 +6,7 @@ import common.RelevanceVariable;
 import common.ResponseHandle;
 import api.configure.option.TestModuleOptions;
 import common.YamlMapper;
+import io.restassured.path.json.exception.JsonPathException;
 import org.junit.jupiter.api.*;
 
 import java.util.*;
@@ -36,7 +37,7 @@ public class SingleInterfaceTest {
      * @return
      */
     @TestFactory
-    @DisplayName("单接口测试")
+    @DisplayName("单接口请求参数测试")
     Collection<DynamicContainer> single() {
         // 最终要返回给Junit5让其测试的“测试用例容器列表”
         ArrayList<DynamicContainer> result = new ArrayList<>(pathMap.size());
@@ -77,8 +78,19 @@ public class SingleInterfaceTest {
         if(relevance != null){
             Set<String> keys = relevance.keySet();
             for(String key : keys){
-                Object jsonObject = responseHandle.getJsonObject(key);
-                RelevanceVariable.addRelevanceVariable((String) relevance.get(key),jsonObject);
+                try{
+                    Object jsonObject = responseHandle.getJsonObject(key);
+                    if(jsonObject != null){
+                        RelevanceVariable.addRelevanceVariable((String) relevance.get(key),jsonObject);
+                    }
+                    else {
+                        RelevanceVariable.addRelevanceVariable(key,
+                                RelevanceVariable.replaceByRelevanceVariable((String) relevance.get(key)));
+                    }
+                } catch (JsonPathException e){
+                        RelevanceVariable.addRelevanceVariable(key,
+                                RelevanceVariable.replaceByRelevanceVariable((String) relevance.get(key)));
+                }
             }
         }
         responseHandle.then().log().all();

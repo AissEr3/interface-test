@@ -1,0 +1,51 @@
+interface-info:
+  apiName: "updateJob"
+  path: /api/job
+  requestType: put
+  dataPlaceIn: body
+single-test-data:
+  - describe: "正确修改（所有字段都修改）"
+    data: '{"id":${ids[4]},"name":"test1","jobSort":5,"enabled":false}'
+    excepted:
+      statusCode: 204
+
+  - describe: "错误添加（名称重复）"
+    data: '{"id":${ids[4]},"name":"重复名称","jobSort":5,"enabled":true}'
+    excepted:
+      statusCode: 400
+      message: name 重复名称 existed
+
+  - describe: "错误添加（名称为空）"
+    data: '{"id":${ids[4]},"name":"","jobSort":5,"enabled":true}'
+    excepted:
+      statusCode: 400
+      message: name not empty
+
+  - describe: "错误添加（jobSort＜0）"
+    data: '{"id":${ids[4]},"name":"test1","jobSort":-1,"enabled":false}'
+    excepted:
+      statusCode: 400
+      message: jobSort must greater than or equal to 0
+
+  - describe: "错误添加（jobSort＞999）"
+    data: '{"id":${ids[4]},"name":"test1","jobSort":1000,"enabled":false}'
+    excepted:
+      statusCode: 400
+      message: jobSort must less than or equal to 999
+
+  - describe: "纠错添加（jobSort为小数）"
+    data: '{"id":${ids[4]},"name":"test1","jobSort":1.1,"enabled":false}'
+    excepted:
+      statusCode: 204
+
+  - describe: "错误添加（jobSort包含字母）"
+    data: '{"id":${ids[4]},"name":"test1","jobSort":1a,"enabled":false}'
+    excepted:
+      statusCode: 400
+      message: JSON parse error
+
+  - describe: "错误测试（启动为其它值）"
+    data: '{"id":${ids[4]},"name":"test1","jobSort":1,"enabled":null}'
+    excepted:
+      statusCode: 400
+      message: could not execute statement

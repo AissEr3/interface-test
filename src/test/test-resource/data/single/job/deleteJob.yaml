@@ -1,0 +1,49 @@
+interface-info:
+  apiName: "deleteJob"
+  path: /api/job
+  requestType: delete
+  dataPlaceIn: body
+single-test-data:
+  # 正确删除用例1
+  - describe: "正确删除用例1"
+    data: "[${ids[4]},${ids[5]}]"
+    excepted:
+      statusCode: 200
+
+  # 正确删除用例2
+  - describe: "正确删除用例2"
+    data: "[]"
+    excepted:
+      statusCode: 200
+
+  # 删除没有的用户
+  - describe: "删除没有的用户"
+    data: "[0]"
+    excepted:
+      statusCode: 200
+
+  # 删除中存在没有的用户
+  - describe: "删除中存在没有的用户"
+    data: "[${ids[6]},0]"
+    excepted:
+      statusCode: 200
+
+  # 请求参数格式错误
+  - describe: "请求参数格式错误"
+    data: "5]"
+    excepted:
+      statusCode: 400
+      message: JSON parse error
+
+  # 请求参数格式错误
+  - describe: "请求参数格式错误"
+    data: "[5"
+    excepted:
+      statusCode: 400
+      message: JSON parse error
+
+  # 正确删除用例3
+  - describe: "删除多余的用户"
+    data: "[${ids[6]},${ids[7]},${ids[8]},${ids[9]}]"
+    excepted:
+      statusCode: 200

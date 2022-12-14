@@ -1,0 +1,61 @@
+interface-info:
+  apiName: "addJob"
+  path: /api/job
+  requestType: post
+  dataPlaceIn: body
+single-test-data:
+  - describe: "正确添加1（所有字段都添加）"
+    data: '{"name":"测试开发01","jobSort":5,"enabled":true}'
+    excepted:
+      statusCode: 201
+
+  - describe: "正确添加2（所有字段都添加）"
+    data: '{"name":"重复名称","jobSort":5,"enabled":true}'
+    excepted:
+      statusCode: 201
+
+  - describe: "正确添加（只填写必要字段，验证默认）"
+    data: '{"name":"测试开发02"}'
+    excepted:
+      statusCode: 201
+
+  - describe: "错误添加（名称重复）"
+    data: '{"name":"重复名称","jobSort":5,"enabled":true}'
+    excepted:
+      statusCode: 400
+      message: name 重复名称 existed
+
+  - describe: "错误添加（名称为空）"
+    data: '{"name":"","jobSort":5,"enabled":true}'
+    excepted:
+      statusCode: 400
+      message: name not empty
+
+  - describe: "错误添加（jobSort＜0）"
+    data: '{"name":"测试开发03","jobSort":-1,"enabled":false}'
+    excepted:
+      statusCode: 400
+      message: jobSort must greater than or equal to 0
+
+  - describe: "错误添加（jobSort＞999）"
+    data: '{"name":"测试开发07","jobSort":1000,"enabled":false}'
+    excepted:
+      statusCode: 400
+      message: jobSort must less than or equal to 999
+
+  - describe: "纠错添加（jobSort为小数）"
+    data: '{"name":"测试开发04","jobSort":1.1,"enabled":false}'
+    excepted:
+      statusCode: 201
+
+  - describe: "错误添加（jobSort包含字母）"
+    data: '{"name":"测试开发05","jobSort":1a,"enabled":false}'
+    excepted:
+      statusCode: 400
+      message: JSON parse error
+
+  - describe: "错误测试（启动为其它值）"
+    data: '{"name":"测试开发06","jobSort":1,"enabled":null}'
+    excepted:
+      statusCode: 400
+      message: could not execute statement

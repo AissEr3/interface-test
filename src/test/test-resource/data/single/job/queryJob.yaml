@@ -1,0 +1,58 @@
+interface-info:
+  apiName: "queryJob"
+  path: /api/job
+  requestType: get
+  dataPlaceIn: query
+single-test-data:
+  - describe: "无条件查询数据"
+    data: { page: 0, size: 20, sort: id}
+    excepted:
+      content[0].name: 人事专员
+      content[1].name: 产品经理
+      content[2].name: 全栈开发
+      content[3].name: 软件测试
+      statusCode: 200
+    addRelevanceData:
+      content.id: "ids" #list
+
+  - describe: "全条件查询数据（可以查询出数据）"
+    data: { page: 0, size: 10, sort: id, name: "测试", enable: true}
+    excepted:
+      content[0].name: 测试
+      statusCode: 200
+
+  - describe: "全条件查询数据（无法查询出数据1）"
+    data: { page: 0, size: 10, sort: id, name: "测a试s", enable: true}
+    excepted:
+      totalElements: 0
+      statusCode: 200
+
+  - describe: "查询纠错测试，enable为其它值"
+    data: { page: 0, size: 10, sort: id, name: "测试", enable: null}
+    excepted:
+      content[0].name: 测试
+      statusCode: 200
+
+  - describe: "倒叙查询"
+    data: { page: 0, sort: "id,desc"}
+    excepted:
+      content[0].id: "${ids[9]}"
+      statusCode: 200
+
+  - describe: "size默认值验证"
+    data: { page: 0 }
+    excepted:
+      content[0].name: "人事专员"
+      statusCode: 200
+
+  - describe: "page默认值验证"
+    data: { size: 1 }
+    excepted:
+      content[0].name: "人事专员"
+      statusCode: 200
+
+  - describe: "请求参数为空"
+    data: { }
+    excepted:
+      content[0].name: "人事专员"
+      statusCode: 200

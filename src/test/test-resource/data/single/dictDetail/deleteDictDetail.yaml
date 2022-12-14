@@ -1,0 +1,40 @@
+interface-info:
+  apiName: "deleteDict"
+  path: /api/dictDetail/${id}
+  requestType: delete
+single-test-data:
+  - describe: "正确删除用例"
+    excepted:
+      statusCode: 200
+    addRelevanceData:
+      id: "${dictDetail_ids[3]}"
+
+  - describe: "正确删除用例"
+    excepted:
+      statusCode: 200
+    addRelevanceData:
+      id: "${dictDetail_ids[4]}"
+
+  - describe: "正确删除用例"
+    excepted:
+      statusCode: 200
+    addRelevanceData:
+      id: "${dictDetail_ids[5]}"
+
+  - describe: "正确删除用例"
+    excepted:
+      statusCode: 200
+    addRelevanceData:
+      id: "${dictDetail_ids[6]}"
+
+  - describe: "正确删除用例"
+    excepted:
+      statusCode: 200
+    addRelevanceData:
+      id: "0"
+
+  - describe: "删除不存在的用户"
+    excepted:
+      statusCode: 400
+      message: is null
+
