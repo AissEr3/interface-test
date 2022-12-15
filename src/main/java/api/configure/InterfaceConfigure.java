@@ -4,6 +4,7 @@ import api.ApiObject;
 import api.configure.option.ConfigureOptions;
 import api.configure.option.TestModuleOptions;
 import api.configure.strategy.StrategyFactory;
+import api.manage.login.LoginResponseInfoManage;
 import common.YamlMapper;
 
 import java.io.File;

@@ -93,4 +93,7 @@ public class GeneralConfigure extends AbstractConfigure {
         }
     }
 
+    public static void exitCurrentUser(){
+        DEFAULT_LOGIN_INFO.exitThisUser();
+    }
 }

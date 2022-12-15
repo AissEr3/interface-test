@@ -1,0 +1,32 @@
+interface-info:
+  apiName: "updateDictDetail"
+  path: /api/dictDetail
+  requestType: put
+  dataPlaceIn: body
+single-test-data:
+  - describe: "正确添加（所有字段都添加）"
+    data: '{"dict":{"id":${dict_ids[2]}},"id":${dictDetail_ids[2]},"label":"修改停止","value":"halt","dictSort":4}'
+    excepted:
+      statusCode: 204
+
+  - describe: "正确添加（重复标签名测试）"
+    data: '{"dict":{"id":${dict_ids[2]}},"id":${dictDetail_ids[2]},"label":"停止","value":"re","dictSort":4}'
+    excepted:
+      statusCode: 204
+
+  - describe: "错误添加（标签名为空）"
+    data: '{"dict":{"id":${dict_ids[2]}},"id":${dictDetail_ids[2]},"label":"","value":"re","dictSort":4}'
+    excepted:
+      statusCode: 400
+      message: label error
+
+  - describe: "错误添加（字典值为空）"
+    data: '{"dict":{"id":${dict_ids[2]}},"id":${dictDetail_ids[2]},"label":"test001","value":"","dictSort":4}'
+    excepted:
+      statusCode: 400
+      message: value error
+
+  - describe: "正确添加（排序为空纠错测试）"
+    data: '{"dict":{"id":${dict_ids[2]}},"id":${dictDetail_ids[2]},"label":"","value":"re"}'
+    excepted:
+      statusCode: 204

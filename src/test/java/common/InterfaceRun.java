@@ -3,13 +3,12 @@ package common;
 import api.ApiObject;
 import api.configure.option.ConfigureOptions;
 import api.configure.InterfaceConfigure;
-import api.configure.option.TestModuleOptions;
 import api.configure.strategy.StrategyFactory;
+import api.manage.login.BaseLoginResponseInfo;
 import api.manage.login.LoginResponseInfo;
 import api.manage.login.LoginResponseInfoManage;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.util.HashMap;
@@ -29,7 +28,7 @@ import java.util.Map;
 public class InterfaceRun implements InterfaceTest{
     // 是否指定配置文件都会使用到的信息
     protected RequestSpecification given;
-    protected LoginResponseInfo loginInfo;
+    protected BaseLoginResponseInfo loginInfo;
     private ApiObject apiObject;
 
     // 如果指定配置文件才使用到的属性；
@@ -41,7 +40,7 @@ public class InterfaceRun implements InterfaceTest{
      *  在运行前保证设置全局变量的信息已经初始化，且在运行时只用初始化一次
      */
     static{
-        SetRestAssured.initFundamentalConfigure();
+        SetRestAssured.initGenernalConfigure();
     }
 
     /**

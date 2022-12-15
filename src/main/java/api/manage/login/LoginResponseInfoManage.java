@@ -42,6 +42,17 @@ public class LoginResponseInfoManage extends BaseLoginResponseInfo {
         loginJSON = new LoginJSON(username,password);
     }
 
+    @Override
+    public void exitThisUser(){
+        if(loginJSON != null){
+            given()
+                .headers("Authorization",loginInfo.get(TOKEN_NAME))
+                .cookies(loginInfo)
+            .when()
+                .delete("http://localhost:8000/auth/logout");
+        }
+    }
+
     // 重写修改登录信息的方法，增加功能，如果是同一用户，不进行修改
     @Override
     public void changeLoginMessage(String username, String password) {

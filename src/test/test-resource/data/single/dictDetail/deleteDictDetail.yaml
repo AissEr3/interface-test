@@ -33,7 +33,7 @@ single-test-data:
     addRelevanceData:
       id: "0"
 
-  - describe: "删除不存在的用户"
+  - describe: "删除不存在的字典详情"
     excepted:
       statusCode: 400
       message: is null

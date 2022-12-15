@@ -22,6 +22,8 @@ public abstract class BaseLoginResponseInfo implements LoginResponseInfo {
 
     protected abstract void setLoginMessage(String username, String password);
 
+    public abstract void exitThisUser();
+
     /**
      * 使用“模板模式”
      * 调用的方法都是自定义的抽象类，需要子类去实现
@@ -40,6 +42,7 @@ public abstract class BaseLoginResponseInfo implements LoginResponseInfo {
      */
     @Override
     public void changeLoginMessage(String username, String password) {
+        exitThisUser();
         loginInfo = null;
         setLoginMessage(username, password);
     }

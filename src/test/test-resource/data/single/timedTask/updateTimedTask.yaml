@@ -1,0 +1,121 @@
+interface-info:
+  apiName: "updateTimedTask"
+  path: /api/jobs
+  requestType: put
+  dataPlaceIn: body
+single-test-data:
+  - describe: "正确修改，可执行（bean和method都正确）"
+    data: '{"id":${ids[4]},"jobName":"修改任务01","subTask":null,"isPause":false,"beanName":"testTask","methodName":"run"
+    ,"params":"测试参数","cronExpression":"0/1 * * * * ?","pauseAfterFailure":true,
+    "personInCharge":"AissEr","email":"AissErhhd@qq.com","description":"正确执行任务"}'
+    excepted:
+      statusCode: 204
+
+  - describe: "正确修改，无法执行（bean正确，method错误）"
+    data: '{"id":${ids[4]},"jobName":"修改任务02","subTask":null,"isPause":false,"beanName":"testTask","methodName":"run1"
+    ,"params":"测试参数","cronExpression":"0/1 * * * * ?","pauseAfterFailure":true,
+    "personInCharge":"AissEr","email":"AissErhhd@qq.com","description":"无法执行任务"}'
+    excepted:
+      statusCode: 204
+
+  - describe: "错误修改（bean错误，method正确）"
+    data: '{"id":${ids[4]},"jobName":"修改任务03","subTask":null,"isPause":false,"beanName":"testTask1","methodName":"run"
+    ,"params":"测试参数","cronExpression":"0/1 * * * * ?","pauseAfterFailure":true,
+    "personInCharge":"AissEr","email":"AissErhhd@qq.com","description":"错误修改"}'
+    excepted:
+      statusCode: 400
+      message: 非法的 Bean，请重新输入！
+
+  - describe: "错误修改（cron表达式错误）"
+    data: '{"id":${ids[4]},"jobName":"修改任务04","subTask":null,"isPause":false,"beanName":"testTask","methodName":"run"
+    ,"params":"测试参数","cronExpression":"0/5 * * * *","pauseAfterFailure":true,
+    "personInCharge":"AissEr","email":"AissErhhd@qq.com","description":"错误修改"}'
+    excepted:
+      statusCode: 400
+      message: cron表达式格式错误
+
+  - describe: "错误修改（任务名称为空）"
+    data: '{"id":${ids[4]},"jobName":"","subTask":null,"isPause":false,"beanName":"testTask","methodName":"run"
+    ,"params":"测试参数","cronExpression":"0/1 * * * * ?","pauseAfterFailure":true,
+    "personInCharge":"AissEr","email":"AissErhhd@qq.com","description":"错误修改"}'
+    excepted:
+      statusCode: 400
+      message: jobName error
+
+  - describe: "错误修改（任务描述为空）"
+    data: '{"id":${ids[4]},"jobName":"修改任务05","subTask":null,"isPause":false,"beanName":"testTask","methodName":"run"
+    ,"params":"测试参数","cronExpression":"0/1 * * * * ?","pauseAfterFailure":true,
+    "personInCharge":"AissEr","email":"AissErhhd@qq.com","description":""}'
+    excepted:
+      statusCode: 400
+      message: description error
+
+  - describe: "错误修改（beanName为空）"
+    data: '{"id":${ids[4]},"jobName":"修改任务06","subTask":null,"isPause":false,"beanName":"","methodName":"run"
+    ,"params":"测试参数","cronExpression":"0/1 * * * * ?","pauseAfterFailure":true,
+    "personInCharge":"AissEr","email":"AissErhhd@qq.com","description":"错误修改"}'
+    excepted:
+      statusCode: 400
+      message: 非法的 Bean，请重新输入！
+
+  - describe: "错误修改（methodName为空）"
+    data: '{"id":${ids[4]},"jobName":"修改任务07","subTask":null,"isPause":false,"beanName":"testTask","methodName":""
+    ,"params":"测试参数","cronExpression":"0/1 * * * * ?","pauseAfterFailure":true,
+    "personInCharge":"AissEr","email":"AissErhhd@qq.com","description":"错误修改"}'
+    excepted:
+      statusCode: 400
+      message: methodName error
+
+  - describe: "错误修改（cronExpression为空）"
+    data: '{"id":${ids[4]},"jobName":"修改任务08","subTask":null,"isPause":false,"beanName":"testTask","methodName":"run"
+    ,"params":"测试参数","cronExpression":"","pauseAfterFailure":true,
+    "personInCharge":"AissEr","email":"AissErhhd@qq.com","description":"错误修改"}'
+    excepted:
+      statusCode: 400
+      message: cron表达式格式错误
+
+  - describe: "错误修改（personInCharge为空）"
+    data: '{"id":${ids[4]},"jobName":"修改任务09","subTask":null,"isPause":false,"beanName":"testTask","methodName":"run"
+    ,"params":"测试参数","cronExpression":"0/1 * * * * ?","pauseAfterFailure":true,
+    "personInCharge":"","email":"AissErhhd@qq.com","description":"错误修改"}'
+    excepted:
+      statusCode: 400
+      message: personInCharge error
+
+  - describe: "正确修改（缺少非必要字段）"
+    data: '{"id":${ids[4]},"jobName":"修改任务10","subTask":null,"isPause":false,"beanName":"testTask","methodName":"run"
+    ,"cronExpression":"0/1 * * * * ?","personInCharge":"AissEr","description":"错误修改"}'
+    excepted:
+      statusCode: 204
+
+  - describe: "错误修改（缺少必要字段jobName）"
+    data: '{"id":${ids[4]},"subTask":null,"isPause":false,"beanName":"testTask","methodName":"run"
+    ,"params":"测试参数","cronExpression":"0/1 * * * * ?","pauseAfterFailure":true,
+    "personInCharge":"AissEr","email":"AissErhhd@qq.com","description":"错误修改"}'
+    excepted:
+      statusCode: 400
+      message: jobName error
+
+  - describe: "错误修改（缺少必要字段beanName）"
+    data: '{"id":${ids[4]},"jobName":"修改任务11","isPause":false,"subTask":null,"methodName":"run"
+    ,"params":"测试参数","cronExpression":"0/1 * * * * ?","pauseAfterFailure":true,
+    "personInCharge":"AissEr","email":"AissErhhd@qq.com","description":"错误修改"}'
+    excepted:
+      statusCode: 400
+      message: 非法的 Bean，请重新输入！
+
+  - describe: "错误修改（缺少必要字段methodName）"
+    data: '{"id":${ids[4]},"jobName":"修改任务11","subTask":null,"isPause":false,"beanName":"testTask"
+    ,"params":"测试参数","cronExpression":"0/1 * * * * ?","pauseAfterFailure":true,
+    "personInCharge":"AissEr","email":"AissErhhd@qq.com","description":"错误修改"}'
+    excepted:
+      statusCode: 400
+      message: methodName error
+
+  - describe: "错误修改（缺少必要字段cronExpression）"
+    data: '{"id":${ids[4]},"jobName":"修改任务12","subTask":null,"isPause":false,"beanName":"testTask","methodName":"run"
+    ,"params":"测试参数","pauseAfterFailure":true,
+    "personInCharge":"AissEr","email":"AissErhhd@qq.com","description":"错误修改"}'
+    excepted:
+      statusCode: 400
+      message: cronExpression cannot be null

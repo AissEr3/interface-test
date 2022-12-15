@@ -23,7 +23,7 @@ public class TestUser {
     @BeforeAll
     public static void setInterface(){
         currentInterface = new InterfaceRun(
-            "src/test/test-resource/data/single/dictDetail/queryDictDetail.yaml");
+            "src/test/test-resource/data/single/timedTask/addTimedTask.yaml");
     }
 
     public static List<Map<String,?>> testData() {

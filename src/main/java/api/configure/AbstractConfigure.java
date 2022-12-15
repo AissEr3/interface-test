@@ -1,5 +1,6 @@
 package api.configure;
 
+import api.manage.login.BaseLoginResponseInfo;
 import api.manage.login.LoginResponseInfo;
 import api.manage.login.LoginResponseInfoManage;
 
@@ -15,7 +16,7 @@ import java.util.Map;
  *   很多信息都需要登录后才可以获取，例如header、cookies，在配置header和cookies时从登录信息中取值
  **/
 public abstract class AbstractConfigure implements Configure {
-    protected static final LoginResponseInfo DEFAULT_LOGIN_INFO = new LoginResponseInfoManage();
+    protected static final BaseLoginResponseInfo DEFAULT_LOGIN_INFO = new LoginResponseInfoManage();
 
     // 记录配置信息的map
     protected Map<String,?> applicationMap;

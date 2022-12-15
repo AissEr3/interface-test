@@ -16,14 +16,14 @@ single-test-data:
     excepted:
       statusCode: 200
 
-  # 删除没有的用户
-  - describe: "删除没有的用户"
+  # 删除没有的字典
+  - describe: "删除没有的字典"
     data: "[0]"
     excepted:
       statusCode: 200
 
-  # 删除中存在没有的用户
-  - describe: "删除中存在没有的用户"
+  # 删除中存在没有的字典
+  - describe: "删除中存在没有的字典"
     data: "[${dict_ids[5]},0]"
     excepted:
       statusCode: 200
@@ -43,7 +43,7 @@ single-test-data:
       message: JSON parse error
 
   # 正确删除用例3
-  - describe: "删除多余的用户"
+  - describe: "删除多余的字典"
     data: "[${dict_ids[6]},${dict_ids[7]},${dict_ids[8]}]"
     excepted:
       statusCode: 200

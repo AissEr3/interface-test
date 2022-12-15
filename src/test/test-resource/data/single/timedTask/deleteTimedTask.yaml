@@ -1,12 +1,12 @@
 interface-info:
-  apiName: "deleteDept"
-  path: /api/dept
+  apiName: "deleteTimedTask"
+  path: /api/jobs
   requestType: delete
   dataPlaceIn: body
 single-test-data:
   # 正确删除用例1
   - describe: "正确删除用例1"
-    data: "[${subIds[0]},${subIds[1]}]"
+    data: "[${ids[4]},${ids[5]}]"
     excepted:
       statusCode: 200
 
@@ -16,17 +16,19 @@ single-test-data:
     excepted:
       statusCode: 200
 
-  # 删除没有的部门
-  - describe: "删除没有的部门"
+  # 删除没有的用户
+  - describe: "删除没有的任务"
     data: "[0]"
     excepted:
       statusCode: 400
+      message: "QuartzJob 不存在: id is 0"
 
-  # 删除中存在没有的部门
-  - describe: "删除中存在没有的部门"
-    data: "[${subIds[2]},0]"
+  # 删除中存在没有的用户
+  - describe: "删除中存在没有的任务"
+    data: "[${ids[6]},0]"
     excepted:
       statusCode: 400
+      message: "QuartzJob 不存在: id is 0"
 
   # 请求参数格式错误
   - describe: "请求参数格式错误"
@@ -43,7 +45,8 @@ single-test-data:
       message: JSON parse error
 
   # 正确删除用例3
-  - describe: "删除顶层部门"
-    data: "[${topDeptId}]"
+  - describe: "删除多余的任务"
+    data: "[${ids[6]},${ids[7]},${ids[8]},${ids[9]},${ids[10]}
+    ,${ids[11]},${ids[12]},${ids[13]},${ids[14]},${ids[15]}]"
     excepted:
       statusCode: 200

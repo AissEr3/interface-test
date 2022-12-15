@@ -16,14 +16,14 @@ single-test-data:
     excepted:
       statusCode: 200
 
-  # 删除没有的用户
-  - describe: "删除没有的用户"
+  # 删除没有的角色
+  - describe: "删除没有的角色"
     data: "[0]"
     excepted:
       statusCode: 400
 
-  # 删除中存在没有的用户
-  - describe: "删除中存在没有的用户"
+  # 删除中存在没有的角色
+  - describe: "删除中存在没有的角色"
     data: "[${ids[4]},0]"
     excepted:
       statusCode: 400
@@ -43,7 +43,7 @@ single-test-data:
       message: JSON parse error
 
   # 正确删除用例3
-  - describe: "删除多余的用户"
+  - describe: "删除多余的角色"
     data: "[${ids[4]},${ids[5]},${ids[6]}]"
     excepted:
       statusCode: 200

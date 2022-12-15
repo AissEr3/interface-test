@@ -19,7 +19,7 @@ import java.util.Map;
 public class SetRestAssured {
     private static AbstractConfigure generalConfigure;
     private static ApiObject apiObject = ApiObject.builder().build();
-    public RequestSpecification given;
+    private RequestSpecification given;
 
     private SetRestAssured(){}
 
@@ -35,7 +35,7 @@ public class SetRestAssured {
      * 如果需要设置配置文件类，在这里设置
      * 具体如何设置，看GeneralConfigure类即可知道
      */
-    public static void initFundamentalConfigure(){
+    public static void initGenernalConfigure(){
         generalConfigure = GeneralConfigure.getInstance();
         generalConfigure.initConfigure();
         generalConfigure.configure(apiObject);
@@ -50,6 +50,10 @@ public class SetRestAssured {
         if(apiObject.getPort() != null){
             RestAssured.port = Integer.parseInt(apiObject.getPort());
         }
+    }
+
+    public static void exitSettingUser(){
+        GeneralConfigure.exitCurrentUser();
     }
 
     /**

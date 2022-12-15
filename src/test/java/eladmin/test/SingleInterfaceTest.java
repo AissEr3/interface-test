@@ -1,11 +1,9 @@
 package eladmin.test;
 
 
-import common.InterfaceRun;
-import common.RelevanceVariable;
-import common.ResponseHandle;
+import api.configure.GeneralConfigure;
+import common.*;
 import api.configure.option.TestModuleOptions;
-import common.YamlMapper;
 import io.restassured.path.json.exception.JsonPathException;
 import org.junit.jupiter.api.*;
 
@@ -16,7 +14,7 @@ import java.util.*;
  * @Author AissEr
  * @Date 2022/10/18 17:57
  * @Version 1.0
- * @Description 对单接口进行测试
+ * @Description 对单接口请求参数测试
  **/
 public class SingleInterfaceTest {
     private static Map<String,String> pathMap  = new HashMap<>();
@@ -27,8 +25,13 @@ public class SingleInterfaceTest {
             = "src/test/test-resource/application/single-interface-file-path.yaml";
 
     @BeforeAll
-    public static void beforeAll(){
+    public static void initPathMap(){
         pathMap = (Map<String, String>) new YamlMapper(ALL_SINGLE_INTERFACE_FILE_PATH).getYamlMap();
+    }
+
+    @AfterAll
+    public static void exitApplicationUser(){
+        SetRestAssured.exitSettingUser();
     }
 
     /**

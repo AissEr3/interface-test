@@ -1,0 +1,62 @@
+interface-info:
+  apiName: "queryTimedTask"
+  path: /api/jobs
+  requestType: get
+  dataPlaceIn: query
+single-test-data:
+  - describe: "不带条件正确查询出数据"
+    data: { page: 0, size: 20, sort: "id" }
+    excepted:
+      content[0].jobName: "测试1"
+      content[1].jobName: "测试"
+      statusCode: 200
+    addRelevanceData:
+      content.id: "ids" #list
+
+  - describe: "不带条件倒叙查询"
+    data: { page: 0, size: 20, sort: "id,desc" }
+    excepted:
+      content[0].id: ${ids[15]}
+      statusCode: 200
+
+  - describe: "带条件正确查询出数据"
+    data: { page: 0, size: 1, sort: "id", jobName: "测试"}
+    excepted:
+      content[0].jobName: "测试"
+      statusCode: 200
+
+  - describe: "查询不出数据的情况"
+    data: { page: 0, size: 1, sort: "id", jobName: "测试01"}
+    excepted:
+      totalElements: 0
+      statusCode: 200
+
+  - describe: "查询不出数据的情况"
+    data: { page: 1, size: 100, sort: "id", jobName: "测试1"}
+    excepted:
+      totalElements: 0
+      statusCode: 200
+
+  - describe: "默认排序查询数据"
+    data: { page: 0, size: 1}
+    excepted:
+      content[0].jobName: "测试1"
+      statusCode: 200
+
+  - describe: "size默认值验证"
+    data: { page: 0}
+    excepted:
+      content[0].jobName: "测试1"
+      statusCode: 200
+
+  - describe: "page默认值验证"
+    data: { size: 1}
+    excepted:
+      content[0].jobName: "测试1"
+      statusCode: 200
+
+  - describe: "请求参数为空"
+    data: {}
+    excepted:
+      content[0].jobName: "测试1"
+      statusCode: 200
