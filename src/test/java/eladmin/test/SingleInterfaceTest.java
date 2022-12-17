@@ -1,9 +1,11 @@
 package eladmin.test;
 
-
-import api.configure.GeneralConfigure;
 import common.*;
 import api.configure.option.TestModuleOptions;
+import common.test.InterfaceRun;
+import common.test.RelevanceVariable;
+import common.test.ResponseHandle;
+import common.test.SetRestAssured;
 import io.restassured.path.json.exception.JsonPathException;
 import org.junit.jupiter.api.*;
 
@@ -96,7 +98,6 @@ public class SingleInterfaceTest {
                 }
             }
         }
-        responseHandle.then().log().all();
         // 验证断言是否通过
         Object excepted = data.get(TestModuleOptions.EXCEPTED.getName());
         if(excepted != null){

@@ -68,12 +68,13 @@ public class LoginResponseInfoManage extends BaseLoginResponseInfo {
 
     @Override
     protected void runLoginInterface() {
-        if(loginJSON.isRas())
-        response = given()
-                .contentType("application/json")
-                .body(loginJSON)
-                .when()
-                .post("http://localhost:8000/auth/login");
+        if(loginJSON.isRas()){
+            response = given()
+                    .contentType("application/json")
+                    .body(loginJSON)
+                    .when()
+                    .post("http://localhost:8000/auth/login");
+        }
     }
 
     @Override

@@ -16,7 +16,7 @@ single-test-data:
   - describe: "不带条件倒叙查询"
     data: { page: 0, size: 20, sort: "id,desc" }
     excepted:
-      content[0].id: ${ids[15]}
+      content[0].id: ${ids[14]}
       statusCode: 200
 
   - describe: "带条件正确查询出数据"

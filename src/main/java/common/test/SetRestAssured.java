@@ -1,4 +1,4 @@
-package common;
+package common.test;
 
 import api.ApiObject;
 import api.configure.AbstractConfigure;

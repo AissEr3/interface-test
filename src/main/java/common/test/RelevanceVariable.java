@@ -1,4 +1,4 @@
-package common;
+package common.test;
 
 import org.junit.jupiter.api.Test;
 
@@ -30,6 +30,10 @@ public class RelevanceVariable {
 
     public static Object getRelevanceVariable(String variableName) {
         return relevanceData.get(variableName);
+    }
+
+    public static void clear(){
+        relevanceData.clear();
     }
 
     // 根据字符串替换

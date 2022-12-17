@@ -47,6 +47,6 @@ single-test-data:
   # 正确删除用例3
   - describe: "删除多余的任务"
     data: "[${ids[6]},${ids[7]},${ids[8]},${ids[9]},${ids[10]}
-    ,${ids[11]},${ids[12]},${ids[13]},${ids[14]},${ids[15]}]"
+    ,${ids[11]},${ids[12]},${ids[13]},${ids[14]}]"
     excepted:
       statusCode: 200

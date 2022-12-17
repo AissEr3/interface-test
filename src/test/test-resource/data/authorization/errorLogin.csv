@@ -1,0 +1,10 @@
+username,password,code,uuid,message
+admin1,123456,hhd,hhd,用户名或密码错误
+admin,123,hhd,hhd,用户名或密码错误
+admin,123456,hhd1,hhd,验证码错误
+admin,123456,hhd,hhd1s,验证码不存在或已过期
+test1,123456,hhd,hhd,用户名或密码错误
+test,123,hhd,hhd,用户名或密码错误
+test,123456,hhd1,hhd,验证码错误
+test,123456,hhd,hhd1s,验证码不存在或已过期
+,123456,hhd,hhd,用户名或密码错误

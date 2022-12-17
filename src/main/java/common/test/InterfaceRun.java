@@ -1,4 +1,4 @@
-package common;
+package common.test;
 
 import api.ApiObject;
 import api.configure.option.ConfigureOptions;
@@ -91,10 +91,9 @@ public class InterfaceRun implements InterfaceTest{
 
     /**
      * @param data 接口请求需要的参数，可以为null——null代表为空
-     * @param <T> 如果数据在body里，可以任意类型；如果数据在其他地方，只能使用Map<String,?>
      */
     @Override
-    public <T> ResponseHandle request(T data){
+    public ResponseHandle request(Object data){
         configureGiven();
         if(data != null){
             addData(data);
@@ -129,7 +128,7 @@ public class InterfaceRun implements InterfaceTest{
      * @param data 接口需要的数据
      * 缺少自定义异常
      */
-    private<T> void addData(T data){
+    private <T> void addData(T data){
         String dataPlace = apiObject.getDataPlaceIn();
         if(dataPlace.equals("body") && data instanceof String){
             given.body(RelevanceVariable.replaceByRelevanceVariable((String) data));

@@ -1,11 +1,11 @@
-package common;
+package common.test;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.path.json.exception.JsonPathException;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
-import static org.assertj.core.api.Assertions.*;
 import lombok.Data;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 import java.util.Map;
@@ -54,7 +54,7 @@ public class ResponseHandle {
         return jsonPath().getJsonObject(path);
     }
 
-    private ResponseHandle verifyStatusCode(Integer code){
+    public ResponseHandle verifyStatusCode(Integer code){
         response.then().statusCode(code);
         return this;
     }
