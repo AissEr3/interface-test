@@ -31,24 +31,14 @@ public class InterfaceRun implements InterfaceTest{
     protected BaseLoginResponseInfo loginInfo;
     private ApiObject apiObject;
 
-    // 如果指定配置文件才使用到的属性；
-    // 文件路径即存储文件路径，也是判断是否使用配置文件的标志
-    private final String INTERFACE_CONFIGURE_FILE_PATH;
+    private boolean useConfigure = false;
     protected InterfaceConfigure interfaceConfigure;
-
-    /**
-     *  在运行前保证设置全局变量的信息已经初始化，且在运行时只用初始化一次
-     */
-    static{
-        SetRestAssured.initGenernalConfigure();
-    }
 
     /**
      * 使用自定义接口信息运行接口
      * @param apiObject 配置的信息
      */
     public InterfaceRun(ApiObject apiObject){
-        INTERFACE_CONFIGURE_FILE_PATH = null;
         this.apiObject = apiObject;
     }
 
@@ -57,14 +47,14 @@ public class InterfaceRun implements InterfaceTest{
      * @param interfaceConfigureFilePath 配置文件的路径
      */
     public InterfaceRun(String interfaceConfigureFilePath){
-        this.INTERFACE_CONFIGURE_FILE_PATH = interfaceConfigureFilePath;
+        useConfigure = true;
         apiObject = ApiObject.builder().build();
-        interfaceConfigure = new InterfaceConfigure(INTERFACE_CONFIGURE_FILE_PATH);
+        interfaceConfigure = new InterfaceConfigure(interfaceConfigureFilePath);
         loadFileAndApiObjectConfigure();
     }
 
     public InterfaceRun(File file){
-        this.INTERFACE_CONFIGURE_FILE_PATH = "has";
+        useConfigure = true;
         apiObject = ApiObject.builder().build();
         interfaceConfigure = new InterfaceConfigure(file);
         loadFileAndApiObjectConfigure();
@@ -76,17 +66,6 @@ public class InterfaceRun implements InterfaceTest{
     private void loadFileAndApiObjectConfigure(){
         interfaceConfigure.initConfigure();
         interfaceConfigure.configure(apiObject);
-    }
-
-    /**
-     * 获取配置文件中的测试数据，此测试数据是用来测试单接口的
-     * @return 单接口测试数据
-     */
-    public List<Map<String, ?>> getSingleTestData(){
-        if(INTERFACE_CONFIGURE_FILE_PATH != null){
-            return interfaceConfigure.getTestData();
-        }
-        return null;
     }
 
     /**
@@ -104,23 +83,25 @@ public class InterfaceRun implements InterfaceTest{
     /**
      * 使用SetRestAssured来设置given
      * 将APIObject的信息，通过SetRestAssured类配置好，并得到配置好的given
+     * 主要配置的是登录信息（token）和contentType
      */
     private void configureGiven(){
-        if(loginInfo == null || INTERFACE_CONFIGURE_FILE_PATH == null){
-            given = SetRestAssured.startSet().defaultContentType().defaultHeaders()
-                    .defaultCookies().endSet();
-            // 如果自己指定ContentType
-            if(apiObject.getContentType() != null && !apiObject.getContentType().equals("")){
-                given.contentType(apiObject.getContentType());
-            }
+        SetRestAssured.InterfaceSetter interfaceSetter = SetRestAssured.startSet();
+        // 如果没有指定登录用户，就用默认的用户信息
+        if(loginInfo == null){
+            interfaceSetter.defaultHeaders().defaultCookies();
         }
         else{
-            given = SetRestAssured.startSet()
-                    .contentType(apiObject.getContentType())
-                    .headers(apiObject.getHeaders())
-                    .cookies(apiObject.getCookies())
-                    .endSet();
+            interfaceSetter.headers(apiObject.getHeaders()).cookies(apiObject.getCookies());
         }
+        // 如果自己指定ContentType
+        if(apiObject.getContentType() != null && !apiObject.getContentType().equals("")){
+            interfaceSetter.contentType(apiObject.getContentType());
+        }
+        else {
+            interfaceSetter.defaultContentType();
+        }
+        given = interfaceSetter.endSet();
     }
 
     /**
@@ -161,6 +142,29 @@ public class InterfaceRun implements InterfaceTest{
     }
 
     /**
+     * 获取配置文件中的测试数据，此测试数据是用来测试单接口的
+     * @return 单接口测试数据
+     */
+    public List<Map<String, ?>> getCurrentInterfaceTestData(){
+        if(useConfigure){
+            return interfaceConfigure.getTestData();
+        }
+        return null;
+    }
+
+    public void changeInterface(ApiObject apiObject){
+        useConfigure = false;
+        this.apiObject = apiObject;
+    }
+
+    public void changeInterface(String interfaceConfigureFilePath){
+        useConfigure = true;
+        apiObject = ApiObject.builder().build();
+        interfaceConfigure = new InterfaceConfigure(interfaceConfigureFilePath);
+        loadFileAndApiObjectConfigure();
+    }
+
+    /**
      * 如果在运行时需要设置接口，可以调用该方法
      * @return 返回开放的接口信息设置类
      */
@@ -180,12 +184,18 @@ public class InterfaceRun implements InterfaceTest{
             else {
                 loginInfo.changeLoginMessage(username, password);
             }
-            ConfigureLogin.cookies(apiObject,loginInfo);
             ConfigureLogin.header(apiObject,loginInfo);
+            ConfigureLogin.cookies(apiObject,loginInfo);
         }
 
         public void changeToDefaultUser(){
             loginInfo = null;
+        }
+
+        public void logoutCurrentUser(){
+            if(loginInfo != null){
+                loginInfo.exitThisUser();
+            }
         }
 
         public void addHeader(String headerName, Object headerValue){
@@ -207,7 +217,7 @@ public class InterfaceRun implements InterfaceTest{
                 Map<String, String> login = loginInfo.getValue();
                 for(String opt : HEADER_OPTIONS){
                     if(opt.equals("Authorization")){
-                        value.put(opt,login.get(LoginResponseInfoManage.TOKEN_NAME));
+                        value.put("Authorization",login.get(LoginResponseInfoManage.TOKEN_NAME));
                     }
                     else {
                         value.put(opt,login.get(opt));

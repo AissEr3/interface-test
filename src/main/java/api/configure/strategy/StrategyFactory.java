@@ -17,22 +17,21 @@ import java.util.Map;
  * @Description 创建静态工厂，这里策略并不需要多个对象，一个即可
  **/
 public class StrategyFactory {
-    private static Map<ConfigureOptions,ConfigureStrategy> factory = new HashMap<>();
-    // 此处策略都不用重复创建，因此只用创建一个即可
-    private static final BaseConfigureStrategy BASE_CONFIGURE_STRATEGY = new BaseConfigureStrategy();
-    private static final InterfaceConfigureStrategy INTERFACE_CONFIGURE_STRATEGY = new InterfaceConfigureStrategy();
-    private static final HeadersConfigureStrategy HEADERS_CONFIGURE_STRATEGY = new HeadersConfigureStrategy();
-    private static final CookiesConfigureStrategy COOKIES_CONFIGURE_STRATEGY = new CookiesConfigureStrategy();
-
-    static{
-        factory.put(ConfigureOptions.BASE, BASE_CONFIGURE_STRATEGY);
-        factory.put(ConfigureOptions.LOGIN_HEADERS, HEADERS_CONFIGURE_STRATEGY);
-        factory.put(ConfigureOptions.LOGIN_COOKIES, COOKIES_CONFIGURE_STRATEGY);
-        factory.put(ConfigureOptions.INTERFACE_INFO, INTERFACE_CONFIGURE_STRATEGY);
-    }
 
     public static ConfigureStrategy createStrategy(ConfigureOptions option){
-        return factory.get(option);
+        if(option == ConfigureOptions.BASE){
+            return new BaseConfigureStrategy();
+        }
+        else if(option == ConfigureOptions.LOGIN_HEADERS){
+            return new HeadersConfigureStrategy();
+        }
+        else if(option == ConfigureOptions.LOGIN_COOKIES){
+            return new CookiesConfigureStrategy();
+        }
+        else if(option == ConfigureOptions.INTERFACE_INFO){
+            return new InterfaceConfigureStrategy();
+        }
+        return null;
     }
 
 }

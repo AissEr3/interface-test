@@ -11,15 +11,15 @@ import static io.restassured.RestAssured.*;
 import static org.assertj.core.api.Assertions.*;
 
 /**
- * @ClassName TestAuthorization
+ * @ClassName AuthorizationTest
  * @Author AissEr
  * @Date 2022/10/16 20:51
  * @Version 1.0
- * @Description TODO
+ * @Description 测试登录、登出等相关功能
  **/
 @DisplayName("登录、登出授权测试")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class TestAuthorization {
+public class AuthorizationTest {
     private static InterfaceTest loginInterface;
     private static InterfaceTest getCodeInterface;
 
@@ -118,7 +118,6 @@ public class TestAuthorization {
                 token = testToken;
             }
         }
-
     }
 
 }

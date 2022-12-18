@@ -125,7 +125,7 @@ public class SetRestAssured {
         // 设置cookies
         public InterfaceSetter cookies(Map<String, Object> cookies){
             if(cookies != null && cookies.size() != 0){
-                given.headers(cookies);
+                given.cookies(cookies);
             }
             return this;
         }

@@ -3,6 +3,7 @@ package api.configure;
 import api.ApiObject;
 import api.configure.option.ConfigureOptions;
 import api.configure.strategy.StrategyFactory;
+import api.manage.login.LoginResponseInfoManage;
 import common.YamlMapper;
 import util.MapUtil;
 import util.PathUtil;
@@ -79,21 +80,22 @@ public class GeneralConfigure extends AbstractConfigure {
      */
     @Override
     protected void initLoginMessage() {
+        defaultLoginInfo = new LoginResponseInfoManage();
         if(applicationMap != null) {
             String targetKey = PathUtil.connectionByPoint(ROOT_NAME,
                     DEFAULT_LOGIN_MESSAGE.getName());
             if (targetKey != null) {
                 Map<String, Object> resultMap = (Map<String, Object>) MapUtil.readMapByPoint(applicationMap, targetKey);
-                DEFAULT_LOGIN_INFO.changeLoginMessage((String) resultMap.get("username"), (String) resultMap.get("password"));
+                defaultLoginInfo.changeLoginMessage((String) resultMap.get("username"), (String) resultMap.get("password"));
             } else {
-                DEFAULT_LOGIN_INFO.changeLoginMessage(username, password);
+                defaultLoginInfo.changeLoginMessage(username, password);
             }
             // 初始化loginInfo
-            DEFAULT_LOGIN_INFO.getValue();
+            defaultLoginInfo.getValue();
         }
     }
 
     public static void exitCurrentUser(){
-        DEFAULT_LOGIN_INFO.exitThisUser();
+        defaultLoginInfo.exitThisUser();
     }
 }

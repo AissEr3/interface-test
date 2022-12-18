@@ -19,9 +19,10 @@ public class RelevanceVariable {
      *  如 ${name}，找出关联数据集中，名称为name的数据
      *  如 ${ids[1]}，找出存入关联数据集中，名称为ids的列表，取出列表中第二个元素
      */
-    private static final Pattern DEFAULT_REGULAR = Pattern.compile("\\$\\{((\\w+)|(\\w+\\[\\d+\\]))\\}{1}");
+    public static final Pattern DEFAULT_REGULAR = Pattern.compile("\\$\\{((\\w+)|(\\w+\\[\\d+\\]))\\}{1}");
     // 可以修改匹配规则（默认规则，${key}），指定对应的匹配表达式即可，但key名称的规则仍只有以上两种
     public static Pattern REGULAR = DEFAULT_REGULAR;
+    // 存放关联数据的地方
     private static Map<String, Object> relevanceData = new HashMap<>();
 
     public static void addRelevanceVariable(String variableName, Object variableVale) {

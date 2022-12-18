@@ -1,0 +1,95 @@
+data:
+  # 用户管理
+  - addUser:
+      url: "/user/addUser.yaml"
+      data: '{"username":"test100","nickName":"AissEr","gender":"男","email":"123459@qq.com"
+      ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":12}],"dept":{"id":6},"phone":13212341213}'
+  - queryUser:
+      url: "/user/queryUser.yaml"
+      data: { page: 0, sort: "id" }
+  - updateUser:
+      url: "/user/updateUser.yaml"
+      data: '{"id":0,"username":"test001","nickName":"test002","gender":"男","email":"5500002@qq.com"
+          ,"enabled":"true","roles":[{"id":2}],"jobs":[{"id":8}],"dept":{"id":5,"name":"运维部"},"phone":"13412340001"}'
+  - deleteUser:
+      url: "/user/deleteUser.yaml"
+      data: "[0]"
+  # 角色管理
+  - addRoles:
+      url: "/roles/addRoles.yaml"
+      data: '{"name":"test01","description":"test","dataScope":"本级","level":3}'
+  - queryRoles:
+      url: "/roles/queryRoles.yaml"
+      data: { page: 0, sort: "level" }
+  - updateRoles:
+      url: "/roles/updateRoles.yaml"
+      data: '{"id":0,"name":"test","description":"des","dataScope":"本级","level":2}'
+  - deleteRoles:
+      url: "/roles/deleteRoles.yaml"
+      data: "[0]"
+  # 部门管理
+  - addTopDept:
+      url: "/dept/addTopDept.yaml"
+      data: '{"name":"测试分部","isTop":"1","subCount":0,"pid":null,"deptSort":999,"enabled":"true"}'
+  - queryTopDept:
+      url: "/dept/queryTopDept.yaml"
+      data: { page: 0, sort: "id,decs" }
+  - updateDept:
+      url: "/dept/updateDept.yaml"
+      data: '{"id":0,"name":"修改部门1","isTop":"1","subCount":0,"pid":null,"deptSort":992,"enabled":"true"}'
+  - deleteDept:
+      url: "/dept/deleteDept.yaml"
+      data: "[0]"
+  # 岗位管理
+  - addJob:
+      url: "/job/addJob.yaml"
+      data: '{"name":"测试开发01","jobSort":5,"enabled":true}'
+  - queryJob:
+      url: "/job/queryJob.yaml"
+      data: { page: 0, size: 20, sort: id}
+  - updateJob:
+      url: "/job/updateJob.yaml"
+      data: '{"id":0,"name":"test1","jobSort":5,"enabled":false}'
+  - deleteJob:
+      url: "/job/deleteJob.yaml"
+      data: "[0]"
+  # 字典管理
+  - addDict:
+      url: "/dict/addDict.yaml"
+      data: '{"name":"test_status_01","description":"测试状态","dictDetails":[]}'
+  - queryDict:
+      url: "/dict/queryDict.yaml"
+      data: { page: 0,size: 20,sort: "id"}
+  - updateDict:
+      url: "/dict/updateDict.yaml"
+      data: '{"id":0,"name":"test_status_01","description":"测试状态","dictDetails":[]}'
+  - deleteDict:
+      url: "/dict/deleteDict.yaml"
+      data: "[0]"
+  # 字典详情管理
+  - addDictDetail:
+      url: "/dictDetail/addDictDetail.yaml"
+      data: '{"dict":{"id":0},"label":"停止","value":"halt","dictSort":3}'
+  - queryDictDetail:
+      url: "/dictDetail/queryDictDetail.yaml"
+      data: { page: 0,size: 20, sort: "id", dictName: "job_status"}
+  - updateDictDetail:
+      url: "/dictDetail/updateDictDetail.yaml"
+      data: '{"dict":{"id":0},"id":0,"label":"修改停止","value":"halt","dictSort":4}'
+  # 定时任务管理
+  - addTimedTask:
+      url: "/timedTask/addTimedTask.yaml"
+      data: '{"jobName":"测试任务01","subTask":null,"isPause":false,"beanName":"testTask","methodName":"run"
+    ,"params":"测试参数","cronExpression":"0/1 * * * * ?","pauseAfterFailure":true,
+    "personInCharge":"AissEr","email":"AissErhhd@qq.com","description":"正确执行任务"}'
+  - queryTimedTask:
+      url: "/timedTask/queryTimedTask.yaml"
+      data: { page: 0, size: 20, sort: "id" }
+  - updateTimedTask:
+      url: "/timedTask/updateTimedTask.yaml"
+      data: '{"id":0},"jobName":"修改任务01","subTask":null,"isPause":false,"beanName":"testTask","methodName":"run"
+    ,"params":"测试参数","cronExpression":"0/1 * * * * ?","pauseAfterFailure":true,
+    "personInCharge":"AissEr","email":"AissErhhd@qq.com","description":"正确执行任务"}'
+  - deleteTimedTask:
+      url: "/timedTask/deleteTimedTask.yaml"
+      data: "[0]"
